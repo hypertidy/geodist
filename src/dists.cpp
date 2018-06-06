@@ -10,10 +10,8 @@
 double one_haversine (double x1, double y1, double x2, double y2,
         double cosy1, double cosy2)
 {
-    double xd = (x2 - x1) * M_PI / 180.0;
-    double yd = (y2 - y1) * M_PI / 180.0;
-    double sxd = sin (xd / 2.0);
-    double syd = sin (yd / 2.0);
+    double sxd = sin ((x2 - x1) * M_PI / 360.0);
+    double syd = sin ((y2 - y1) * M_PI / 360.0);
     double d = syd * syd + cosy1 * cosy2 * sxd * sxd;
     d = 2.0 * earth * asin (sqrt (d));
     return (d);
@@ -64,8 +62,8 @@ Rcpp::NumericMatrix rcpp_haversine_xy (Rcpp::NumericMatrix x,
 
         for (size_t j = 0; j < ny; j++)
         {
-            double cosy2 = cos (x (j, 1) * M_PI / 180.0);
-            res (i, j) = one_haversine (x (i, 0), x (i, 1), x (j, 0), x (j, 1),
+            double cosy2 = cos (y (j, 1) * M_PI / 180.0);
+            res (i, j) = one_haversine (x (i, 0), x (i, 1), y (j, 0), y (j, 1),
                 cosy1, cosy2);
         }
     }

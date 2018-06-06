@@ -7,13 +7,11 @@ test_that("geodist with tibble", {
                                    y = -90 + 180 * runif (2 * n))
               d1 <- geodist (x)
               expect_equal (dim (d1), c (n, n))
-              diag (d1) <- Inf
-              expect_true (all (d1 > 0))
+              expect_true (all (d1 >= 0))
 
               d2 <- geodist (x, y)
               expect_equal (dim (d2), c (n, 2 * n))
-              diag (d2) <- Inf
-              expect_true (all (d2 > 0))
+              expect_true (all (d2 >= 0))
 })
 
 test_that("geodist with df", {
@@ -25,12 +23,12 @@ test_that("geodist with df", {
               d1 <- geodist (x)
               expect_equal (dim (d1), c (n, n))
               diag (d1) <- Inf
-              expect_true (all (d1 > 0))
+              expect_true (all (d1 >= 0))
 
               d2 <- geodist (x, y)
               expect_equal (dim (d2), c (n, 2 * n))
               diag (d2) <- Inf
-              expect_true (all (d2 > 0))
+              expect_true (all (d2 >= 0))
 })
 
 test_that("geodist with matrix", {
@@ -42,10 +40,11 @@ test_that("geodist with matrix", {
               expect_silent (d1 <- geodist (x))
               expect_equal (dim (d1), c (n, n))
               diag (d1) <- Inf
-              expect_true (all (d1 > 0))
+              expect_true (all (d1 >= 0))
 
               expect_message (d2 <- geodist (x, y), "object has no named columns")
               expect_equal (dim (d2), c (n, 2 * n))
               diag (d2) <- Inf
               expect_true (all (d2 > 0))
+              expect_true (all (d2 >= 0))
 })

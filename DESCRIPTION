@@ -5,7 +5,7 @@ Authors@R: c(
     person("Mark", "Padgham", email="mark.padgham@email.com", role=c("aut", "cre")),
     person("Michael D.", "Sumner", role="aut"))
 Description: Ultra lightweight, ultra fast calculation of geo distances.
-Depends: R (>= 3.4.4)
+Depends: R (>= 3.2)
 License: GPL-3
 Imports:
     Rcpp (>= 0.12.6),

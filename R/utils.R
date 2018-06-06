@@ -35,6 +35,10 @@ find_xy_cols <- function (obj)
 convert_to_matrix <- function (obj)
 {
     xy_cols <- find_xy_cols (obj)
-    cbind (as.numeric (obj [, xy_cols [1]]),
-           as.numeric (obj [, xy_cols [2]]))
+    if (is.numeric (obj))
+        cbind (as.numeric (obj [, xy_cols [1]]),
+               as.numeric (obj [, xy_cols [2]]))
+    else
+        cbind (as.numeric (obj [[xy_cols [1] ]]),
+               as.numeric (obj [[xy_cols [2] ]]))
 }

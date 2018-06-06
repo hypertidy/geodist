@@ -6,16 +6,25 @@
 using namespace Rcpp;
 
 // rcpp_haversine
-double rcpp_haversine(double x1, double y1, double x2, double y2);
-RcppExport SEXP _geodist_rcpp_haversine(SEXP x1SEXP, SEXP y1SEXP, SEXP x2SEXP, SEXP y2SEXP) {
+Rcpp::NumericMatrix rcpp_haversine(Rcpp::NumericMatrix x);
+RcppExport SEXP _geodist_rcpp_haversine(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type x1(x1SEXP);
-    Rcpp::traits::input_parameter< double >::type y1(y1SEXP);
-    Rcpp::traits::input_parameter< double >::type x2(x2SEXP);
-    Rcpp::traits::input_parameter< double >::type y2(y2SEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_haversine(x1, y1, x2, y2));
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_haversine(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_haversine_xy
+Rcpp::NumericMatrix rcpp_haversine_xy(Rcpp::NumericMatrix x, Rcpp::NumericMatrix y);
+RcppExport SEXP _geodist_rcpp_haversine_xy(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_haversine_xy(x, y));
     return rcpp_result_gen;
 END_RCPP
 }

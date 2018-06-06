@@ -11,8 +11,9 @@ geodist(x, y)
 }
 \arguments{
 \item{x}{Rectangular object (matrix, \code{data.frame}, \pkg{tibble},
-whatever) containing longitude and latitude coordinates.
-#param y Optional second object which, if passed, results in distances
+whatever) containing longitude and latitude coordinates.}
+
+\item{y}{Optional second object which, if passed, results in distances
 calculated between each object in \code{x} and each in \code{y}.}
 }
 \value{

@@ -8,11 +8,12 @@ Description: Ultra lightweight, ultra fast calculation of geo distances.
 Depends: R (>= 3.2)
 License: GPL-3
 Imports:
-    Rcpp (>= 0.12.6),
-    RcppParallel
+    Rcpp (>= 0.12.6)
+Suggests:
+    testthat,
+    tibble
 LinkingTo:
-    Rcpp,
-    RcppParallel
+    Rcpp
 SystemRequirements:
     C++11
 NeedsCompilation: yes

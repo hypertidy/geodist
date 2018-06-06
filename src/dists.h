@@ -2,8 +2,6 @@
 #include <cmath>
 
 #include <Rcpp.h>
-// [[Rcpp::depends(RcppParallel)]]
-#include <RcppParallel.h>
 
 const double earth = 6378.137; // value used in geosphere::distHaversine
 

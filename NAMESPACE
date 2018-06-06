@@ -2,5 +2,4 @@
 
 export(geodist)
 importFrom(Rcpp,evalCpp)
-importFrom(RcppParallel,RcppParallelLibs)
 useDynLib(geodist, .registration = TRUE)

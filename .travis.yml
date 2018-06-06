@@ -19,10 +19,10 @@ matrix:
           r: release
           before_install: ''
           disable_homebrew: true
-        - os: osx
-          r: devel
-          before_install: ''
-          disable_homebrew: true
+          #- os: osx
+          #r: devel
+          #before_install: ''
+          #disable_homebrew: true
 
 notifications:
   email:

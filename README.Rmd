@@ -12,6 +12,11 @@ knitr::opts_chunk$set(
 )
 ```
 
+[![Build Status](https://travis-ci.org/hypertidy/geodist.svg)](https://travis-ci.org/hypertidy/geodist) 
+[![Project Status: Concept - Minimal or no implementation has been done yet.](http://www.repostatus.org/badges/0.1.0/concept.svg)](http://www.repostatus.org/#concept)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/geodist)](http://cran.r-project.org/web/packages/geodist) 
+![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geodist)
+
 # geodist
 
 The goal of geodist is to ...
@@ -33,11 +38,6 @@ This is a basic example which shows you how to solve a common problem:
 ## basic example code
 ```
 
-[![Build Status](https://travis-ci.org/mpadge/geodist.svg)](https://travis-ci.org/mpadge/geodist) 
-[![Project Status: Concept - Minimal or no implementation has been done yet.](http://www.repostatus.org/badges/0.1.0/concept.svg)](http://www.repostatus.org/#concept)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/geodist)](http://cran.r-project.org/web/packages/geodist) 
-![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geodist)
-
 geodist is ...
 
 The following functions are implemented:
@@ -51,7 +51,7 @@ The following data sets are included:
 ### Installation
 
 ```{r, eval=FALSE}
-devtools::install_github("mpadge/geodist")
+devtools::install_github("hypertidy/geodist")
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}

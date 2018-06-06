@@ -7,14 +7,14 @@
 //' @return single distance
 //'
 //' @noRd
-double one_haversine (double x1, double y1, double x2, double y2)
+double one_haversine (double x1, double y1, double x2, double y2,
+        double cosy1, double cosy2)
 {
     double xd = (x2 - x1) * M_PI / 180.0;
     double yd = (y2 - y1) * M_PI / 180.0;
     double sxd = sin (xd / 2.0);
     double syd = sin (yd / 2.0);
-    double d = syd * syd + cos (y2 * M_PI / 180.0) *
-        cos (y1 * M_PI / 180.0) * sxd * sxd;
+    double d = syd * syd + cosy1 * cosy2 * sxd * sxd;
     d = 2.0 * earth * asin (sqrt (d));
     return (d);
 }
@@ -31,11 +31,17 @@ Rcpp::NumericMatrix rcpp_haversine (Rcpp::NumericMatrix x)
     Rcpp::NumericMatrix res (nx, nx);
     for (size_t i = 0; i < nx; i++)
         res (i, i) = 0.0;
+
+    std::vector <double> cosy1 (static_cast <size_t> (nx));
+    for (size_t i = 0; i < nx; i++)
+        cosy1 [i] = cos (x (i, 1) * M_PI / 180.0);
+
     for (size_t i = 0; i < (nx - 1); i++)
         for (size_t j = (i + 1); j < nx; j++)
         {
             res (i, j) = res (j, i) =
-                one_haversine (x (i, 0), x (i, 1), x (j, 0), x (j, 1));
+                one_haversine (x (i, 0), x (i, 1), x (j, 0), x (j, 1),
+                        cosy1 [i], cosy1 [j]);
         }
     return res;
 }
@@ -53,9 +59,15 @@ Rcpp::NumericMatrix rcpp_haversine_xy (Rcpp::NumericMatrix x,
               ny = y.nrow ();
     Rcpp::NumericMatrix res (nx, ny);
     for (size_t i = 0; i < nx; i++)
+    {
+        double cosy1 = cos (x (i, 1) * M_PI / 180.0);
+
         for (size_t j = 0; j < ny; j++)
         {
-            res (i, j) = one_haversine (x (i, 0), x (i, 1), x (j, 0), x (j, 1));
+            double cosy2 = cos (x (j, 1) * M_PI / 180.0);
+            res (i, j) = one_haversine (x (i, 0), x (i, 1), x (j, 0), x (j, 1),
+                cosy1, cosy2);
         }
+    }
     return res;
 }

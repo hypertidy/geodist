@@ -110,13 +110,13 @@ rbenchmark::benchmark (replications = 10, order = "relative",
                       sf::st_distance (xsf, xsf),
                       geodist (x))
 #>                        test replications elapsed relative user.self
-#> 3                geodist(x)           10   0.463    1.000     0.443
-#> 1                havdist(x)           10   1.518    3.279     1.386
-#> 2 sf::st_distance(xsf, xsf)           10   4.594    9.922     4.571
+#> 3                geodist(x)           10   0.374    1.000     0.344
+#> 1                havdist(x)           10   1.462    3.909     1.311
+#> 2 sf::st_distance(xsf, xsf)           10   4.444   11.882     4.421
 #>   sys.self user.child sys.child
-#> 3    0.020          0         0
-#> 1    0.130          0         0
-#> 2    0.021          0         0
+#> 3     0.03          0         0
+#> 1     0.15          0         0
+#> 2     0.02          0         0
 ```
 
 ### Test Results

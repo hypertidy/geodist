@@ -105,18 +105,15 @@ n <- 1e3
 x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
 colnames (x) <- c ("x", "y")
 xsf <- x_to_sf (x)
-rbenchmark::benchmark (replications = 10, order = "relative",
+sf_dist <- function (x) sf::st_distance (x, x)
+rbenchmark::benchmark (replications = 10, order = "test",
                       havdist (x),
-                      sf::st_distance (xsf, xsf),
-                      geodist (x))
-#>                        test replications elapsed relative user.self
-#> 3                geodist(x)           10   0.374    1.000     0.344
-#> 1                havdist(x)           10   1.462    3.909     1.311
-#> 2 sf::st_distance(xsf, xsf)           10   4.444   11.882     4.421
-#>   sys.self user.child sys.child
-#> 3     0.03          0         0
-#> 1     0.15          0         0
-#> 2     0.02          0         0
+                      sf_dist (xsf),
+                      geodist (x)) [, 1:4]
+#>           test replications elapsed relative
+#> 3   geodist(x)           10   0.345    1.000
+#> 1   havdist(x)           10   1.586    4.597
+#> 2 sf_dist(xsf)           10   4.677   13.557
 ```
 
 ### Test Results

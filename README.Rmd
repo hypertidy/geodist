@@ -107,10 +107,11 @@ n <- 1e3
 x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
 colnames (x) <- c ("x", "y")
 xsf <- x_to_sf (x)
-rbenchmark::benchmark (replications = 10, order = "relative",
+sf_dist <- function (x) sf::st_distance (x, x)
+rbenchmark::benchmark (replications = 10, order = "test",
                       havdist (x),
-                      sf::st_distance (xsf, xsf),
-                      geodist (x))
+                      sf_dist (xsf),
+                      geodist (x)) [, 1:4]
 ```
 
 

@@ -4,7 +4,13 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
 
 # geodist
 
@@ -14,8 +20,7 @@ The goal of geodist is to ...
 
 You can install geodist from github with:
 
-
-```r
+```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("hypertidy/geodist")
 ```
@@ -24,8 +29,7 @@ devtools::install_github("hypertidy/geodist")
 
 This is a basic example which shows you how to solve a common problem:
 
-
-```r
+```{r example}
 ## basic example code
 ```
 
@@ -46,17 +50,17 @@ The following data sets are included:
 
 ### Installation
 
-
-```r
+```{r, eval=FALSE}
 devtools::install_github("mpadge/geodist")
 ```
 
-
+```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+options(width=120)
+```
 
 ### Usage
 
-
-```r
+```{r, eval=FALSE}
 library(geodist)
 
 # current verison
@@ -66,8 +70,7 @@ packageVersion("geodist")
 
 ### Test Results
 
-
-```r
+```{r, eval=FALSE}
 library(geodist)
 library(testthat)
 

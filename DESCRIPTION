@@ -1,0 +1,13 @@
+Package: geodist
+Title: Ultra lightweight package for geo distance calculations
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Mark", "Padgham", email="mark.padgham@email.com", role=c("aut", "cre")),
+    person("Michael D.", "Sumner", role="aut"))
+Description: Ultra lightweight, ultra fast calculation of geo distances.
+Depends: R (>= 3.4.4)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Suggests: testthat
+RoxygenNote: 6.0.1

@@ -7,7 +7,16 @@ Authors@R: c(
 Description: Ultra lightweight, ultra fast calculation of geo distances.
 Depends: R (>= 3.4.4)
 License: GPL-3
+Imports:
+    Rcpp (>= 0.12.6),
+    RcppParallel
+LinkingTo:
+    Rcpp,
+    RcppParallel
+NeedsCompilation: yes
 Encoding: UTF-8
 LazyData: true
 Suggests: testthat
 RoxygenNote: 6.0.1
+URL: https://github.com/hypertidy/geodist
+BugReports: https://github.com/hypertidy/geodist/issues

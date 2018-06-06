@@ -117,11 +117,12 @@ rbenchmark::benchmark (replications = 10, order = "test",
 
 ### Test Results
 
-```{r, eval=FALSE}
-library(geodist)
-library(testthat)
+```{r load-testthat, message = FALSE}
+require (devtools)
+require (testthat)
+```
 
+```{r tests, eval = TRUE}
 date()
-
-test_dir("tests/")
+devtools::test("tests/")
 ```

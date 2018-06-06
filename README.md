@@ -1,4 +1,5 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 [![Build
 Status](https://travis-ci.org/hypertidy/geodist.svg)](https://travis-ci.org/hypertidy/geodist)
 [![Project Status: Concept - Minimal or no implementation has been done
@@ -7,14 +8,12 @@ yet.](http://www.repostatus.org/badges/0.1.0/concept.svg)](http://www.repostatus
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/geodist)](http://cran.r-project.org/web/packages/geodist)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geodist)
 
-geodist
-=======
+# geodist
 
 An ultra-lightweight package for calculation of geodesic distances. Only
 package dependency is `Rcpp`.
 
-Installation
-------------
+## Installation
 
 You can install geodist from github with:
 
@@ -23,8 +22,7 @@ You can install geodist from github with:
 devtools::install_github("hypertidy/geodist")
 ```
 
-Usage
------
+## Usage
 
 `geodist` contains only one eponymous function which accepts only one or
 two arguments, each of which must be some kind of rectangular object
@@ -111,18 +109,30 @@ rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
                       geodist (x)) [, 1:4]
 #>           test replications elapsed relative
-#> 3   geodist(x)           10   0.345    1.000
-#> 1   havdist(x)           10   1.586    4.597
-#> 2 sf_dist(xsf)           10   4.677   13.557
+#> 3   geodist(x)           10   0.342    1.000
+#> 1   havdist(x)           10   1.479    4.325
+#> 2 sf_dist(xsf)           10   4.647   13.588
 ```
 
 ### Test Results
 
 ``` r
-library(geodist)
-library(testthat)
+require (devtools)
+require (testthat)
+```
 
+``` r
 date()
-
-test_dir("tests/")
+#> [1] "Wed Jun  6 17:37:40 2018"
+devtools::test("tests/")
+#> Loading geodist
+#> Testing geodist
+#> ✔ | OK F W S | Context
+✔ | 12       | geodist
+#> 
+#> ══ Results ════════════════════════════════════════════════════════════════
+#> OK:       12
+#> Failed:   0
+#> Warnings: 0
+#> Skipped:  0
 ```

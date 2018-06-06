@@ -39,9 +39,17 @@ arguments, each of which must be some kind of rectangular object with
 unambiguously labelled longitude and latitude columns (that is, some variant of
 `lon`/`lat`, or `x`/`y`).
 
-```{r}
+```{r, echo = FALSE}
 devtools::load_all (".", export_all = FALSE)
 ```
+```{r, eval=FALSE}
+library(geodist)
+```
+```{r}
+# current verison
+packageVersion("geodist")
+```
+
 
 
 ```{r}
@@ -105,20 +113,6 @@ rbenchmark::benchmark (replications = 10, order = "relative",
                       geodist (x))
 ```
 
-```{r}
-```
-
-
-
-
-
-```{r, eval=FALSE}
-library(geodist)
-
-# current verison
-packageVersion("geodist")
-
-```
 
 ### Test Results
 

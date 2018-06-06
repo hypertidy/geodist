@@ -13,6 +13,8 @@ Imports:
 LinkingTo:
     Rcpp,
     RcppParallel
+SystemRequirements:
+    C++11
 NeedsCompilation: yes
 Encoding: UTF-8
 LazyData: true

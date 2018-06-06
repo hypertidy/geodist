@@ -31,9 +31,16 @@ two arguments, each of which must be some kind of rectangular object
 with unambiguously labelled longitude and latitude columns (that is,
 some variant of `lon`/`lat`, or `x`/`y`).
 
+    #> Loading geodist
+
 ``` r
-devtools::load_all (".", export_all = FALSE)
-#> Loading geodist
+library(geodist)
+```
+
+``` r
+# current verison
+packageVersion("geodist")
+#> [1] '0.0.0.9000'
 ```
 
 ``` r
@@ -103,20 +110,13 @@ rbenchmark::benchmark (replications = 10, order = "relative",
                       sf::st_distance (xsf, xsf),
                       geodist (x))
 #>                        test replications elapsed relative user.self
-#> 3                geodist(x)           10   0.473    1.000     0.446
-#> 1                havdist(x)           10   1.428    3.019     1.317
-#> 2 sf::st_distance(xsf, xsf)           10   4.425    9.355     4.404
+#> 3                geodist(x)           10   0.463    1.000     0.443
+#> 1                havdist(x)           10   1.518    3.279     1.386
+#> 2 sf::st_distance(xsf, xsf)           10   4.594    9.922     4.571
 #>   sys.self user.child sys.child
-#> 3    0.027          0         0
-#> 1    0.110          0         0
-#> 2    0.020          0         0
-```
-
-``` r
-library(geodist)
-
-# current verison
-packageVersion("geodist")
+#> 3    0.020          0         0
+#> 1    0.130          0         0
+#> 2    0.021          0         0
 ```
 
 ### Test Results

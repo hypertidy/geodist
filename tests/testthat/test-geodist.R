@@ -1,18 +1,9 @@
 context("geodist")
-test_that("geodist with tibble", {
-              n <- 1e2
-              x <- tibble::tibble (x = -180 + 360 * runif (n),
-                                   y = -90 + 180 * runif (n))
-              y <- tibble::tibble (x = -180 + 360 * runif (2 * n),
-                                   y = -90 + 180 * runif (2 * n))
-              d1 <- geodist (x)
-              expect_equal (dim (d1), c (n, n))
-              expect_true (all (d1 >= 0))
-
-              d2 <- geodist (x, y)
-              expect_equal (dim (d2), c (n, 2 * n))
-              expect_true (all (d2 >= 0))
-})
+# tibble not tested to avoid pacakge suggests, but just needs these lines
+#x <- tibble::tibble (x = -180 + 360 * runif (n),
+#                     y = -90 + 180 * runif (n))
+#y <- tibble::tibble (x = -180 + 360 * runif (2 * n),
+#                     y = -90 + 180 * runif (2 * n))
 
 test_that("geodist with df", {
               n <- 1e2

@@ -20,16 +20,6 @@ double one_haversine (double x1, double y1, double x2, double y2,
     return (d);
 }
 
-
-SEXP myadd_(SEXP x_, SEXP y_) {
-    double x = asReal(x_);
-    double y = asReal(y_);
-
-    double sum = x + y;
-
-    return ScalarReal(sum);
-}
-
 //' R_haversine
 //' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
 //' @noRd

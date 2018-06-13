@@ -3,11 +3,14 @@
 
 #include "dists.h"
 
-//' haversine
-//'
 //' Haversine for variable x and y
 //'
 //' @return single distance
+//'
+//' @note The sxd and syd values could be calculated in arrays, each value of
+//' which could be determined with only n operations, rather than the n2 used
+//' here. Doing so, however, requires very large C arrays which are often
+//' problematic, so this is safer.
 //'
 //' @noRd
 double one_haversine (double x1, double y1, double x2, double y2,
@@ -35,6 +38,15 @@ double one_vincenty (double x1, double y1, double x2, double y2,
     double d = earth * atan2 (sqrt (numerator), denominator);
     return d;
 }
+//' mapbox cheap ruler
+//' https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016
+double one_cheap (double x1, double y1, double x2, double y2, double cosy)
+{
+    double dy = meridian * (y1 - y2) / 180.0;
+    double dx = equator * (x1 - x2) * cosy / 360.0;
+    double d = sqrt (dx * dx + dy * dy);
+    return d;
+}
 
 //' R_haversine
 //' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
@@ -55,7 +67,6 @@ SEXP R_haversine (SEXP x_)
         cosy1 [i] = cos (rx [n + i] * M_PI / 180.0);
         rout [i * n + i] = 0.0;
     }
-
 
     for (size_t i = 0; i < (n - 1); i++)
         for (size_t j = (i + 1); j < n; j++)
@@ -92,7 +103,6 @@ SEXP R_vincenty (SEXP x_)
         rout [i * n + i] = 0.0;
     }
 
-
     for (size_t i = 0; i < (n - 1); i++)
         for (size_t j = (i + 1); j < n; j++)
         {
@@ -101,6 +111,47 @@ SEXP R_vincenty (SEXP x_)
             rout [indx1] = rout [indx2] = one_vincenty (rx [i], rx [n + i],
                     rx [j], rx [n + j],
                     siny1 [i], cosy1 [i], siny1 [j], cosy1 [j]);
+        }
+
+    UNPROTECT (1);
+
+    return out;
+}
+
+//' R_cheap
+//' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
+//' @noRd
+SEXP R_cheap (SEXP x_)
+{
+    size_t n = floor (length (x_) / 2);
+    size_t n2 = n * n;
+    SEXP out = PROTECT (allocVector (REALSXP, n2));
+    double *rx, *rout;
+    rx = REAL (x_);
+    rout = REAL (out);
+
+    // Get maximal latitude range
+    double ymin = 9999.9, ymax = -9999.9;
+    for (size_t i = 0; i < n; i++)
+    {
+        if (rx [n + i] < ymin)
+            ymin = rx [n + i];
+        else if (rx [n + i] > ymax)
+            ymax = rx [n + i];
+        rout [i * n + i] = 0.0;
+    }
+    // and set constant cosine multiplier
+    ymin = ymin * M_PI / 180;
+    ymax = ymax * M_PI / 180;
+    double cosy = cos (ymin + ymax) / 2.0;
+
+    for (size_t i = 0; i < (n - 1); i++)
+        for (size_t j = (i + 1); j < n; j++)
+        {
+            size_t indx1 = i * n + j;
+            size_t indx2 = j * n + i;
+            rout [indx1] = rout [indx2] = one_cheap (rx [i], rx [n + i],
+                    rx [j], rx [n + j], cosy);
         }
 
     UNPROTECT (1);
@@ -173,3 +224,53 @@ SEXP R_vincenty_xy (SEXP x_, SEXP y_)
 
     return out;
 }
+
+//' R_cheap_xy
+//' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
+//' @noRd
+SEXP R_cheap_xy (SEXP x_, SEXP y_)
+{
+    size_t nx = floor (length (x_) / 2);
+    size_t ny = floor (length (y_) / 2);
+    size_t n2 = nx * ny;
+    SEXP out = PROTECT (allocVector (REALSXP, n2));
+    double *rx, *ry, *rout;
+    rx = REAL (x_);
+    ry = REAL (y_);
+    rout = REAL (out);
+
+    // Get maximal latitude range
+    double ymin = 9999.9, ymax = -9999.9;
+    for (size_t i = 0; i < nx; i++)
+    {
+        if (rx [nx + i] < ymin)
+            ymin = rx [nx + i];
+        else if (rx [nx + i] > ymax)
+            ymax = rx [nx + i];
+    }
+    for (size_t i = 0; i < ny; i++)
+    {
+        if (ry [ny + i] < ymin)
+            ymin = ry [ny + i];
+        else if (ry [ny + i] > ymax)
+            ymax = ry [ny + i];
+    }
+    // and set constant cosine multiplier
+    ymin = ymin * M_PI / 180;
+    ymax = ymax * M_PI / 180;
+    double cosy = cos (ymin + ymax) / 2.0;
+
+    for (size_t i = 0; i < nx; i++)
+    {
+        for (size_t j = 0; j < ny; j++)
+        {
+            rout [i * ny + j] = one_cheap (rx [i], rx [nx + i],
+                    ry [j], ry [ny + j], cosy);
+        }
+    }
+
+    UNPROTECT (1);
+
+    return out;
+}
+

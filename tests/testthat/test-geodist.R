@@ -53,6 +53,20 @@ test_that("haversine and vincenty", {
               expect_true (!identical (d1, d2))
 })
 
+test_that("haversine and cheap", {
+              n <- 1e2
+              dx <- dy <- 0.01
+              x <- cbind (-100 + dx * runif (n), 20 + dy * runif (n))
+              y <- cbind (-100 + dx * runif (2 * n), 20 + dy * runif (2 * n))
+              colnames (x) <- colnames (y) <- c ("x", "y")
+              d1 <- geodist (x, measure = "haversine")
+              d2 <- geodist (x, measure = "cheap")
+              expect_true (!identical (d1, d2))
+              d1 <- geodist (x, y, measure = "haversine")
+              d2 <- geodist (x, y, measure = "cheap")
+              expect_true (!identical (d1, d2))
+})
+
 havdist <- function (x, y)
 {
     if (missing (y))

@@ -15,8 +15,9 @@ whatever) containing longitude and latitude coordinates.}
 \item{y}{Optional second object which, if passed, results in distances
 calculated between each object in \code{x} and each in \code{y}.}
 
-\item{measure}{One of "haversine" or "vincenty" specifying desired
-great-circle distance}
+\item{measure}{One of "haversine" "vincenty", or "cheap" specifying desired
+great-circle distance, where "cheap" denotes the mapbox cheap ruler
+\url{https://github.com/mapbox/cheap-ruler-cpp}.}
 }
 \value{
 If only \code{x} passed, a square matrix containing distances between

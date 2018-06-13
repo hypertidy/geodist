@@ -8,12 +8,16 @@
 */
 
 /* .Call calls */
+extern SEXP R_cheap(SEXP);
+extern SEXP R_cheap_xy(SEXP, SEXP);
 extern SEXP R_haversine(SEXP);
 extern SEXP R_haversine_xy(SEXP, SEXP);
 extern SEXP R_vincenty(SEXP);
 extern SEXP R_vincenty_xy(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
+    {"R_cheap",        (DL_FUNC) &R_cheap,        1},
+    {"R_cheap_xy",     (DL_FUNC) &R_cheap_xy,     2},
     {"R_haversine",    (DL_FUNC) &R_haversine,    1},
     {"R_haversine_xy", (DL_FUNC) &R_haversine_xy, 2},
     {"R_vincenty",     (DL_FUNC) &R_vincenty,     1},

@@ -88,8 +88,32 @@ rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
                       geodist (x, measure = "vincenty")) [, 1:4]
 #>                               test replications elapsed relative
-#> 2 geodist(x, measure = "vincenty")           10   0.670    1.000
-#> 1                     sf_dist(xsf)           10   7.183   10.721
+#> 2 geodist(x, measure = "vincenty")           10   0.664    1.000
+#> 1                     sf_dist(xsf)           10   6.990   10.527
+```
+
+The `geodist` package also implements the [mapbox cheap ruler
+algorithm](https://github.com/mapbox/cheap-ruler-cpp) (described in this
+[blog
+post](https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016),
+providing approximate yet very fast distance calculations within small
+(typically intra-urban) areas. Speed advantages are demonstrated in the
+following code:
+
+``` r
+n <- 1e3
+dx <- dy <- 0.01
+x <- cbind (-100 + dx * runif (n), 20 + dy * runif (n))
+y <- cbind (-100 + dx * runif (2 * n), 20 + dy * runif (2 * n))
+colnames (x) <- colnames (y) <- c ("x", "y")
+rbenchmark::benchmark (replications = 10, order = "test",
+                       d1 <- geodist (x, measure = "cheap"),
+                       d2 <- geodist (x, measure = "haversine"),
+                       d3 <- geodist (x, measure = "vincenty")) [, 1:4]
+#>                                      test replications elapsed relative
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.244    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.279    1.143
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.379    1.553
 ```
 
 ### Test Results
@@ -101,19 +125,40 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Wed Jun 13 16:18:47 2018"
+#> [1] "Wed Jun 13 17:28:59 2018"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist
 #> ✔ | OK F W S | Context
 #> 
-✔ | 14       | geodist [0.1 s]
+⠏ |  0       | geodist
+⠋ |  1       | geodist
+⠙ |  2       | geodist
+⠹ |  3       | geodist
+⠸ |  4       | geodist
+⠼ |  5       | geodist
+⠴ |  6       | geodist
+⠦ |  7       | geodist
+⠧ |  8       | geodist
+⠇ |  9       | geodist
+⠏ | 10       | geodist
+⠋ | 11       | geodist
+⠙ | 12       | geodist
+⠹ | 13       | geodist
+⠸ | 14       | geodist
+⠼ | 15       | geodist
+⠴ | 16       | geodist
+⠦ | 17       | geodist
+⠧ | 18       | geodist
+✔ | 18       | geodist [0.1 s]
 #> 
 #> ══ Results ════════════════════════════════════════════════════════════════
 #> Duration: 0.2 s
 #> 
-#> OK:       14
+#> OK:       18
 #> Failed:   0
 #> Warnings: 0
 #> Skipped:  0
+#> 
+#> Way to go!
 ```

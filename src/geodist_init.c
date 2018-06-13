@@ -8,12 +8,12 @@
 */
 
 /* .Call calls */
-extern SEXP _geodist_rcpp_haversine(SEXP);
-extern SEXP _geodist_rcpp_haversine_xy(SEXP, SEXP);
+extern SEXP R_haversine(SEXP);
+extern SEXP R_haversine_xy(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_geodist_rcpp_haversine",    (DL_FUNC) &_geodist_rcpp_haversine,    1},
-    {"_geodist_rcpp_haversine_xy", (DL_FUNC) &_geodist_rcpp_haversine_xy, 2},
+    {"R_haversine",    (DL_FUNC) &R_haversine,    1},
+    {"R_haversine_xy", (DL_FUNC) &R_haversine_xy, 2},
     {NULL, NULL, 0}
 };
 

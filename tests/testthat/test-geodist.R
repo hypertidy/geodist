@@ -39,3 +39,40 @@ test_that("geodist with matrix", {
               expect_true (all (d2 > 0))
               expect_true (all (d2 >= 0))
 })
+
+havdist <- function (x, y)
+{
+    if (missing (y))
+        y <- x
+    x1mat <- array (x [, 1], dim = c (nrow (x), nrow (y)))
+    x2mat <- array (x [, 2], dim = c (nrow (x), nrow (y)))
+    y1mat <- t (array (y [, 1], dim = c (nrow (y), nrow (x))))
+    y2mat <- t (array (y [, 2], dim = c (nrow (y), nrow (x))))
+    xd <- (x1mat - y1mat) * pi / 180
+    yd <- (x2mat - y2mat) * pi / 180
+    sxd <- sin (xd / 2)
+    syd <- sin (yd / 2)
+    earth <- 6378.137 # radius of Earth
+    d <- syd * syd +
+        cos (x2mat * pi / 180) * cos (y2mat * pi / 180) * sxd * sxd
+    2 * earth * asin (sqrt (d));
+}
+
+test_that("matrix structure for x only", {
+              n <- 100
+              x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
+              colnames (x) <- c ("x", "y")
+              d1 <- geodist (x)
+              d2 <- havdist (x)
+              expect_identical (d1, d2)
+})
+
+test_that("matrix structure for x y", {
+              n <- 100
+              x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
+              y <- cbind (-180 + 360 * runif (2 * n), -90 + 180 * runif (2 * n))
+              colnames (x) <- colnames (y) <- c ("x", "y")
+              d1 <- geodist (x, y)
+              d2 <- havdist (x, y)
+              expect_identical (d1, d2)
+})

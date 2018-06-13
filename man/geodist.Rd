@@ -4,7 +4,6 @@
 \name{geodist}
 \alias{geodist}
 \alias{geodist-package}
-\alias{geodist}
 \title{geodist.}
 \usage{
 geodist(x, y)
@@ -22,8 +21,6 @@ all items in \code{x}; otherwise if \code{y} is passed, the resultant matrix
 has \code{nrow(x)} rows and \code{nrow(y)} columns.
 }
 \description{
-geodist.
-
 Convert one or two rectangular objects containing lon-lat coordinates into
 matrix of geodesic distances.
 }

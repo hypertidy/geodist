@@ -40,6 +40,19 @@ test_that("geodist with matrix", {
               expect_true (all (d2 >= 0))
 })
 
+test_that("haversine and vincenty", {
+              n <- 1e2
+              x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
+              y <- cbind (-180 + 360 * runif (2 * n), -90 + 180 * runif (2 * n))
+              colnames (x) <- colnames (y) <- c ("x", "y")
+              d1 <- geodist (x, measure = "haversine")
+              d2 <- geodist (x, measure = "vincenty")
+              expect_true (!identical (d1, d2))
+              d1 <- geodist (x, y, measure = "haversine")
+              d2 <- geodist (x, y, measure = "vincenty")
+              expect_true (!identical (d1, d2))
+})
+
 havdist <- function (x, y)
 {
     if (missing (y))

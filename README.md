@@ -10,8 +10,8 @@ yet.](http://www.repostatus.org/badges/0.1.0/concept.svg)](http://www.repostatus
 
 # geodist
 
-An ultra-lightweight package for calculation of geodesic distances. Only
-package dependency is `Rcpp`.
+An ultra-lightweight, zero-dependency package for calculation of
+geodesic distances.
 
 ## Installation
 
@@ -25,9 +25,11 @@ devtools::install_github("hypertidy/geodist")
 ## Usage
 
 `geodist` contains only one eponymous function which accepts only one or
-two arguments, each of which must be some kind of rectangular object
-with unambiguously labelled longitude and latitude columns (that is,
-some variant of `lon`/`lat`, or `x`/`y`).
+two primary arguments, each of which must be some kind of rectangular
+object with unambiguously labelled longitude and latitude columns (that
+is, some variant of `lon`/`lat`, or `x`/`y`). The only other argument is
+`measure`, specifying one of Haversine or Vincenty great-circle
+distances.
 
     #> Loading geodist
 
@@ -72,31 +74,9 @@ x_to_sf <- function (x)
 }
 ```
 
-Note, however, that the relevant function, `sf::st_distance()`
-calculates the Vicenty distance via `liblwgeom`, and that these
-calculations are considerably more complicated than Haversine distances.
-
-Haversine distances are also very straightforward to calculate directly
-in matrix form as follows:
-
-``` r
-havdist <- function (x)
-{
-    xmat <- array (x [, 1], dim = rep (nrow (x), 2))
-    ymat <- array (x [, 2], dim = rep (nrow (x), 2))
-    xd <- (xmat - t (xmat)) * pi / 180
-    yd <- (ymat - t (ymat)) * pi / 180
-    sxd <- sin (xd / 2)
-    syd <- sin (yd / 2)
-    earth <- 6378.137 # radius of Earth
-    d <- syd * syd +
-        cos (ymat * pi / 180) * cos (t (ymat) * pi / 180) * sxd * sxd
-    2 * earth * asin (sqrt (d));
-}
-```
-
-The following code demonstrates relative speeds of the three ways of
-calculating distances:
+Note that the relevant function, `sf::st_distance()` calculates the
+Vicenty distance via `liblwgeom`, so `measure = "vincenty"` is used in
+the following comparison.
 
 ``` r
 n <- 1e3
@@ -105,13 +85,11 @@ colnames (x) <- c ("x", "y")
 xsf <- x_to_sf (x)
 sf_dist <- function (x) sf::st_distance (x, x)
 rbenchmark::benchmark (replications = 10, order = "test",
-                      havdist (x),
                       sf_dist (xsf),
-                      geodist (x)) [, 1:4]
-#>           test replications elapsed relative
-#> 3   geodist(x)           10   0.416    1.000
-#> 1   havdist(x)           10   1.888    4.538
-#> 2 sf_dist(xsf)           10   7.114   17.101
+                      geodist (x, measure = "vincenty")) [, 1:4]
+#>                               test replications elapsed relative
+#> 2 geodist(x, measure = "vincenty")           10   0.670    1.000
+#> 1                     sf_dist(xsf)           10   7.183   10.721
 ```
 
 ### Test Results
@@ -123,11 +101,12 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Wed Jun 13 15:00:30 2018"
+#> [1] "Wed Jun 13 16:18:47 2018"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist
 #> ✔ | OK F W S | Context
+#> 
 ✔ | 14       | geodist [0.1 s]
 #> 
 #> ══ Results ════════════════════════════════════════════════════════════════

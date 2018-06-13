@@ -3,3 +3,5 @@
 export(geodist)
 useDynLib(geodist,R_haversine)
 useDynLib(geodist,R_haversine_xy)
+useDynLib(geodist,R_vincenty)
+useDynLib(geodist,R_vincenty_xy)

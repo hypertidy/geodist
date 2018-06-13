@@ -6,7 +6,7 @@
 \alias{geodist-package}
 \title{geodist.}
 \usage{
-geodist(x, y)
+geodist(x, y, measure = "haversine")
 }
 \arguments{
 \item{x}{Rectangular object (matrix, \code{data.frame}, \pkg{tibble},
@@ -14,6 +14,9 @@ whatever) containing longitude and latitude coordinates.}
 
 \item{y}{Optional second object which, if passed, results in distances
 calculated between each object in \code{x} and each in \code{y}.}
+
+\item{measure}{One of "haversine" or "vincenty" specifying desired
+great-circle distance}
 }
 \value{
 If only \code{x} passed, a square matrix containing distances between

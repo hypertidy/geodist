@@ -74,7 +74,7 @@ SEXP R_haversine_xy (SEXP x_, SEXP y_)
     size_t nx = floor (length (x_) / 2);
     size_t ny = floor (length (y_) / 2);
     size_t n2 = nx * ny;
-    Rprintf ("(nx, ny) = (%d , %d )\n", nx, ny);
+    //Rprintf ("(nx, ny) = (%d , %d )\n", nx, ny);
     SEXP out = PROTECT (allocVector (REALSXP, n2));
     double *rx, *ry, *rout;
     rx = REAL (x_);

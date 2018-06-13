@@ -109,9 +109,9 @@ rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
                       geodist (x)) [, 1:4]
 #>           test replications elapsed relative
-#> 3   geodist(x)           10   0.342    1.000
-#> 1   havdist(x)           10   1.479    4.325
-#> 2 sf_dist(xsf)           10   4.647   13.588
+#> 3   geodist(x)           10   0.416    1.000
+#> 1   havdist(x)           10   1.888    4.538
+#> 2 sf_dist(xsf)           10   7.114   17.101
 ```
 
 ### Test Results
@@ -123,15 +123,17 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Wed Jun  6 17:37:40 2018"
+#> [1] "Wed Jun 13 15:00:30 2018"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist
 #> ✔ | OK F W S | Context
-✔ | 12       | geodist
+✔ | 14       | geodist [0.1 s]
 #> 
 #> ══ Results ════════════════════════════════════════════════════════════════
-#> OK:       12
+#> Duration: 0.2 s
+#> 
+#> OK:       14
 #> Failed:   0
 #> Warnings: 0
 #> Skipped:  0

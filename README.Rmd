@@ -20,8 +20,8 @@ knitr::opts_chunk$set(
 
 # geodist
 
-An ultra-lightweight, zero-dependency package for calculation of geodesic
-distances.
+An ultra-lightweight, zero-dependency package for very fast calculation of
+geodesic distances.
 
 ## Installation
 
@@ -37,10 +37,9 @@ devtools::install_github("hypertidy/geodist")
 `geodist` contains only one eponymous function which accepts only one or two
 primary arguments, each of which must be some kind of rectangular object with
 unambiguously labelled longitude and latitude columns (that is, some variant of
-`lon`/`lat`, or `x`/`y`). The only other argument is `measure`, specifying one
-of Haversine or Vincenty great-circle distances.
+`lon`/`lat`, or `x`/`y`).
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, message = FALSE}
 devtools::load_all (".", export_all = FALSE)
 ```
 ```{r, eval=FALSE}
@@ -51,7 +50,7 @@ library(geodist)
 packageVersion("geodist")
 ```
 
-
+Input can be in arbtirary rectangular format.
 
 ```{r}
 n <- 1e1
@@ -61,7 +60,30 @@ dim (geodist (x))
 y <- tibble::tibble (x = -180 + 360 * runif (2 * n),
                      y = -90 + 180 * runif (2 * n))
 dim (geodist (x, y))
+x <- cbind (-180 + 360 * runif (n),
+             -90 + 100 * runif (n),
+             seq (n), runif (n))
+colnames (x) <- c ("lon", "lat", "a", "b")
+dim (geodist (x))
 ```
+Distance currently implemented are Haversine, Vincenty (spherical), and the very
+fast [mapbox cheap
+ruler](https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp)
+(see their [blog
+post](https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016)).
+These are determined by the `measure` parameter which takes one of
+`"haversine"`, `"vincenty"`, or `"cheap"`.
+
+It is also possible to calculate sequential distances along the rows of a
+rentangular object:
+```{r}
+d <- geodist (x, measure = "vincenty", sequential = TRUE)
+nrow (x); length (d)
+d <- geodist (x, measure = "vincenty", sequential = TRUE, pad = TRUE)
+nrow (x); length (d); head (d)
+```
+The `pad` argument pre-pends an `NA` to return a vector commensurate with input
+dimensions, and so able to be used directly in piped `dplyr` operations.
 
 ### Comparison
 
@@ -92,6 +114,16 @@ rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
                       geodist (x, measure = "vincenty")) [, 1:4]
 ```
+The [`geosphere` package](https://cran.r-project.org/package=geosphere) also
+offers sequential calculation which is benchmarked with the following code:
+```{r sequential}
+fgeodist <- function () geodist (x, measure = "vincenty", sequential = TRUE)
+fgeosphere <- function () geosphere::distVincentySphere (x)
+rbenchmark::benchmark (replications = 10, order = "test",
+                       fgeodist (),
+                       fgeosphere ()) [, 1:4]
+```
+
 
 The `geodist` package also implements the [mapbox cheap ruler
 algorithm](https://github.com/mapbox/cheap-ruler-cpp) (described in this [blog

@@ -59,7 +59,7 @@ dim (geodist (x))
 #> [1] 10 10
 ```
 
-Distance currently implemented are Haversine, Vincenty (spherical), and
+Distances currently implemented are Haversine, Vincenty (spherical), and
 the very fast [mapbox cheap
 ruler](https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp)
 (see their [blog
@@ -79,13 +79,13 @@ d <- geodist (x, measure = "vincenty", sequential = TRUE, pad = TRUE)
 nrow (x); length (d); head (d)
 #> [1] 10
 #> [1] 10
-#>           [,1]
-#> [1,]        NA
-#> [2,] 14166.003
-#> [3,]  6558.802
-#> [4,]  4666.745
-#> [5,]  1765.603
-#> [6,] 10368.916
+#>          [,1]
+#> [1,]       NA
+#> [2,] 2927.228
+#> [3,] 9321.920
+#> [4,] 9831.189
+#> [5,] 5999.407
+#> [6,] 7946.590
 ```
 
 The `pad` argument pre-pends an `NA` to return a vector commensurate
@@ -125,8 +125,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
                       geodist (x, measure = "vincenty")) [, 1:4]
 #>                               test replications elapsed relative
-#> 2 geodist(x, measure = "vincenty")           10   0.670    1.000
-#> 1                     sf_dist(xsf)           10   6.903   10.303
+#> 2 geodist(x, measure = "vincenty")           10   0.673    1.000
+#> 1                     sf_dist(xsf)           10   6.974   10.363
 ```
 
 The [`geosphere` package](https://cran.r-project.org/package=geosphere)
@@ -145,13 +145,11 @@ rbenchmark::benchmark (replications = 10, order = "test",
 #> 2 fgeosphere()           10   0.054     13.5
 ```
 
-The `geodist` package also implements the [mapbox cheap ruler
-algorithm](https://github.com/mapbox/cheap-ruler-cpp) (described in this
-[blog
-post](https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016)),
-providing approximate yet very fast distance calculations within small
-(typically intra-urban) areas. Speed advantages are demonstrated in the
-following code:
+The [mapbox cheap ruler
+algorithm](https://github.com/mapbox/cheap-ruler-cpp) provides
+approximate yet very fast distance calculations within small (typically
+intra-urban) areas. Speed advantages are demonstrated in the following
+code:
 
 ``` r
 n <- 1e3
@@ -164,9 +162,9 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d2 <- geodist (x, measure = "haversine"),
                        d3 <- geodist (x, measure = "vincenty")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.245    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.305    1.245
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.392    1.600
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.249    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.304    1.221
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.393    1.578
 ```
 
 ### Test Results
@@ -178,7 +176,7 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Thu Jun 14 11:34:19 2018"
+#> [1] "Thu Jun 14 11:40:16 2018"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist

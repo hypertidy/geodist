@@ -66,7 +66,7 @@ x <- cbind (-180 + 360 * runif (n),
 colnames (x) <- c ("lon", "lat", "a", "b")
 dim (geodist (x))
 ```
-Distance currently implemented are Haversine, Vincenty (spherical), and the very
+Distances currently implemented are Haversine, Vincenty (spherical), and the very
 fast [mapbox cheap
 ruler](https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp)
 (see their [blog
@@ -125,12 +125,10 @@ rbenchmark::benchmark (replications = 10, order = "test",
 ```
 
 
-The `geodist` package also implements the [mapbox cheap ruler
-algorithm](https://github.com/mapbox/cheap-ruler-cpp) (described in this [blog
-post](https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016)),
-providing approximate yet very fast distance calculations within small
-(typically intra-urban) areas. Speed advantages are demonstrated in the
-following code:
+The [mapbox cheap ruler
+algorithm](https://github.com/mapbox/cheap-ruler-cpp) provides approximate yet
+very fast distance calculations within small (typically intra-urban) areas.
+Speed advantages are demonstrated in the following code:
 ```{r benchmark2}
 n <- 1e3
 dx <- dy <- 0.01

@@ -15,9 +15,9 @@ whatever) containing longitude and latitude coordinates.}
 \item{y}{Optional second object which, if passed, results in distances
 calculated between each object in \code{x} and each in \code{y}.}
 
-\item{sequential}{If \code{TRUE}, calculate distances sequentially along
-\code{x} (when no \code{y} is passed), otherwise calculate matrix of pairwise
-distances between all points.}
+\item{sequential}{If \code{TRUE}, calculate (vector of) distances
+sequentially along \code{x} (when no \code{y} is passed), otherwise calculate
+matrix of pairwise distances between all points.}
 
 \item{pad}{If \code{sequential = TRUE} values are padded with initial
 \code{NA} to return \code{n} values for input with \code{n} rows, otherwise
@@ -28,11 +28,13 @@ great-circle distance, where "cheap" denotes the mapbox cheap ruler
 \url{https://github.com/mapbox/cheap-ruler-cpp}.}
 }
 \value{
-If only \code{x} passed, a square matrix containing distances between
-all items in \code{x}; otherwise if \code{y} is passed, the resultant matrix
-has \code{nrow(x)} rows and \code{nrow(y)} columns.
+If only \code{x} passed and \code{sequential = FALSE}, a square
+symmetric matrix containing distances between all items in \code{x}; If only
+\code{x} passed and \code{sequential = TRUE}, a vector of sequential
+distances between rows of \code{x}; otherwise if \code{y} is passed, a matrix
+of \code{nrow(x)} rows and \code{nrow(y)} columns.
 }
 \description{
 Convert one or two rectangular objects containing lon-lat coordinates into
-matrix of geodesic distances.
+vector or matrix of geodesic distances.
 }

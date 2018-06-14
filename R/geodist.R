@@ -1,24 +1,26 @@
 #' geodist
 #'
 #' Convert one or two rectangular objects containing lon-lat coordinates into
-#' matrix of geodesic distances.
+#' vector or matrix of geodesic distances.
 #'
 #' @param x Rectangular object (matrix, \code{data.frame}, \pkg{tibble},
 #' whatever) containing longitude and latitude coordinates.
 #' @param y Optional second object which, if passed, results in distances
 #' calculated between each object in \code{x} and each in \code{y}.
-#' @param sequential If \code{TRUE}, calculate distances sequentially along
-#' \code{x} (when no \code{y} is passed), otherwise calculate matrix of pairwise
-#' distances between all points.
+#' @param sequential If \code{TRUE}, calculate (vector of) distances
+#' sequentially along \code{x} (when no \code{y} is passed), otherwise calculate
+#' matrix of pairwise distances between all points.
 #' @param pad If \code{sequential = TRUE} values are padded with initial
 #' \code{NA} to return \code{n} values for input with \code{n} rows, otherwise
 #' return \code{n - 1} values.
 #' @param measure One of "haversine" "vincenty", or "cheap" specifying desired
 #' great-circle distance, where "cheap" denotes the mapbox cheap ruler
 #' \url{https://github.com/mapbox/cheap-ruler-cpp}.
-#' @return If only \code{x} passed, a square matrix containing distances between
-#' all items in \code{x}; otherwise if \code{y} is passed, the resultant matrix
-#' has \code{nrow(x)} rows and \code{nrow(y)} columns.
+#' @return If only \code{x} passed and \code{sequential = FALSE}, a square
+#' symmetric matrix containing distances between all items in \code{x}; If only
+#' \code{x} passed and \code{sequential = TRUE}, a vector of sequential
+#' distances between rows of \code{x}; otherwise if \code{y} is passed, a matrix
+#' of \code{nrow(x)} rows and \code{nrow(y)} columns.
 #'
 #' @export
 #' @useDynLib geodist R_haversine R_vincenty R_cheap_xy

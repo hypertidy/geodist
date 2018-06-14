@@ -2,8 +2,9 @@
 
 [![Build
 Status](https://travis-ci.org/hypertidy/geodist.svg)](https://travis-ci.org/hypertidy/geodist)
-[![Project Status: Concept - Minimal or no implementation has been done
-yet.](http://www.repostatus.org/badges/0.1.0/concept.svg)](http://www.repostatus.org/#concept)
+[![Project Status: WIP – Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 [![codecov](https://codecov.io/gh/hypertidy/geodist/branch/master/graph/badge.svg)](https://codecov.io/gh/hypertidy/geodist)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/geodist)](http://cran.r-project.org/web/packages/geodist)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geodist)
@@ -79,13 +80,13 @@ d <- geodist (x, measure = "vincenty", sequential = TRUE, pad = TRUE)
 nrow (x); length (d); head (d)
 #> [1] 10
 #> [1] 10
-#>          [,1]
-#> [1,]       NA
-#> [2,] 2927.228
-#> [3,] 9321.920
-#> [4,] 9831.189
-#> [5,] 5999.407
-#> [6,] 7946.590
+#>           [,1]
+#> [1,]        NA
+#> [2,] 10728.064
+#> [3,]  5371.735
+#> [4,]  8515.388
+#> [5,]  5857.710
+#> [6,]  8645.188
 ```
 
 The `pad` argument pre-pends an `NA` to return a vector commensurate
@@ -125,8 +126,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
                       geodist (x, measure = "vincenty")) [, 1:4]
 #>                               test replications elapsed relative
-#> 2 geodist(x, measure = "vincenty")           10   0.673    1.000
-#> 1                     sf_dist(xsf)           10   6.974   10.363
+#> 2 geodist(x, measure = "vincenty")           10   0.675     1.00
+#> 1                     sf_dist(xsf)           10   7.081    10.49
 ```
 
 The [`geosphere` package](https://cran.r-project.org/package=geosphere)
@@ -141,8 +142,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
                        fgeosphere ()) [, 1:4]
 #>           test replications elapsed relative
-#> 1   fgeodist()           10   0.004      1.0
-#> 2 fgeosphere()           10   0.054     13.5
+#> 1   fgeodist()           10   0.004     1.00
+#> 2 fgeosphere()           10   0.053    13.25
 ```
 
 The [mapbox cheap ruler
@@ -162,9 +163,9 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d2 <- geodist (x, measure = "haversine"),
                        d3 <- geodist (x, measure = "vincenty")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.249    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.304    1.221
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.393    1.578
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.248    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.301    1.214
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.393    1.585
 ```
 
 ### Test Results
@@ -176,7 +177,7 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Thu Jun 14 11:40:16 2018"
+#> [1] "Thu Jun 14 12:04:52 2018"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist

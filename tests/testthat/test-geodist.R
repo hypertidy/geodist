@@ -67,6 +67,38 @@ test_that("haversine and cheap", {
               expect_true (!identical (d1, d2))
 })
 
+test_that ("sequential structure", {
+              n <- 1e2
+              x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
+              y <- cbind (-180 + 360 * runif (2 * n), -90 + 180 * runif (2 * n))
+              colnames (x) <- colnames (y) <- c ("x", "y")
+              d1 <- geodist (x, sequential = TRUE)
+              expect_equal (length (d1), nrow (x) - 1)
+              d2 <- geodist (x, sequential = TRUE, pad = TRUE)
+              expect_equal (length (d2), nrow (x))
+              # Sequential should equal off-diagonal off full matrix:
+              dmat <- geodist (x)
+              indx <- row (dmat) - col (dmat)
+              dmat1 <- split (dmat, indx)["1"][[1]] # first off-diagonal
+              expect_identical (d1, dmat1)
+              expect_message (d3 <- geodist (x, y, sequential = TRUE),
+                              "Sequential distances calculated along values")
+})
+
+test_that ("sequential measures", {
+              n <- 1e2
+              x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
+              colnames (x) <- c ("x", "y")
+              d1 <- geodist (x, sequential = TRUE, measure = "haversine")
+              d2 <- geodist (x, sequential = TRUE, measure = "vincenty")
+              d3 <- geodist (x, sequential = TRUE, measure = "cheap")
+              expect_error (d4 <- geodist (x, sequential = TRUE,
+                                           measure = "blah"))
+              expect_true (max (abs (d1 - d2)) > 0)
+              expect_true (max (abs (d1 - d3)) > 0)
+              expect_true (max (abs (d2 - d3)) > 0)
+})
+
 havdist <- function (x, y)
 {
     if (missing (y))

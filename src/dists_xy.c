@@ -102,7 +102,7 @@ SEXP R_cheap_xy (SEXP x_, SEXP y_)
     // and set constant cosine multiplier
     ymin = ymin * M_PI / 180;
     ymax = ymax * M_PI / 180;
-    double cosy = cos (ymin + ymax) / 2.0;
+    double cosy = cos ((ymin + ymax) / 2.0);
 
     for (size_t i = 0; i < nx; i++)
     {

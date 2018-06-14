@@ -7,6 +7,12 @@
 #' whatever) containing longitude and latitude coordinates.
 #' @param y Optional second object which, if passed, results in distances
 #' calculated between each object in \code{x} and each in \code{y}.
+#' @param sequential If \code{TRUE}, calculate distances sequentially along
+#' \code{x} (when no \code{y} is passed), otherwise calculate matrix of pairwise
+#' distances between all points.
+#' @param pad If \code{sequential = TRUE} values are padded with initial
+#' \code{NA} to return \code{n} values for input with \code{n} rows, otherwise
+#' return \code{n - 1} values.
 #' @param measure One of "haversine" "vincenty", or "cheap" specifying desired
 #' great-circle distance, where "cheap" denotes the mapbox cheap ruler
 #' \url{https://github.com/mapbox/cheap-ruler-cpp}.
@@ -15,33 +21,66 @@
 #' has \code{nrow(x)} rows and \code{nrow(y)} columns.
 #'
 #' @export
-#' @useDynLib geodist R_haversine R_haversine_xy
-#' @useDynLib geodist R_vincenty R_vincenty_xy
-#' @useDynLib geodist R_cheap R_cheap_xy
-geodist <- function (x, y, measure = "haversine")
+#' @useDynLib geodist R_haversine R_vincenty R_cheap_xy
+#' @useDynLib geodist R_haversine_xy R_vincenty_xy R_cheap_xy
+#' @useDynLib geodist R_haversine_seq R_vincenty_seq R_cheap_seq
+geodist <- function (x, y, sequential = FALSE, pad = FALSE, measure = "haversine")
 {
     measures <- c ("haversine", "vincenty", "cheap", "haversine2")
     measure <- match.arg (tolower (measure), measures)
     x <- convert_to_matrix (x)
     if (!missing (y))
     {
-        y <- convert_to_matrix (y)
-        # t() because the src code loops over x then y, so y is the internal
-        # loop
-        if (measure == "haversine")
-            res <- .Call ("R_haversine_xy", as.vector (x), as.vector (y))
-        else if (measure == "vincenty")
-            res <- .Call ("R_vincenty_xy", as.vector (x), as.vector (y))
-        else if (measure == "cheap")
-            res <- .Call ("R_cheap_xy", as.vector (x), as.vector (y))
-        t (matrix (res, nrow = nrow (y)))
+        if (sequential)
+        {
+            message ("Sequential distances calculated along values of 'x' only")
+            geodist_seq (x, measure, pad)
+        } else
+        {
+            y <- convert_to_matrix (y)
+            geodist_xy (x, y, measure)
+            # t() because the src code loops over x then y, so y is the internal
+            # loop
+        }
     } else
     {
-        if (measure == "haversine")
-            matrix (.Call("R_haversine", as.vector (x)), nrow = nrow (x))
-        else if (measure == "vincenty")
-            matrix (.Call("R_vincenty", as.vector (x)), nrow = nrow (x))
+        if (sequential)
+            geodist_seq (x, measure, pad)
         else
-            matrix (.Call("R_cheap", as.vector (x)), nrow = nrow (x))
+            geodist_x (x, measure)
     }
+}
+
+geodist_seq <- function (x, measure, pad)
+{
+    if (measure == "haversine")
+        res <- matrix (.Call("R_haversine_seq", as.vector (x)), nrow = nrow (x))
+    else if (measure == "vincenty")
+        res <- matrix (.Call("R_vincenty_seq", as.vector (x)), nrow = nrow (x))
+    else
+        res <- matrix (.Call("R_cheap_seq", as.vector (x)), nrow = nrow (x))
+    if (!pad)
+        res <- res [2:length (res)]
+    return (res)
+}
+
+geodist_x <- function (x, measure)
+{
+    if (measure == "haversine")
+        matrix (.Call("R_haversine", as.vector (x)), nrow = nrow (x))
+    else if (measure == "vincenty")
+        matrix (.Call("R_vincenty", as.vector (x)), nrow = nrow (x))
+    else
+        matrix (.Call("R_cheap", as.vector (x)), nrow = nrow (x))
+}
+
+geodist_xy <- function (x, y, measure)
+{
+    if (measure == "haversine")
+        res <- .Call ("R_haversine_xy", as.vector (x), as.vector (y))
+    else if (measure == "vincenty")
+        res <- .Call ("R_vincenty_xy", as.vector (x), as.vector (y))
+    else if (measure == "cheap")
+        res <- .Call ("R_cheap_xy", as.vector (x), as.vector (y))
+    t (matrix (res, nrow = nrow (y)))
 }

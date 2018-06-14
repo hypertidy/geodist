@@ -6,7 +6,7 @@
 \alias{geodist-package}
 \title{geodist.}
 \usage{
-geodist(x, y, measure = "haversine")
+geodist(x, y, sequential = FALSE, pad = FALSE, measure = "haversine")
 }
 \arguments{
 \item{x}{Rectangular object (matrix, \code{data.frame}, \pkg{tibble},
@@ -14,6 +14,14 @@ whatever) containing longitude and latitude coordinates.}
 
 \item{y}{Optional second object which, if passed, results in distances
 calculated between each object in \code{x} and each in \code{y}.}
+
+\item{sequential}{If \code{TRUE}, calculate distances sequentially along
+\code{x} (when no \code{y} is passed), otherwise calculate matrix of pairwise
+distances between all points.}
+
+\item{pad}{If \code{sequential = TRUE} values are padded with initial
+\code{NA} to return \code{n} values for input with \code{n} rows, otherwise
+return \code{n - 1} values.}
 
 \item{measure}{One of "haversine" "vincenty", or "cheap" specifying desired
 great-circle distance, where "cheap" denotes the mapbox cheap ruler

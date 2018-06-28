@@ -2,9 +2,16 @@
 
 #include "common.h"
 
-const double earth = 6378.137; // value used in geosphere::distHaversine
-const double meridian = 12429.9; // length of prime meridian in metres
-const double equator = 40007.862917; // equatorial circumference
+// All values in metres; see https://github.com/hypertidy/geodist/issues/7
+// meridian is only used in mapbox cheap distances
+const double earth = 6378137.0; // WSG-84 definition
+const double meridian = 20003930.0; // length of prime meridian
+const double equator = 40007862.917; // IUGG standard equatorial circumference
+
+// All values in metres; see https://github.com/hypertidy/geodist/issues/7
+//const double earth = 6378137.0; // WSG-84 definition
+//const double meridian = 20003930.0;; // length of prime meridian
+//const double equator = 40007862.917; // IUGG standard equatorial circumference
 
 // Core calculations for a single distance measure
 

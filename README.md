@@ -80,13 +80,13 @@ d <- geodist (x, measure = "vincenty", sequential = TRUE, pad = TRUE)
 nrow (x); length (d); head (d)
 #> [1] 10
 #> [1] 10
-#>           [,1]
-#> [1,]        NA
-#> [2,] 10728.064
-#> [3,]  5371.735
-#> [4,]  8515.388
-#> [5,]  5857.710
-#> [6,]  8645.188
+#>         [,1]
+#> [1,]      NA
+#> [2,] 2186740
+#> [3,] 5407228
+#> [4,] 3564634
+#> [5,] 9380025
+#> [6,] 3007030
 ```
 
 The `pad` argument pre-pends an `NA` to return a vector commensurate
@@ -108,13 +108,15 @@ x_to_sf <- function (x)
     sapply (seq (nrow (x)), function (i)
             sf::st_point (x [i, ]) %>%
                 sf::st_sfc ()) %>%
-    sf::st_sfc ()
+    sf::st_sfc (crs = 4326)
 }
 ```
 
-Note that the relevant function, `sf::st_distance()` calculates the
-Vicenty distance via `liblwgeom`, so `measure = "vincenty"` is used in
-the following comparison.
+Note that the relevant function, `sf::st_distance()` calculates geodesic
+distances using the methods developed by [Karney
+(2013)](https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf),
+also provided in this package through internally-bundled code (available
+[here](https://geographiclib.sourceforge.io/geod.html)).
 
 ``` r
 n <- 1e3
@@ -122,13 +124,27 @@ x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
 colnames (x) <- c ("x", "y")
 xsf <- x_to_sf (x)
 sf_dist <- function (x) sf::st_distance (x, x)
+geo_dist <- function (x) geodist (x, measure = "geodesic")
 rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
-                      geodist (x, measure = "vincenty")) [, 1:4]
-#>                               test replications elapsed relative
-#> 2 geodist(x, measure = "vincenty")           10   0.675     1.00
-#> 1                     sf_dist(xsf)           10   7.081    10.49
+                      geo_dist (x)) [, 1:4]
+#> Linking to GEOS 3.6.2, GDAL 2.3.0, proj.4 5.0.1
+#>           test replications elapsed relative
+#> 2  geo_dist(x)           10   5.368    1.000
+#> 1 sf_dist(xsf)           10  15.480    2.884
 ```
+
+Confirm that the two give almost identical results:
+
+``` r
+ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
+dg <- geodist (x, measure = "geodesic")
+formatC (max (abs (ds - dg)), format = "e")
+#> [1] "1.1176e-08"
+```
+
+All results are in metres, so the two differ by only around 10
+nanometres.
 
 The [`geosphere` package](https://cran.r-project.org/package=geosphere)
 also offers sequential calculation which is benchmarked with the
@@ -137,13 +153,13 @@ code:
 
 ``` r
 fgeodist <- function () geodist (x, measure = "vincenty", sequential = TRUE)
-fgeosphere <- function () geosphere::distVincentySphere (x)
+fgeosph <- function () geosphere::distVincentySphere (x)
 rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
-                       fgeosphere ()) [, 1:4]
-#>           test replications elapsed relative
-#> 1   fgeodist()           10   0.004     1.00
-#> 2 fgeosphere()           10   0.053    13.25
+                       fgeosph ()) [, 1:4]
+#>         test replications elapsed relative
+#> 1 fgeodist()           10   0.004     1.00
+#> 2  fgeosph()           10   0.007     1.75
 ```
 
 The [mapbox cheap ruler
@@ -161,11 +177,13 @@ colnames (x) <- colnames (y) <- c ("x", "y")
 rbenchmark::benchmark (replications = 10, order = "test",
                        d1 <- geodist (x, measure = "cheap"),
                        d2 <- geodist (x, measure = "haversine"),
-                       d3 <- geodist (x, measure = "vincenty")) [, 1:4]
+                       d3 <- geodist (x, measure = "vincenty"),
+                       d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.248    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.301    1.214
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.393    1.585
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.113    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.176    1.558
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.236    2.088
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.114   27.558
 ```
 
 ### Test Results
@@ -177,17 +195,17 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Thu Jun 14 12:04:52 2018"
+#> [1] "Thu Jun 28 11:20:47 2018"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist
 #> ✔ | OK F W S | Context
-✔ | 26       | geodist [0.1 s]
+✔ | 33       | geodist [0.1 s]
 #> 
 #> ══ Results ════════════════════════════════════════════════════════════════
 #> Duration: 0.2 s
 #> 
-#> OK:       26
+#> OK:       33
 #> Failed:   0
 #> Warnings: 0
 #> Skipped:  0

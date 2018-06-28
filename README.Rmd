@@ -97,12 +97,14 @@ x_to_sf <- function (x)
     sapply (seq (nrow (x)), function (i)
             sf::st_point (x [i, ]) %>%
                 sf::st_sfc ()) %>%
-    sf::st_sfc ()
+    sf::st_sfc (crs = 4326)
 }
 ```
-Note that the relevant function, `sf::st_distance()` calculates the Vicenty
-distance via `liblwgeom`, so `measure = "vincenty"` is used in the following
-comparison.
+Note that the relevant function, `sf::st_distance()` calculates geodesic
+distances using the methods developed by [Karney
+(2013)](https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf),
+also provided in this package through internally-bundled code (available
+[here](https://geographiclib.sourceforge.io/geod.html)).
 
 ```{r benchmark}
 n <- 1e3
@@ -110,18 +112,27 @@ x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
 colnames (x) <- c ("x", "y")
 xsf <- x_to_sf (x)
 sf_dist <- function (x) sf::st_distance (x, x)
+geo_dist <- function (x) geodist (x, measure = "geodesic")
 rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
-                      geodist (x, measure = "vincenty")) [, 1:4]
+                      geo_dist (x)) [, 1:4]
 ```
+Confirm that the two give almost identical results:
+```{r}
+ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
+dg <- geodist (x, measure = "geodesic")
+formatC (max (abs (ds - dg)), format = "e")
+```
+All results are in metres, so the two differ by only around 10 nanometres.
+
 The [`geosphere` package](https://cran.r-project.org/package=geosphere) also
 offers sequential calculation which is benchmarked with the following code:
 ```{r sequential}
 fgeodist <- function () geodist (x, measure = "vincenty", sequential = TRUE)
-fgeosphere <- function () geosphere::distVincentySphere (x)
+fgeosph <- function () geosphere::distVincentySphere (x)
 rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
-                       fgeosphere ()) [, 1:4]
+                       fgeosph ()) [, 1:4]
 ```
 
 
@@ -138,7 +149,8 @@ colnames (x) <- colnames (y) <- c ("x", "y")
 rbenchmark::benchmark (replications = 10, order = "test",
                        d1 <- geodist (x, measure = "cheap"),
                        d2 <- geodist (x, measure = "haversine"),
-                       d3 <- geodist (x, measure = "vincenty")) [, 1:4]
+                       d3 <- geodist (x, measure = "vincenty"),
+                       d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 ```
 
 

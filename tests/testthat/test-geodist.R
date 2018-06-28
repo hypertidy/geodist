@@ -167,3 +167,32 @@ test_that("matrix structure for x y", {
               d2 <- havdist (x, y)
               expect_identical (d1, d2)
 })
+
+test_that("geodesic extreme cases", {
+              x <- rbind (c (0, 0),
+                          c (0, 1))
+              colnames (x) <- c ("x", "y")
+              d <- geodist (x, measure = "geodesic")
+              expect_true (sum (diag (d)) > 0)
+
+              x <- rbind (c (0, 0),
+                          c (0, 90))
+              colnames (x) <- c ("x", "y")
+              d <- geodist (x, measure = "geodesic")
+              expect_true (sum (diag (d)) > 0)
+
+              x <- rbind (c (0, 0),
+                          c (1, 0))
+              colnames (x) <- c ("x", "y")
+              d <- geodist (x, measure = "geodesic")
+              expect_true (sum (diag (d)) > 0)
+
+              x <- rbind (c (0, 0),
+                          c (180, 0))
+              colnames (x) <- c ("x", "y")
+              d <- geodist (x, measure = "geodesic")
+              expect_true (sum (diag (d)) > 0)
+              m <- 20003930
+              expect_true (abs (d [1, 2] - m) < 2) # it doesn't equal zero
+              expect_true (abs (d [2, 1] - m) < 2) # it doesn't equal zero
+})

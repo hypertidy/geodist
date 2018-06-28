@@ -24,6 +24,9 @@ SEXP R_haversine (SEXP x_)
     }
 
     for (size_t i = 0; i < (n - 1); i++)
+    {
+        if (i % 100 == 0)
+            R_CheckUserInterrupt ();
         for (size_t j = (i + 1); j < n; j++)
         {
             size_t indx1 = i * n + j;
@@ -31,6 +34,7 @@ SEXP R_haversine (SEXP x_)
             rout [indx1] = rout [indx2] = one_haversine (rx [i], rx [n + i],
                     rx [j], rx [n + j], cosy1 [i], cosy1 [j]);
         }
+    }
 
     UNPROTECT (1);
 
@@ -59,6 +63,9 @@ SEXP R_vincenty (SEXP x_)
     }
 
     for (size_t i = 0; i < (n - 1); i++)
+    {
+        if (i % 100 == 0)
+            R_CheckUserInterrupt ();
         for (size_t j = (i + 1); j < n; j++)
         {
             size_t indx1 = i * n + j;
@@ -67,6 +74,7 @@ SEXP R_vincenty (SEXP x_)
                     rx [j], rx [n + j],
                     siny1 [i], cosy1 [i], siny1 [j], cosy1 [j]);
         }
+    }
 
     UNPROTECT (1);
 
@@ -101,6 +109,9 @@ SEXP R_cheap (SEXP x_)
     double cosy = cos ((ymin + ymax) / 2.0);
 
     for (size_t i = 0; i < (n - 1); i++)
+    {
+        if (i % 100 == 0)
+            R_CheckUserInterrupt ();
         for (size_t j = (i + 1); j < n; j++)
         {
             size_t indx1 = i * n + j;
@@ -108,6 +119,7 @@ SEXP R_cheap (SEXP x_)
             rout [indx1] = rout [indx2] = one_cheap (rx [i], rx [n + i],
                     rx [j], rx [n + j], cosy);
         }
+    }
 
     UNPROTECT (1);
 
@@ -127,6 +139,9 @@ SEXP R_geodesic (SEXP x_)
     rout = REAL (out);
 
     for (size_t i = 0; i < (n - 1); i++)
+    {
+        if (i % 100 == 0)
+            R_CheckUserInterrupt ();
         for (size_t j = (i + 1); j < n; j++)
         {
             size_t indx1 = i * n + j;
@@ -134,6 +149,7 @@ SEXP R_geodesic (SEXP x_)
             rout [indx1] = rout [indx2] = one_geodesic (rx [i], rx [n + i],
                     rx [j], rx [n + j]);
         }
+    }
 
     UNPROTECT (1);
 

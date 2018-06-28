@@ -17,6 +17,8 @@ SEXP R_haversine_seq (SEXP x_)
     rout [0] = NA_REAL;
     for (size_t i = 1; i < n; i++)
     {
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt ();
         double cosy1 = cos (rx [n + i] * M_PI / 180.0);
         rout [i] = one_haversine (rx [i - 1], rx [n + i - 1],
                 rx [i], rx [n + i],
@@ -44,6 +46,8 @@ SEXP R_vincenty_seq (SEXP x_)
 
     for (size_t i = 1; i < n; i++)
     {
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt ();
         double siny1 = sin (rx [n + i - 1] * M_PI / 180.0);
         double cosy1 = cos (rx [n + i - 1] * M_PI / 180.0);
         double siny2 = sin (rx [n + i] * M_PI / 180.0);
@@ -72,6 +76,8 @@ SEXP R_cheap_seq (SEXP x_)
 
     for (size_t i = 1; i < n; i++)
     {
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt ();
         double cosy = cos ((rx [i - 1] * M_PI / 180.0 +
                             rx [i] * M_PI / 180.0) / 2.0);
         rout [i] = one_cheap (rx [i - 1], rx [n + i - 1],
@@ -98,6 +104,8 @@ SEXP R_geodesic_seq (SEXP x_)
 
     for (size_t i = 1; i < n; i++)
     {
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt ();
         rout [i] = one_geodesic (rx [i - 1], rx [n + i - 1],
                 rx [i], rx [n + i]);
     }

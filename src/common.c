@@ -1,6 +1,8 @@
 #include <math.h>
 
 #include "common.h"
+#include "geodesic.h"
+
 
 // All values in metres; see https://github.com/hypertidy/geodist/issues/7
 // meridian is only used in mapbox cheap distances
@@ -60,3 +62,31 @@ double one_cheap (double x1, double y1, double x2, double y2, double cosy)
     double d = sqrt (dx * dx + dy * dy);
     return d;
 }
+
+//' Karney (2013) geodesic
+//' https://geographiclib.sourceforge.io/geod.html
+//' https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf
+double one_geodesic (double x1, double y1, double x2, double y2)
+{
+    double f = 1.0 / 298.257223563; /* WGS84 */
+    //double lat1, lon1, azi1, lat2, lon2, azi2, s12;
+    double azi1, azi2, s12;
+    struct geod_geodesic g;
+
+    geod_init(&g, earth, f);
+    geod_inverse(&g, y1, x1, y2, x2, &s12, &azi1, &azi2);
+    return s12;
+}
+
+/*
+ * geod_init calls: nothing
+ * geod_inverse calls straight to geod_geninverse, and that in turn calls
+ * straight to geod_geninverse_int. That calls only trig functions, plus
+ * - InverseStart
+ *
+ * Should be able to delete everything except
+ * - geod_inverse
+ * - geod_geninverse
+ * - geod_geninverse_int
+ * - InverseStart
+ */

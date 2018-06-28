@@ -82,3 +82,28 @@ SEXP R_cheap_seq (SEXP x_)
 
     return out;
 }
+
+//' R_geodesic_seq
+//' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
+//' @noRd
+SEXP R_geodesic_seq (SEXP x_)
+{
+    size_t n = floor (length (x_) / 2);
+    SEXP out = PROTECT (allocVector (REALSXP, n));
+    double *rx, *rout;
+    rx = REAL (x_);
+    rout = REAL (out);
+
+    rout [0] = NA_REAL;
+
+    for (size_t i = 1; i < n; i++)
+    {
+        rout [i] = one_geodesic (rx [i - 1], rx [n + i - 1],
+                rx [i], rx [n + i]);
+    }
+
+    UNPROTECT (1);
+
+    return out;
+}
+

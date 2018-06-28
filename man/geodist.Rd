@@ -24,9 +24,8 @@ matrix of pairwise distances between all points.}
 \code{NA} to return \code{n} values for input with \code{n} rows, otherwise
 return \code{n - 1} values.}
 
-\item{measure}{One of "haversine" "vincenty", or "cheap" specifying desired
-great-circle distance, where "cheap" denotes the mapbox cheap ruler
-\url{https://github.com/mapbox/cheap-ruler-cpp}.}
+\item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap"
+specifying desired method of geodesic distance calculation; see Notes.}
 }
 \value{
 If only \code{x} passed and \code{sequential = FALSE}, a square
@@ -40,4 +39,10 @@ geodist.
 
 Convert one or two rectangular objects containing lon-lat coordinates into
 vector or matrix of geodesic distances.
+}
+\note{
+\code{measure = "cheap"} denotes the mapbox cheap ruler
+\url{https://github.com/mapbox/cheap-ruler-cpp}; \code{measure = "geodetic"}
+denotes the very accurate geodetic methods given in Kearney (2013)
+"Algorithms for geodesics" J Geod 87:43-55.
 }

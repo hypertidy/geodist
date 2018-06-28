@@ -67,6 +67,34 @@ test_that("haversine and cheap", {
               expect_true (!identical (d1, d2))
 })
 
+test_that("haversine and geodesic", {
+              n <- 1e2
+              dx <- dy <- 0.01
+              x <- cbind (-100 + dx * runif (n), 20 + dy * runif (n))
+              y <- cbind (-100 + dx * runif (2 * n), 20 + dy * runif (2 * n))
+              colnames (x) <- colnames (y) <- c ("x", "y")
+              d1 <- geodist (x, measure = "haversine")
+              d2 <- geodist (x, measure = "geodesic")
+              expect_true (!identical (d1, d2))
+              d1 <- geodist (x, y, measure = "haversine")
+              d2 <- geodist (x, y, measure = "geodesic")
+              expect_true (!identical (d1, d2))
+})
+
+test_that("vincenty and geodesic", {
+              n <- 1e2
+              dx <- dy <- 0.01
+              x <- cbind (-100 + dx * runif (n), 20 + dy * runif (n))
+              y <- cbind (-100 + dx * runif (2 * n), 20 + dy * runif (2 * n))
+              colnames (x) <- colnames (y) <- c ("x", "y")
+              d1 <- geodist (x, measure = "vincenty")
+              d2 <- geodist (x, measure = "geodesic")
+              expect_true (!identical (d1, d2))
+              d1 <- geodist (x, y, measure = "vincenty")
+              d2 <- geodist (x, y, measure = "geodesic")
+              expect_true (!identical (d1, d2))
+})
+
 test_that ("sequential structure", {
               n <- 1e2
               x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
@@ -92,11 +120,15 @@ test_that ("sequential measures", {
               d1 <- geodist (x, sequential = TRUE, measure = "haversine")
               d2 <- geodist (x, sequential = TRUE, measure = "vincenty")
               d3 <- geodist (x, sequential = TRUE, measure = "cheap")
+              d4 <- geodist (x, sequential = TRUE, measure = "geodesic")
               expect_error (d4 <- geodist (x, sequential = TRUE,
                                            measure = "blah"))
               expect_true (max (abs (d1 - d2)) > 0)
               expect_true (max (abs (d1 - d3)) > 0)
+              expect_true (max (abs (d1 - d4)) > 0)
               expect_true (max (abs (d2 - d3)) > 0)
+              expect_true (max (abs (d2 - d4)) > 0)
+              expect_true (max (abs (d3 - d4)) > 0)
 })
 
 havdist <- function (x, y)
@@ -111,7 +143,7 @@ havdist <- function (x, y)
     yd <- (x2mat - y2mat) * pi / 180
     sxd <- sin (xd / 2)
     syd <- sin (yd / 2)
-    earth <- 6378.137 # radius of Earth
+    earth <- 6378137 # radius of Earth in m
     d <- syd * syd +
         cos (x2mat * pi / 180) * cos (y2mat * pi / 180) * sxd * sxd
     2 * earth * asin (sqrt (d));

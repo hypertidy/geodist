@@ -113,3 +113,30 @@ SEXP R_cheap (SEXP x_)
 
     return out;
 }
+
+//' R_geodesic
+//' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
+//' @noRd
+SEXP R_geodesic (SEXP x_)
+{
+    size_t n = floor (length (x_) / 2);
+    size_t n2 = n * n;
+    SEXP out = PROTECT (allocVector (REALSXP, n2));
+    double *rx, *rout;
+    rx = REAL (x_);
+    rout = REAL (out);
+
+    for (size_t i = 0; i < (n - 1); i++)
+        for (size_t j = (i + 1); j < n; j++)
+        {
+            size_t indx1 = i * n + j;
+            size_t indx2 = j * n + i;
+            rout [indx1] = rout [indx2] = one_geodesic (rx [i], rx [n + i],
+                    rx [j], rx [n + j]);
+        }
+
+    UNPROTECT (1);
+
+    return out;
+}
+

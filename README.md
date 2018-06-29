@@ -80,13 +80,13 @@ d <- geodist (x, measure = "vincenty", sequential = TRUE, pad = TRUE)
 nrow (x); length (d); head (d)
 #> [1] 10
 #> [1] 10
-#>         [,1]
-#> [1,]      NA
-#> [2,] 2186740
-#> [3,] 5407228
-#> [4,] 3564634
-#> [5,] 9380025
-#> [6,] 3007030
+#>          [,1]
+#> [1,]       NA
+#> [2,]  2576108
+#> [3,]  8883320
+#> [4,] 10675957
+#> [5,]  6641753
+#> [6,]  4512907
 ```
 
 The `pad` argument pre-pends an `NA` to return a vector commensurate
@@ -130,8 +130,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                       geo_dist (x)) [, 1:4]
 #> Linking to GEOS 3.6.2, GDAL 2.3.0, proj.4 5.0.1
 #>           test replications elapsed relative
-#> 2  geo_dist(x)           10   5.368    1.000
-#> 1 sf_dist(xsf)           10  15.480    2.884
+#> 2  geo_dist(x)           10   5.319     1.00
+#> 1 sf_dist(xsf)           10  15.319     2.88
 ```
 
 Confirm that the two give almost identical results:
@@ -158,8 +158,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
                        fgeosph ()) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.004     1.00
-#> 2  fgeosph()           10   0.007     1.75
+#> 1 fgeodist()           10   0.005      1.0
+#> 2  fgeosph()           10   0.006      1.2
 ```
 
 The [mapbox cheap ruler
@@ -180,11 +180,42 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d3 <- geodist (x, measure = "vincenty"),
                        d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.113    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.176    1.558
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.236    2.088
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.114   27.558
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.112    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.171    1.527
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.232    2.071
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.096   27.643
 ```
+
+Finally, what everybody probably most wants to know … Is the extra time
+to calculate highly accurate geodesic distances really worthwhile? The
+answer depends of course on the scale of distances involved, but the
+following graph provides a visual aid to answering this question.
+
+``` r
+n <- 1e3
+x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
+colnames (x) <- c ("x", "y")
+d0 <- geodist (x, measure = "geodesic") # reference dists
+d1 <- abs (geodist (x, measure = "vincenty") - d0)
+d0 <- d0 [upper.tri (d0)]
+indx <- order (d0)
+d0 <- d0 [indx]
+d1mod <- approx (d0, d1 [upper.tri (d1)] [indx], n = n)
+d1mod <- lapply (d1mod, function (i) i / 1000) # convert to km
+
+par (mfrow = c (1, 2))
+plot (d1mod$x, d1mod$y, "l", log = "xy",
+      xlab = "distance (km)", ylab = "error", main = "Absolute error (m)")
+lines (d1mod$x, d1mod$x, col = "grey", lty = 2)
+
+d1mod <- approx (d0, d1 [upper.tri (d1)] [indx] / d0, n = n)
+plot (d1mod$x / 1000, 100 * d1mod$y, "l", log = "xy",
+      xlab = "distance (km)", ylab = "error", main = "Relative error (%)")
+```
+
+![](fig/README-plot-1.png%22) The absolute error increases with
+increasing distance as expected, yet the relative error remains
+generally constant at around 0.2%.
 
 ### Test Results
 
@@ -195,17 +226,17 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Thu Jun 28 11:20:47 2018"
+#> [1] "Fri Jun 29 10:33:44 2018"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist
 #> ✔ | OK F W S | Context
-✔ | 33       | geodist [0.1 s]
+✖ | 38 1     | geodist [0.1 s]
 #> 
 #> ══ Results ════════════════════════════════════════════════════════════════
-#> Duration: 0.2 s
+#> Duration: 0.1 s
 #> 
-#> OK:       33
+#> OK:       39
 #> Failed:   0
 #> Warnings: 0
 #> Skipped:  0

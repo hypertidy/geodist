@@ -1,19 +1,9 @@
 #include <math.h>
 
 #include "common.h"
+#include "WSG84-defs.h"
 #include "geodesic.h"
 
-
-// All values in metres; see https://github.com/hypertidy/geodist/issues/7
-// meridian is only used in mapbox cheap distances
-const double earth = 6378137.0; // WSG-84 definition
-const double meridian = 20003930.0; // length of prime meridian
-const double equator = 40007862.917; // IUGG standard equatorial circumference
-
-// All values in metres; see https://github.com/hypertidy/geodist/issues/7
-//const double earth = 6378137.0; // WSG-84 definition
-//const double meridian = 20003930.0;; // length of prime meridian
-//const double equator = 40007862.917; // IUGG standard equatorial circumference
 
 // Core calculations for a single distance measure
 
@@ -68,25 +58,11 @@ double one_cheap (double x1, double y1, double x2, double y2, double cosy)
 //' https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf
 double one_geodesic (double x1, double y1, double x2, double y2)
 {
-    double f = 1.0 / 298.257223563; /* WGS84 */
     //double lat1, lon1, azi1, lat2, lon2, azi2, s12;
     double azi1, azi2, s12;
     struct geod_geodesic g;
 
-    geod_init(&g, earth, f);
+    geod_init(&g, earth, flattening);
     geod_inverse(&g, y1, x1, y2, x2, &s12, &azi1, &azi2);
     return s12;
 }
-
-/*
- * geod_init calls: nothing
- * geod_inverse calls straight to geod_geninverse, and that in turn calls
- * straight to geod_geninverse_int. That calls only trig functions, plus
- * - InverseStart
- *
- * Should be able to delete everything except
- * - geod_inverse
- * - geod_geninverse
- * - geod_geninverse_int
- * - InverseStart
- */

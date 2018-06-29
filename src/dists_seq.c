@@ -2,6 +2,7 @@
 #include <Rinternals.h>
 
 #include "common.h"
+#include "WSG84-defs.h"
 
 //' R_haversine
 //' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]

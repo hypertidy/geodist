@@ -9,6 +9,7 @@
 ^cran-comments.md$
 ^vignettes/makefile$
 docs/
+fig/
 data-raw/
 ^_pkgdown\.yml$
 ^appveyor\.yml$

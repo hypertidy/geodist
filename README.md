@@ -213,7 +213,7 @@ plot (d1mod$x / 1000, 100 * d1mod$y, "l", log = "xy",
       xlab = "distance (km)", ylab = "error", main = "Relative error (%)")
 ```
 
-![](fig/README-plot-1.png%22) The absolute error increases with
+![](fig/README-plot-1.png) The absolute error increases with
 increasing distance as expected, yet the relative error remains
 generally constant at around 0.2%.
 

@@ -178,7 +178,7 @@ d1mod <- approx (d0, d1 [upper.tri (d1)] [indx] / d0, n = n)
 plot (d1mod$x / 1000, 100 * d1mod$y, "l", log = "xy",
       xlab = "distance (km)", ylab = "error", main = "Relative error (%)")
 ```
-![](fig/README-plot-1.png")
+![](fig/README-plot-1.png)
 The absolute error increases with increasing distance as expected, yet the
 relative error remains generally constant at around 0.2%.
 

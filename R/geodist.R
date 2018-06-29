@@ -32,7 +32,8 @@
 #' @useDynLib geodist R_haversine_seq R_vincenty_seq R_cheap_seq
 geodist <- function (x, y, sequential = FALSE, pad = FALSE, measure = "haversine")
 {
-    measures <- c ("haversine", "vincenty", "cheap", "haversine2", "geodesic")
+    measures <- c ("haversine", "vincenty", "cheap", "vincenty_ellips",
+                   "geodesic")
     measure <- match.arg (tolower (measure), measures)
     x <- convert_to_matrix (x)
     if (!missing (y))
@@ -78,6 +79,8 @@ geodist_x <- function (x, measure)
         matrix (.Call("R_haversine", as.vector (x)), nrow = nrow (x))
     else if (measure == "vincenty")
         matrix (.Call("R_vincenty", as.vector (x)), nrow = nrow (x))
+    else if (measure == "vincenty_ellips")
+        matrix (.Call("R_vincenty_ellips", as.vector (x)), nrow = nrow (x))
     else if (measure == "geodesic")
         matrix (.Call("R_geodesic", as.vector (x)), nrow = nrow (x))
     else

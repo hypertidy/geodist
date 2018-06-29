@@ -175,23 +175,27 @@ d2mod <- approx (d0, d2 [upper.tri (d2)] [indx], n = n)
 d2mod <- lapply (d2mod, function (i) i / 1000) # convert to km
 
 par (mfrow = c (1, 2))
-plot (d1mod$x, d1mod$y, "l", log = "xy", xlim = c (1, max (d1mod$x)),
-      ylim = range (c (d1mod$y, d2mod$y)),
+plot (d1mod$x, d1mod$y, "l", log = "xy", col = "blue",
+      xlim = c (1, max (d1mod$x)), ylim = range (c (d1mod$y, d2mod$y)),
       xlab = "distance (km)", ylab = "error", main = "Absolute error (m)")
 lines (d1mod$x, d1mod$x, col = "grey", lty = 2)
-lines (d2mod$x, d2mod$y, col = "grey")
+lines (d2mod$x, d2mod$y, col = "red")
+legend ("topleft", lwd = 1, col = c ("blue", "red"), bty = "n",
+        legend = c ("vincenty", "cheap"))
 
 d1mod <- approx (d0, d1 [upper.tri (d1)] [indx] / d0, n = n)
 d2mod <- approx (d0, d2 [upper.tri (d2)] [indx] / d0, n = n)
-plot (d1mod$x / 1000, 100 * d1mod$y, "l", log = "xy",
+plot (d1mod$x / 1000, 100 * d1mod$y, "l", col = "blue", log = "xy",
       ylim = 100 * range (c (d1mod$y, d2mod$y)),
       xlab = "distance (km)", ylab = "error", main = "Relative error (%)")
-lines (d2mod$x / 1000, 100 * d2mod$y, col = "grey")
+lines (d2mod$x / 1000, 100 * d2mod$y, col = "red")
 ```
 ![](fig/README-plot-1.png)
 
-The absolute error increases with increasing distance as expected, yet the
-relative error remains generally constant at around 0.2%.
+The mapbox cheap ruler algorithm is actually even more accurate than Vincenty
+for distances below a few hundred kilometres, beyond which it becomes extremely
+inaccurate. Average relative errors of Vincenty distances remain generally
+constant at around 0.2%.
 
 
 

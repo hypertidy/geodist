@@ -82,11 +82,11 @@ nrow (x); length (d); head (d)
 #> [1] 10
 #>          [,1]
 #> [1,]       NA
-#> [2,] 10858264
-#> [3,]  3534345
-#> [4,]  2582744
-#> [5,] 10944562
-#> [6,]  3053632
+#> [2,] 10959720
+#> [3,]  4278914
+#> [4,]  8746226
+#> [5,]  5729448
+#> [6,]  5478099
 ```
 
 The `pad` argument pre-pends an `NA` to return a vector commensurate
@@ -130,8 +130,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                       geo_dist (x)) [, 1:4]
 #> Linking to GEOS 3.6.2, GDAL 2.3.0, proj.4 5.0.1
 #>           test replications elapsed relative
-#> 2  geo_dist(x)           10   5.405    1.000
-#> 1 sf_dist(xsf)           10  16.149    2.988
+#> 2  geo_dist(x)           10   5.325    1.000
+#> 1 sf_dist(xsf)           10  15.477    2.906
 ```
 
 Confirm that the two give almost identical results:
@@ -140,7 +140,7 @@ Confirm that the two give almost identical results:
 ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
 dg <- geodist (x, measure = "geodesic")
 formatC (max (abs (ds - dg)), format = "e")
-#> [1] "1.1176e-08"
+#> [1] "1.3039e-08"
 ```
 
 All results are in metres, so the two differ by only around 10
@@ -159,7 +159,7 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeosph ()) [, 1:4]
 #>         test replications elapsed relative
 #> 1 fgeodist()           10   0.005      1.0
-#> 2  fgeosph()           10   0.007      1.4
+#> 2  fgeosph()           10   0.006      1.2
 ```
 
 The [mapbox cheap ruler
@@ -180,20 +180,23 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d3 <- geodist (x, measure = "vincenty"),
                        d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.118    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.179    1.517
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.236    2.000
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.142   26.627
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.113    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.173    1.531
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.232    2.053
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.091   27.354
 ```
 
 Finally, what everybody probably most wants to know … Is the extra time
 to calculate highly accurate geodesic distances really worthwhile? The
 answer depends of course on the scale of distances involved, but the
 following graph provides a visual aid to answering this question.
+
 ![](fig/README-plot-1.png)
 
-The absolute error increases with increasing distance as expected, yet
-the relative error remains generally constant at around 0.2%.
+The mapbox cheap ruler algorithm is actually even more accurate than
+Vincenty for distances below a few hundred kilometres, beyond which it
+becomes extremely inaccurate. Average relative errors of Vincenty
+distances remain generally constant at around 0.2%.
 
 ### Test Results
 
@@ -204,12 +207,12 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Fri Jun 29 10:47:36 2018"
+#> [1] "Fri Jun 29 10:56:40 2018"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist
 #> ✔ | OK F W S | Context
-✔ | 39       | geodist [0.1 s]
+✖ | 39       | geodist [0.1 s]
 #> 
 #> ══ Results ════════════════════════════════════════════════════════════════
 #> Duration: 0.2 s

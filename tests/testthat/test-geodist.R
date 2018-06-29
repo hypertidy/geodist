@@ -196,3 +196,12 @@ test_that("geodesic extreme cases", {
               expect_true (abs (d [1, 2] - m) < 2) # it doesn't equal zero
               expect_true (abs (d [2, 1] - m) < 2) # it doesn't equal zero
 })
+
+test_that ("geodist_benchmark", {
+               d <- geodist_benchmark (lon = 0, lat = 1, d = 100, n = 100)
+               expect_is (d, "matrix")
+               expect_equal (nrow (d), 2)
+               expect_equal (ncol (d), 3)
+               expect_equal (rownames (d), c ("absolute", "relative"))
+               expect_equal (colnames (d), c ("haversine", "vincenty", "cheap"))
+})

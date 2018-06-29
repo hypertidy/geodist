@@ -157,28 +157,39 @@ Finally, what everybody probably most wants to know ... Is the extra time to
 calculate highly accurate geodesic distances really worthwhile? The answer
 depends of course on the scale of distances involved, but the following graph
 provides a visual aid to answering this question.
-```{r plot, eval = FALSE}
+```{r plot, eval = FALSE, echo = FALSE}
 n <- 1e3
 x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
+# plus some shorter distances
+x <- rbind (x, cbind (2 * runif (10) - 1, 2 * runif (n) - 1))
 colnames (x) <- c ("x", "y")
 d0 <- geodist (x, measure = "geodesic") # reference dists
 d1 <- abs (geodist (x, measure = "vincenty") - d0)
+d2 <- abs (geodist (x, measure = "cheap") - d0)
 d0 <- d0 [upper.tri (d0)]
 indx <- order (d0)
 d0 <- d0 [indx]
 d1mod <- approx (d0, d1 [upper.tri (d1)] [indx], n = n)
 d1mod <- lapply (d1mod, function (i) i / 1000) # convert to km
+d2mod <- approx (d0, d2 [upper.tri (d2)] [indx], n = n)
+d2mod <- lapply (d2mod, function (i) i / 1000) # convert to km
 
 par (mfrow = c (1, 2))
-plot (d1mod$x, d1mod$y, "l", log = "xy",
+plot (d1mod$x, d1mod$y, "l", log = "xy", xlim = c (1, max (d1mod$x)),
+      ylim = range (c (d1mod$y, d2mod$y)),
       xlab = "distance (km)", ylab = "error", main = "Absolute error (m)")
 lines (d1mod$x, d1mod$x, col = "grey", lty = 2)
+lines (d2mod$x, d2mod$y, col = "grey")
 
 d1mod <- approx (d0, d1 [upper.tri (d1)] [indx] / d0, n = n)
+d2mod <- approx (d0, d2 [upper.tri (d2)] [indx] / d0, n = n)
 plot (d1mod$x / 1000, 100 * d1mod$y, "l", log = "xy",
+      ylim = 100 * range (c (d1mod$y, d2mod$y)),
       xlab = "distance (km)", ylab = "error", main = "Relative error (%)")
+lines (d2mod$x / 1000, 100 * d2mod$y, col = "grey")
 ```
 ![](fig/README-plot-1.png)
+
 The absolute error increases with increasing distance as expected, yet the
 relative error remains generally constant at around 0.2%.
 

@@ -1,6 +1,8 @@
 #include <R.h>
 #include <Rinternals.h>
 
+#include <stdio.h> 
+
 #include "common.h"
 #include "WSG84-defs.h"
 

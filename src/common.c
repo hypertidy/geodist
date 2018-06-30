@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdio.h> 
 
 #include "common.h"
 #include "WSG84-defs.h"

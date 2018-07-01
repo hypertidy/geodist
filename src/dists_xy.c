@@ -76,6 +76,52 @@ SEXP R_vincenty_xy (SEXP x_, SEXP y_)
     return out;
 }
 
+//' R_vincenty_ellips_xy
+//' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
+//' @param y_ Additional vector of x-values in [1:n], y-values in [n+(1:n)]
+//' @noRd
+SEXP R_vincenty_ellips_xy (SEXP x_, SEXP y_)
+{
+    size_t nx = floor (length (x_) / 2);
+    size_t ny = floor (length (y_) / 2);
+    size_t n2 = nx * ny;
+    SEXP out = PROTECT (allocVector (REALSXP, n2));
+    double *rx, *ry, *rout;
+    rx = REAL (x_);
+    ry = REAL (y_);
+    rout = REAL (out);
+
+    double Ux [nx], Uy [ny];
+    for (size_t i = 0; i < nx; i++)
+        Ux [i] = atan ((1.0 - flattening) * tan (rx [nx + i] * M_PI / 180.0));
+    for (size_t i = 0; i < ny; i++)
+        Uy [i] = atan ((1.0 - flattening) * tan (ry [ny + i] * M_PI / 180.0));
+
+    for (size_t i = 0; i < nx; i++)
+    {
+        if (i % 100 == 0)
+            R_CheckUserInterrupt ();
+        for (size_t j = 0; j < ny; j++)
+        {
+            double L = ((ry [j] - rx [i]) * M_PI / 180.0);
+            double s = one_vincenty_ellips (Ux [i], Uy [j], L);
+            if (s < 0.0)
+            {
+                s = one_vincenty (rx [i], rx [nx + i], ry [j], ry [ny + j],
+                        sin (rx [nx + i] * M_PI / 180.0),
+                        cos (rx [nx + i] * M_PI / 180.0),
+                        sin (ry [ny + j] * M_PI / 180.0),
+                        cos (ry [ny + j] * M_PI / 180.0));
+            }
+            rout [i * ny + j] = s;
+        }
+    }
+
+    UNPROTECT (1);
+
+    return out;
+}
+
 //' R_cheap_xy
 //' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
 //' @noRd

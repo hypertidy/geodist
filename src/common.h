@@ -4,7 +4,7 @@
 struct VincEllips {
     double sigma, sin_sigma, cos_sigma, 
            sin_alpha, cos2_alpha, cos_2sig_m,
-           L;
+           cos_2sig_m2, L;
 };
 
 double one_haversine (double x1, double y1, double x2, double y2,

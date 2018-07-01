@@ -52,9 +52,8 @@ double one_vincenty_ellips (double U1, double U2, double L)
     const double tol = 1.0e-12;
     struct VincEllips ve;
     ve.L = L;
-    double lambda = L;
-    double lambda_old = one_lambda (U1, U2, &ve, lambda),
-           delta = 1.0;
+    double lambda_old = L;
+    double delta = 1.0;
     int count = 0, check = 0;;
     while (delta > tol)
     {
@@ -62,25 +61,33 @@ double one_vincenty_ellips (double U1, double U2, double L)
         delta = fabs (lambda - lambda_old);
         lambda_old = lambda;
         count++;
-        if (count > 1e3)
+        if (count > 50)
         {
             check = 1;
             break;
         }
     }
-    if (check > 0)
-        Rprintf ("ERROR: Vincenty ellipsoid failed to converge\n");
 
-    double b2 = b * b,
-           u2 = ve.cos2_alpha * ((earth * earth - b2) / b2),
-           A = 1.0 + (u2 / 16384.0) * (4096.0 + u2 * (-768.0 +
-                       u2 * (320.0 - 175 * u2))),
-           B = (u2 / 1024.0) * (256.0 + u2 * (-128.0 + u2 * (74.0 - 47.0 * u2)));
-    double delta_sig = B * ve.sin_sigma * (ve.cos_2sig_m + 0.25 * B *
-            (ve.cos_sigma * (-1.0 + 2.0 * ve.cos_2sig_m) - (B / 6.0) *
-             ve.cos_2sig_m * (-3.0 + 4.0 * ve.sin_sigma * ve.sin_sigma) *
-             (-3.0 + 4.0 * ve.cos_2sig_m)));
-    double s = b * A * (ve.sigma - delta_sig);
+    double s;
+    // Algorithm does not converge for nearly antipodal points, so just use
+    // spherical Vincenty there instead
+    if (check > 0) 
+    {
+        //Rprintf ("ERROR: Vincenty ellipsoid failed to converge\n");
+        s = -1.0;
+    } else
+    {
+        double b2 = b * b,
+               u2 = ve.cos2_alpha * (earth * earth - b2) / b2,
+               A = 1.0 + (u2 / 16384.0) * (4096.0 + u2 * (-768.0 +
+                           u2 * (320.0 - 175.0 * u2))),
+               B = (u2 / 1024.0) * (256.0 + u2 * (-128.0 + u2 * (74.0 - 47.0 * u2)));
+        double delta_sig = B * ve.sin_sigma * (ve.cos_2sig_m + 0.25 * B *
+                (ve.cos_sigma * (-1.0 + 2.0 * ve.cos_2sig_m2) - (B / 6.0) *
+                 ve.cos_2sig_m * (-3.0 + 4.0 * ve.sin_sigma * ve.sin_sigma) *
+                 (-3.0 + 4.0 * ve.cos_2sig_m2)));
+        s = b * A * (ve.sigma - delta_sig);
+    }
 
     return s;
 }
@@ -101,16 +108,18 @@ double one_lambda (double U1, double U2, struct VincEllips *ve, double lambda)
     ve_temp.sigma = atan2 (ve_temp.sin_sigma, ve_temp.cos_sigma);
 
     ve_temp.sin_alpha = cU1 * cU2 * sL / ve_temp.sin_sigma;
-    ve_temp.cos2_alpha = 1 - ve_temp.sin_alpha * ve_temp.sin_alpha;
-    ve_temp.cos_2sig_m = ve_temp.cos_sigma - 2 * sU1 * sU2 / ve_temp.cos2_alpha;
-
-    double C = (flattening / 16.0) * ve_temp.cos2_alpha *
+    ve_temp.cos2_alpha = 1.0 - ve_temp.sin_alpha * ve_temp.sin_alpha;
+    ve_temp.cos_2sig_m = ve_temp.cos_sigma - 2.0 * sU1 * sU2 / ve_temp.cos2_alpha;
+    ve_temp.cos_2sig_m2 = ve_temp.cos_2sig_m * ve_temp.cos_2sig_m;
+    
+    double C = (flattening / 16.) * ve_temp.cos2_alpha *
         (4.0 + flattening * (4.0 - 3.0 * ve_temp.cos2_alpha));
 
-    double lambda_new = ve_temp.L + (1.0 - C) * flattening * ve_temp.sin_alpha *
-        (ve_temp.sigma + C * ve_temp.sin_sigma * (ve_temp.cos_2sig_m +
+    double lambda_new = ve_temp.L + (1.0 - C) * flattening * ve_temp.sin_alpha +
+        (ve_temp.sigma + C + ve_temp.sin_sigma * (ve_temp.cos_2sig_m +
                                                   C * ve_temp.cos_sigma *
-                                          (-1.0 + 2.0 * ve_temp.cos_2sig_m)));
+                                            (-1.0 + 2.0 * ve_temp.cos_2sig_m2)));
+
     *ve = ve_temp;
 
     return lambda_new;

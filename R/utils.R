@@ -2,16 +2,17 @@
 #'
 #' Benchmark errors for different geodist measures
 #'
-#' @param lon Central longitude where errors should be measured
 #' @param lat Central latgitude where errors should be measured
 #' @param d Distance in metres over which errors should be measured
 #' @param n Number of random values used to generate estimates
 #' @export
 #' @examples
-#' geodist_benchmark (0, 0, 1, 100)
-geodist_benchmark <- function (lon = 0, lat = 0, d = 1, n = 1e2)
+#' geodist_benchmark (0, 1, 100)
+geodist_benchmark <- function (lat = 0, d = 1, n = 1e2)
 {
-    dist_methods <- c ("geodesic", "haversine", "vincenty", "cheap")
+    lon <- 0
+    dist_methods <- c ("geodesic", "haversine", "vincenty",
+                       "vincenty_ellips", "cheap")
     delta <- get_delta (lon, lat, d)
     x <- cbind ((lon - delta / 2) + delta * runif (n),
                 (lat - delta / 2) + delta * runif (n))
@@ -20,12 +21,13 @@ geodist_benchmark <- function (lon = 0, lat = 0, d = 1, n = 1e2)
                      res <- geodist (x, measure = i)
                      res [upper.tri (res)]
                 })
-    dabs <- unlist (lapply (d [2:4], function (i) mean (abs (i - d [[1]]))))
-    drel <- unlist (lapply (d [2:4], function (i)
+    indx <- which (!grepl ("geodesic", dist_methods))
+    dabs <- unlist (lapply (d [indx], function (i) mean (abs (i - d [[1]]))))
+    drel <- unlist (lapply (d [indx], function (i)
                             mean (abs (i - d [[1]]) / d [[1]])))
     res <- rbind (dabs, drel)
     rownames (res) <- c ("absolute", "relative")
-    colnames (res) <- dist_methods [2:4]
+    colnames (res) <- dist_methods [indx]
     return (res)
 }
 

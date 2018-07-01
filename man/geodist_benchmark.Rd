@@ -4,11 +4,9 @@
 \alias{geodist_benchmark}
 \title{geodist_benchmark}
 \usage{
-geodist_benchmark(lon = 0, lat = 0, d = 1, n = 100)
+geodist_benchmark(lat = 0, d = 1, n = 100)
 }
 \arguments{
-\item{lon}{Central longitude where errors should be measured}
-
 \item{lat}{Central latgitude where errors should be measured}
 
 \item{d}{Distance in metres over which errors should be measured}
@@ -19,5 +17,5 @@ geodist_benchmark(lon = 0, lat = 0, d = 1, n = 100)
 Benchmark errors for different geodist measures
 }
 \examples{
-geodist_benchmark (0, 0, 1, 100)
+geodist_benchmark (0, 1, 100)
 }

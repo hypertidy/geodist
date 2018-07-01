@@ -7,12 +7,14 @@ test_that ("sequential structure", {
               x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
               y <- cbind (-180 + 360 * runif (2 * n), -90 + 180 * runif (2 * n))
               colnames (x) <- colnames (y) <- c ("x", "y")
-              d1 <- geodist (x, sequential = TRUE)
+              d1 <- geodist (x, sequential = TRUE, measure = "haversine")
               expect_equal (length (d1), nrow (x) - 1)
-              d2 <- geodist (x, sequential = TRUE, pad = TRUE)
+              d2 <- geodist (x, sequential = TRUE, pad = TRUE,
+                             measure = "haversine")
               expect_equal (length (d2), nrow (x))
-              # Sequential should equal off-diagonal off full matrix:
-              dmat <- geodist (x)
+              # Sequential should equal off-diagonal off full matrix (but note
+              # that this test  will fail for "cheap" distances)
+              dmat <- geodist (x, measure = "haversine")
               indx <- row (dmat) - col (dmat)
               dmat1 <- split (dmat, indx)["1"][[1]] # first off-diagonal
               expect_identical (d1, dmat1)
@@ -42,7 +44,7 @@ test_that("matrix structure for x only", {
               n <- 100
               x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
               colnames (x) <- c ("x", "y")
-              d1 <- geodist (x)
+              d1 <- geodist (x, measure = "haversine")
               d2 <- havdist (x)
               expect_identical (d1, d2)
 })
@@ -52,7 +54,7 @@ test_that("matrix structure for x y", {
               x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
               y <- cbind (-180 + 360 * runif (2 * n), -90 + 180 * runif (2 * n))
               colnames (x) <- colnames (y) <- c ("x", "y")
-              d1 <- geodist (x, y)
+              d1 <- geodist (x, y, measure = "haversine")
               d2 <- havdist (x, y)
               expect_identical (d1, d2)
 })
@@ -90,10 +92,12 @@ test_that("geodesic extreme cases", {
 })
 
 test_that ("geodist_benchmark", {
-               d <- geodist_benchmark (lon = 0, lat = 1, d = 100, n = 100)
+               d <- geodist_benchmark (lat = 1, d = 100, n = 100)
                expect_is (d, "matrix")
                expect_equal (nrow (d), 2)
-               expect_equal (ncol (d), 3)
+               expect_equal (ncol (d), 4)
                expect_equal (rownames (d), c ("absolute", "relative"))
-               expect_equal (colnames (d), c ("haversine", "vincenty", "cheap"))
+               expect_equal (colnames (d),
+                             c ("haversine", "vincenty",
+                                "vincenty_ellips", "cheap"))
 })

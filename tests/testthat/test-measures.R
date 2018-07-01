@@ -1,5 +1,7 @@
 context("geodist measures")
 
+test_all <- identical (Sys.getenv ("MPADGE_LOCAL"), "true")
+
 # all measures compared against geodesic
 
 test_that("measures", {
@@ -17,14 +19,22 @@ test_that("measures", {
                              "cheap")
               for (m in measures)
               {
-                  d1 <- geodist (x, measure = m)
-                  expect_true (max (abs (d1 - d0_x)) > 0)
-                  expect_true (cor (as.vector (d0_x), as.vector (d1)) > 0.99)
-                  d1 <- geodist (x, y, measure = m)
-                  expect_true (max (abs (d1 - d0_xy)) > 0)
-                  expect_true (cor (as.vector (d0_xy), as.vector (d1)) > 0.99)
-                  d1 <- geodist (x, measure = m, sequential = TRUE)
-                  expect_true (max (abs (d1 - d0_seq)) > 0)
-                  expect_true (cor (as.vector (d0_seq), as.vector (d1)) > 0.99)
+                  d1_x <- geodist (x, measure = m)
+                  d1_xy <- geodist (x, y, measure = m)
+                  d1_seq <- geodist (x, measure = m, sequential = TRUE)
+
+                  expect_true (max (abs (d1_x - d0_x)) > 0)
+                  expect_true (max (abs (d1_xy - d0_xy)) > 0)
+                  expect_true (max (abs (d1_seq - d0_seq)) > 0)
+
+                  if (test_all)
+                  {
+                      expect_true (cor (as.vector (d0_x),
+                                        as.vector (d1_x)) > 0.99)
+                      expect_true (cor (as.vector (d0_xy),
+                                        as.vector (d1_xy)) > 0.99)
+                      expect_true (cor (as.vector (d0_seq),
+                                        as.vector (d1_seq)) > 0.99)
+                  }
               }
 })

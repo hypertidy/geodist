@@ -1,4 +1,6 @@
-context("geodist")
+context("misc tests")
+
+test_all <- identical (Sys.getenv ("MPADGE_LOCAL"), "true")
 
 test_that ("sequential structure", {
               n <- 1e2
@@ -56,6 +58,8 @@ test_that("matrix structure for x y", {
 })
 
 test_that("geodesic extreme cases", {
+        if (test_all)
+        {
               x <- rbind (c (0, 0),
                           c (0, 1))
               colnames (x) <- c ("x", "y")
@@ -82,6 +86,7 @@ test_that("geodesic extreme cases", {
               m <- 20003930
               expect_true (abs (d [1, 2] - m) < 2) # it doesn't equal zero
               expect_true (abs (d [2, 1] - m) < 2) # it doesn't equal zero
+        }
 })
 
 test_that ("geodist_benchmark", {

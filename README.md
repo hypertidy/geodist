@@ -109,7 +109,7 @@ which it becomes extremely inaccurate. Average relative errors of
 Vincenty distances remain generally constant at around 0.2%, while
 relative errors of cheap-ruler distances out to 100km are around 1.6.
 
-![](fig/README-plot-1.png)
+![](vignettes/fig1.png)
 
 ### Performance comparison
 

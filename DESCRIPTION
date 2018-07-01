@@ -10,8 +10,10 @@ Description: Ultra lightweight, ultra fast calculation of geo distances.
 Depends: R (>= 3.2)
 License: GPL-3
 Suggests:
+    knitr,
     testthat
 NeedsCompilation: yes
+VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1.9000

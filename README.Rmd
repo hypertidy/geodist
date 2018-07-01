@@ -21,7 +21,20 @@ knitr::opts_chunk$set(
 # geodist
 
 An ultra-lightweight, zero-dependency package for very fast calculation of
-geodesic distances.
+geodesic distances. Main eponymous function, `geodist()`, accepts only one or
+two primary arguments, which must be rectagular objects with unambiguously
+labelled longitude and latitude columns (that is, some variant of `lon`/`lat`,
+or `x`/`y`).
+```{r, eval = FALSE}
+n <- 50
+x <- cbind (-10 + 20 * runif (n), -10 + 20 * runif (n))
+y <- cbind (-10 + 20 * runif (2 * n), -10 + 20 * runif (2 * n))
+colnames (x) <- colnames (y) <- c ("x", "y")
+d0 <- geodist (x) # A 50-by-50 matrix
+d1 <- geodist (x, y) # A 50-by-100 matrix
+d2 <- geodist (x, sequential = TRUE) # Vector of length 49
+d2 <- geodist (x, sequential = TRUE, pad = TRUE) # Vector of length 50
+```
 
 ## Installation
 
@@ -31,14 +44,6 @@ You can install geodist from github with:
 # install.packages("devtools")
 devtools::install_github("hypertidy/geodist")
 ```
-
-## Usage
-
-`geodist` contains only one eponymous function which accepts only one or two
-primary arguments, each of which must be some kind of rectangular object with
-unambiguously labelled longitude and latitude columns (that is, some variant of
-`lon`/`lat`, or `x`/`y`).
-
 ```{r, echo = FALSE, message = FALSE}
 devtools::load_all (".", export_all = FALSE)
 ```
@@ -50,7 +55,10 @@ library(geodist)
 packageVersion("geodist")
 ```
 
-Input can be in arbtirary rectangular format.
+
+## Detailed Usage
+
+Input(s) to the `geodist()` function can be in arbitrary rectangular format.
 
 ```{r}
 n <- 1e1
@@ -66,30 +74,111 @@ x <- cbind (-180 + 360 * runif (n),
 colnames (x) <- c ("lon", "lat", "a", "b")
 dim (geodist (x))
 ```
-Distances currently implemented are Haversine, Vincenty (spherical), and the very
-fast [mapbox cheap
+Distances currently implemented are Haversine, Vincenty (spherical and
+elliptical)), the very fast [mapbox cheap
 ruler](https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp)
 (see their [blog
-post](https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016)).
-These are determined by the `measure` parameter which takes one of
-`"haversine"`, `"vincenty"`, or `"cheap"`.
+post](https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016)),
+and the "reference" implementation of [Karney
+(2013)](https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf), as
+implemented in the package [`sf`](https://cran.r-project.org/package=sf). (Note
+that `geodist` does not accept
+[`sf`](https://cran.r-project.org/package=sf)-format objects; the
+[`sf`](https://cran.r-project.org/package=sf) package itself should be used for
+that.) Note that The [mapbox cheap ruler
+algorithm](https://github.com/mapbox/cheap-ruler-cpp) is intended to provide
+approximate yet very fast distance calculations within small (typically
+intra-urban) areas.
 
-It is also possible to calculate sequential distances along the rows of a
-rentangular object:
+
+### Benchmarks of geodetic accuracy
+
+The `geodist_benchmark()` function - the only other function provided by the
+`geodist` package - compares the accuracy of the different metrics to the
+nanometre-accuracy standard of [Karney
+(2013)](https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf).
 ```{r}
-d <- geodist (x, measure = "vincenty", sequential = TRUE)
-nrow (x); length (d)
-d <- geodist (x, measure = "vincenty", sequential = TRUE, pad = TRUE)
-nrow (x); length (d); head (d)
+geodist_benchmark (lat = 30, d = 1000)
 ```
-The `pad` argument pre-pends an `NA` to return a vector commensurate with input
-dimensions, and so able to be used directly in piped `dplyr` operations.
+All distances (`d)` are in metres, so that result indicates that all measures
+are accurate to within 1m over distances out to several km. The following plots
+compare the absolute and relative accuracies of the different distance measures
+implemented here.  The mapbox cheap ruler algorithm is the most accurate for
+distances out to around 100km, beyond which it becomes extremely inaccurate.
+Average relative errors of Vincenty distances remain generally constant at
+around 0.2%, while relative errors of cheap-ruler distances out to 100km are
+around 1.6.
 
-### Comparison
+
+```{r plot, eval = FALSE, echo = FALSE}
+lat <- 30
+d <- 10 ^ (1:35 / 5) # 1m to 100 km
+y <- lapply (d, function (i) geodist_benchmark (lat = lat, d = i))
+yabs <- do.call (rbind, lapply (y, function (i) i [1, ])) [, c (1, 2, 4)]
+yrel <- 100 * do.call (rbind, lapply (y, function (i) i [2, ])) [, c (1, 2, 4)]
+
+yvals <- list (yabs, yrel)
+cols <- c ("skyblue", "lawngreen", "tomato")
+par (mfrow = c (1, 2))
+ylabs <- c ("Absolute error (m)", "Relative error (%)")
+ylims <- list (range (yvals [[1]]), c (min (yvals [[2]]), 1))
+for (i in 1:2)
+{
+    plot (NULL, NULL, xlim = range (d / 1000), ylim = ylims [[i]],
+          bty = "l", log = "xy", xaxt = "n", yaxt = "n",
+          xlab = "distance (km)", ylab = ylabs [i])
+    axis (d / 1000, side = 1, at = c (0.001, 0.1, 10, 1e3, 1e4),
+          labels = c ("0.001", "0.1", "10", "1000", ""))
+    if (i == 1)
+    {
+        yl <- 10 ^ (-3:5)
+        axis (yvals [[i]], side = 2, at = c (0.001, 0.1, 10, 100, 10000),
+              labels = c ("0.001", "0.1", "10", "100", "1000"))
+    } else
+    {
+        yl <- c (0.1, 0.2, 0.3, 0.4, 0.5, 1, 2)
+        axis (yvals [[i]], side = 2, at = yl, 
+              labels = c ("0.1", "0.2", "0.3", "0.4", "0.5", "1", "2"))
+    }
+    junk <- sapply (yl, function (j)
+                    lines (range (d / 1000), rep (j, 2),
+                           col = "grey", lty = 2))
+
+    xl <- 10 ^ (-3:6)
+    junk <- sapply (xl, function (j)
+                    lines (rep (j, 2), range (yvals [[i]]),
+                           col = "grey", lty = 2))
+
+    for (j in 1:3)
+        lines (d / 1000, yvals [[i]] [, j], col = cols [j])
+    legend ("topleft", lwd = 1, col = cols, bty = "n",
+            legend = colnames (yvals [[i]]))
+}
+```
+![](fig/README-plot-1.png)
+
+
+### Performance comparison
+
+The following code demonstrates the relative speed advantages of the different
+distance measures implemented in the `geodist` package.
+```{r benchmark2}
+n <- 1e3
+dx <- dy <- 0.01
+x <- cbind (-100 + dx * runif (n), 20 + dy * runif (n))
+y <- cbind (-100 + dx * runif (2 * n), 20 + dy * runif (2 * n))
+colnames (x) <- colnames (y) <- c ("x", "y")
+rbenchmark::benchmark (replications = 10, order = "test",
+                       d1 <- geodist (x, measure = "cheap"),
+                       d2 <- geodist (x, measure = "haversine"),
+                       d3 <- geodist (x, measure = "vincenty"),
+                       d4 <- geodist (x, measure = "geodesic")) [, 1:4]
+```
 
 Geodesic distance calculation is available in the [`sf`
-package](https://cran.r-project.org/package=sf), requiring only conversion of
-sets of numeric lon-lat points to `sf` form with the following code:
+package](https://cran.r-project.org/package=sf). Comparing computation speeds
+requires conversion of sets of numeric lon-lat points to `sf` form with the
+following code:
 ```{r x_to_sf}
 require (magrittr)
 x_to_sf <- function (x)
@@ -100,14 +189,9 @@ x_to_sf <- function (x)
     sf::st_sfc (crs = 4326)
 }
 ```
-Note that the relevant function, `sf::st_distance()` calculates geodesic
-distances using the methods developed by [Karney
-(2013)](https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf),
-also provided in this package through internally-bundled code (available
-[here](https://geographiclib.sourceforge.io/geod.html)).
 
 ```{r benchmark}
-n <- 1e3
+n <- 1e2
 x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
 colnames (x) <- c ("x", "y")
 xsf <- x_to_sf (x)
@@ -127,6 +211,11 @@ All results are in metres, so the two differ by only around 10 nanometres.
 
 The [`geosphere` package](https://cran.r-project.org/package=geosphere) also
 offers sequential calculation which is benchmarked with the following code:
+```{r, echo = FALSE}
+n <- 1e4
+x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
+colnames (x) <- c ("x", "y")
+```
 ```{r sequential}
 fgeodist <- function () geodist (x, measure = "vincenty", sequential = TRUE)
 fgeosph <- function () geosphere::distVincentySphere (x)
@@ -134,68 +223,6 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
                        fgeosph ()) [, 1:4]
 ```
-
-
-The [mapbox cheap ruler
-algorithm](https://github.com/mapbox/cheap-ruler-cpp) provides approximate yet
-very fast distance calculations within small (typically intra-urban) areas.
-Speed advantages are demonstrated in the following code:
-```{r benchmark2}
-n <- 1e3
-dx <- dy <- 0.01
-x <- cbind (-100 + dx * runif (n), 20 + dy * runif (n))
-y <- cbind (-100 + dx * runif (2 * n), 20 + dy * runif (2 * n))
-colnames (x) <- colnames (y) <- c ("x", "y")
-rbenchmark::benchmark (replications = 10, order = "test",
-                       d1 <- geodist (x, measure = "cheap"),
-                       d2 <- geodist (x, measure = "haversine"),
-                       d3 <- geodist (x, measure = "vincenty"),
-                       d4 <- geodist (x, measure = "geodesic")) [, 1:4]
-```
-
-Finally, what everybody probably most wants to know ... Is the extra time to
-calculate highly accurate geodesic distances really worthwhile? The answer
-depends of course on the scale of distances involved, but the following graph
-provides a visual aid to answering this question.
-```{r plot, eval = FALSE, echo = FALSE}
-n <- 1e3
-x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
-# plus some shorter distances
-x <- rbind (x, cbind (2 * runif (10) - 1, 2 * runif (n) - 1))
-colnames (x) <- c ("x", "y")
-d0 <- geodist (x, measure = "geodesic") # reference dists
-d1 <- abs (geodist (x, measure = "vincenty") - d0)
-d2 <- abs (geodist (x, measure = "cheap") - d0)
-d0 <- d0 [upper.tri (d0)]
-indx <- order (d0)
-d0 <- d0 [indx]
-d1mod <- approx (d0, d1 [upper.tri (d1)] [indx], n = n)
-d1mod <- lapply (d1mod, function (i) i / 1000) # convert to km
-d2mod <- approx (d0, d2 [upper.tri (d2)] [indx], n = n)
-d2mod <- lapply (d2mod, function (i) i / 1000) # convert to km
-
-par (mfrow = c (1, 2))
-plot (d1mod$x, d1mod$y, "l", log = "xy", col = "blue",
-      xlim = c (1, max (d1mod$x)), ylim = range (c (d1mod$y, d2mod$y)),
-      xlab = "distance (km)", ylab = "error", main = "Absolute error (m)")
-lines (d1mod$x, d1mod$x, col = "grey", lty = 2)
-lines (d2mod$x, d2mod$y, col = "red")
-legend ("topleft", lwd = 1, col = c ("blue", "red"), bty = "n",
-        legend = c ("vincenty", "cheap"))
-
-d1mod <- approx (d0, d1 [upper.tri (d1)] [indx] / d0, n = n)
-d2mod <- approx (d0, d2 [upper.tri (d2)] [indx] / d0, n = n)
-plot (d1mod$x / 1000, 100 * d1mod$y, "l", col = "blue", log = "xy",
-      ylim = 100 * range (c (d1mod$y, d2mod$y)),
-      xlab = "distance (km)", ylab = "error", main = "Relative error (%)")
-lines (d2mod$x / 1000, 100 * d2mod$y, col = "red")
-```
-![](fig/README-plot-1.png)
-
-The mapbox cheap ruler algorithm is actually even more accurate than Vincenty
-for distances below a few hundred kilometres, beyond which it becomes extremely
-inaccurate. Average relative errors of Vincenty distances remain generally
-constant at around 0.2%.
 
 
 

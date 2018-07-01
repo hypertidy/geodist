@@ -24,13 +24,25 @@
 #' @note \code{measure = "cheap"} denotes the mapbox cheap ruler
 #' \url{https://github.com/mapbox/cheap-ruler-cpp}; \code{measure = "geodetic"}
 #' denotes the very accurate geodetic methods given in Kearney (2013)
-#' "Algorithms for geodesics" J Geod 87:43-55.
+#' "Algorithms for geodesics" J Geod 87:43-55, and as provided by the 
+#' code{sf::st_dist()} function.
 #'
 #' @export
 #' @useDynLib geodist R_haversine R_vincenty R_cheap_xy
 #' @useDynLib geodist R_haversine_xy R_vincenty_xy R_cheap_xy
 #' @useDynLib geodist R_haversine_seq R_vincenty_seq R_cheap_seq
-geodist <- function (x, y, sequential = FALSE, pad = FALSE, measure = "haversine")
+#'
+#' @examples
+#' n <- 50
+#' x <- cbind (-10 + 20 * runif (n), -10 + 20 * runif (n))
+#' y <- cbind (-10 + 20 * runif (2 * n), -10 + 20 * runif (2 * n))
+#' colnames (x) <- colnames (y) <- c ("x", "y")
+#' d0 <- geodist (x) # A 50-by-50 matrix
+#' d1 <- geodist (x, y) # A 50-by-100 matrix
+#' d2 <- geodist (x, sequential = TRUE) # Vector of length 49
+#' d2 <- geodist (x, sequential = TRUE, pad = TRUE) # Vector of length 50
+#' d0_2 <- geodist (x, measure = "geodesic") # nanometre-accurate version of d0
+geodist <- function (x, y, sequential = FALSE, pad = FALSE, measure = "cheap")
 {
     measures <- c ("haversine", "vincenty", "cheap", "vincenty_ellips",
                    "geodesic")
@@ -68,9 +80,11 @@ geodist_seq <- function (x, measure, pad)
         res <- matrix (.Call("R_geodesic_seq", as.vector (x)), nrow = nrow (x))
     else
         res <- matrix (.Call("R_cheap_seq", as.vector (x)), nrow = nrow (x))
+    indx <- 1:length (res)
     if (!pad)
-        res <- res [2:length (res)]
-    return (res)
+        indx <- 2:length (res)
+
+    return (res [indx]) # implicitly converts to vector
 }
 
 geodist_x <- function (x, measure)

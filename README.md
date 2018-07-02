@@ -4,9 +4,9 @@
 Status](https://travis-ci.org/hypertidy/geodist.svg)](https://travis-ci.org/hypertidy/geodist)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/geodist?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/geodist)
-[![Project Status: WIP – Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
-public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![codecov](https://codecov.io/gh/hypertidy/geodist/branch/master/graph/badge.svg)](https://codecov.io/gh/hypertidy/geodist)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/geodist)](http://cran.r-project.org/web/packages/geodist)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geodist)
@@ -97,9 +97,9 @@ to the nanometre-accuracy standard of [Karney
 
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
-#>            haversine    vincenty      cheap
-#> absolute 0.853561767 0.853561767 0.60065425
-#> relative 0.002147743 0.002147743 0.00159435
+#>            haversine    vincenty       cheap
+#> absolute 0.734638856 0.734638856 0.564186803
+#> relative 0.002013229 0.002013229 0.001581673
 ```
 
 All distances (`d)` are in metres, so that result indicates that all
@@ -130,10 +130,10 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d3 <- geodist (x, measure = "vincenty"),
                        d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.063    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.176    2.794
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.270    4.286
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.098   49.175
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.066    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.176    2.667
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.272    4.121
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.188   48.303
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -175,7 +175,7 @@ Confirm that the two give almost identical results:
 ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
 dg <- geodist (x, measure = "geodesic")
 formatC (max (abs (ds - dg)), format = "e")
-#> [1] "7.4506e-09"
+#> [1] "1.1176e-08"
 ```
 
 All results are in metres, so the two differ by only around 10
@@ -193,8 +193,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
                        fgeosph ()) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.023    1.000
-#> 2  fgeosph()           10   0.048    2.087
+#> 1 fgeodist()           10   0.023     1.00
+#> 2  fgeosph()           10   0.049     2.13
 ```
 
 ### Test Results
@@ -206,7 +206,7 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Mon Jul  2 10:07:00 2018"
+#> [1] "Mon Jul  2 10:10:40 2018"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist
@@ -222,6 +222,4 @@ devtools::test("tests/")
 #> Failed:   0
 #> Warnings: 0
 #> Skipped:  0
-#> 
-#> Your tests are magnificent!
 ```

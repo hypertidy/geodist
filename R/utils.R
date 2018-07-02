@@ -64,8 +64,14 @@ find_xy_cols <- function (obj)
     {
         ix <- which (grepl ("x", nms, ignore.case = TRUE) |
                      grepl ("lon", nms, ignore.case = TRUE))
+        if (length (ix) > 0)
+            ix <- which (grepl ("^x", nms, ignore.case = TRUE) |
+                         grepl ("lon", nms, ignore.case = TRUE))
         iy <- which (grepl ("y", nms, ignore.case = TRUE) |
                      grepl ("lat", nms, ignore.case = TRUE))
+        if (length (iy) > 0)
+            iy <- which (grepl ("^y", nms, ignore.case = TRUE) |
+                         grepl ("lat", nms, ignore.case = TRUE))
     } else
     {
         message ("object has no named columns; assuming order is lon then lat")

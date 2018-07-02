@@ -39,3 +39,15 @@ test_that("geodist with matrix", {
               expect_true (all (d2 > 0))
               expect_true (all (d2 >= 0))
 })
+
+test_that ("other columns", {
+               n <- 50
+               x <- cbind (-10 + 20 * runif (n), -10 + 20 * runif (n))
+               y <- cbind (-10 + 20 * runif (2 * n), -10 + 20 * runif (2 * n))
+               colnames (x) <- colnames (y) <- c ("x", "y")
+               d <- geodist (x, y)
+               x1 <- cbind (newx = runif (n), newy = runif (n), x)
+               y1 <- cbind (newx = runif (n), newy = runif (n), y)
+               d1 <- geodist (x1, y1)
+               expect_identical (d, d1)
+})

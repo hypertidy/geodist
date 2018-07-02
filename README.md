@@ -2,6 +2,8 @@
 
 [![Build
 Status](https://travis-ci.org/hypertidy/geodist.svg)](https://travis-ci.org/hypertidy/geodist)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/geodist?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/geodist)
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
@@ -95,9 +97,9 @@ to the nanometre-accuracy standard of [Karney
 
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
-#>            haversine    vincenty       cheap
-#> absolute 0.836551561 0.836551562 0.594188257
-#> relative 0.002155514 0.002155514 0.001616718
+#>            haversine    vincenty      cheap
+#> absolute 0.853561767 0.853561767 0.60065425
+#> relative 0.002147743 0.002147743 0.00159435
 ```
 
 All distances (`d)` are in metres, so that result indicates that all
@@ -128,10 +130,10 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d3 <- geodist (x, measure = "vincenty"),
                        d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.060    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.174    2.900
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.265    4.417
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.091   51.517
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.063    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.176    2.794
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.270    4.286
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.098   49.175
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -163,8 +165,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                       geo_dist (x)) [, 1:4]
 #> Linking to GEOS 3.6.2, GDAL 2.3.0, proj.4 5.0.1
 #>           test replications elapsed relative
-#> 2  geo_dist(x)           10   0.064    1.000
-#> 1 sf_dist(xsf)           10   0.209    3.266
+#> 2  geo_dist(x)           10   0.067    1.000
+#> 1 sf_dist(xsf)           10   0.212    3.164
 ```
 
 Confirm that the two give almost identical results:
@@ -191,8 +193,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
                        fgeosph ()) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.024    1.000
-#> 2  fgeosph()           10   0.047    1.958
+#> 1 fgeodist()           10   0.023    1.000
+#> 2  fgeosph()           10   0.048    2.087
 ```
 
 ### Test Results
@@ -204,66 +206,13 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Mon Jul  2 09:58:45 2018"
+#> [1] "Mon Jul  2 10:07:00 2018"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist
 #> ✔ | OK F W S | Context
-#> 
-⠏ |  0       | misc tests
-⠋ |  1       | misc tests
-⠙ |  2       | misc tests
-⠹ |  3       | misc tests
-⠸ |  4       | misc tests
-⠼ |  5       | misc tests
-⠴ |  6       | misc tests
-⠦ |  7       | misc tests
-⠧ |  8       | misc tests
-⠇ |  9       | misc tests
-⠏ | 10       | misc tests
-⠋ | 11       | misc tests
-⠙ | 12       | misc tests
-⠹ | 13       | misc tests
-⠸ | 14       | misc tests
-⠼ | 15       | misc tests
-⠴ | 16       | misc tests
-⠦ | 17       | misc tests
 ✔ | 17       | misc tests
-#> 
-⠏ |  0       | geodist input formats
-⠋ |  1       | geodist input formats
-⠙ |  2       | geodist input formats
-⠹ |  3       | geodist input formats
-⠸ |  4       | geodist input formats
-⠼ |  5       | geodist input formats
-⠴ |  6       | geodist input formats
-⠦ |  7       | geodist input formats
-⠧ |  8       | geodist input formats
-⠇ |  9       | geodist input formats
-⠏ | 10       | geodist input formats
-⠋ | 11       | geodist input formats
-⠙ | 12       | geodist input formats
 ✔ | 12       | geodist input formats
-#> 
-⠏ |  0       | geodist measures
-⠋ |  1       | geodist measures
-⠙ |  2       | geodist measures
-⠹ |  3       | geodist measures
-⠸ |  4       | geodist measures
-⠼ |  5       | geodist measures
-⠴ |  6       | geodist measures
-⠦ |  7       | geodist measures
-⠧ |  8       | geodist measures
-⠇ |  9       | geodist measures
-⠏ | 10       | geodist measures
-⠋ | 11       | geodist measures
-⠙ | 12       | geodist measures
-⠹ | 13       | geodist measures
-⠸ | 14       | geodist measures
-⠼ | 15       | geodist measures
-⠴ | 16       | geodist measures
-⠦ | 17       | geodist measures
-⠧ | 18       | geodist measures
 ✔ | 18       | geodist measures
 #> 
 #> ══ Results ════════════════════════════════════════════════════════════════
@@ -273,4 +222,6 @@ devtools::test("tests/")
 #> Failed:   0
 #> Warnings: 0
 #> Skipped:  0
+#> 
+#> Your tests are magnificent!
 ```

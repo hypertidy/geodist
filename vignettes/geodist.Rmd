@@ -58,8 +58,8 @@ colnames (x) <- c ("lon", "lat", "a", "b")
 dim (geodist (x))
 #> [1] 10 10
 ```
-Distances currently implemented are Haversine, Vincenty (spherical and
-elliptical)), the very fast [mapbox cheap
+Distances currently implemented are Haversine, Vincenty (spherical), the very
+fast [mapbox cheap
 ruler](https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp)
 (see their [blog
 post](https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016)),
@@ -71,8 +71,8 @@ that `geodist` does not accept
 [`sf`](https://cran.r-project.org/package=sf) package itself should be used for
 that.) Note that The [mapbox cheap ruler
 algorithm](https://github.com/mapbox/cheap-ruler-cpp) is intended to provide
-approximate yet very fast distance calculations within small (typically
-intra-urban) areas.
+approximate yet very fast distance calculations within small areas (typically
+the size of single cities or study sites).
 
 
 ### Benchmarks of geodetic accuracy
@@ -83,9 +83,9 @@ nanometre-accuracy standard of [Karney
 (2013)](https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf).
 ```{r geodist_benchmark, eval = FALSE}
 geodist_benchmark (lat = 30, d = 1000)
-#>            haversine    vincenty vincenty_ellips       cheap
-#> absolute 0.762938028 0.762938028     0.762938028 0.565866290
-#> relative 0.002058837 0.002058837     0.002058837 0.001577529
+#>            haversine    vincenty       cheap
+#> absolute 0.836551561 0.836551562 0.594188257
+#> relative 0.002155514 0.002155514 0.001616718
 ```
 All distances (`d)` are in metres, so that result indicates that all measures
 are accurate to within 1m over distances out to several km. The following plots
@@ -94,7 +94,7 @@ implemented here.  The mapbox cheap ruler algorithm is the most accurate for
 distances out to around 100km, beyond which it becomes extremely inaccurate.
 Average relative errors of Vincenty distances remain generally constant at
 around 0.2%, while relative errors of cheap-ruler distances out to 100km are
-around 1.6.
+around 0.16%.
 
 
 ```{r plot, eval = FALSE, echo = FALSE}
@@ -203,7 +203,7 @@ Confirm that the two give almost identical results:
 ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
 dg <- geodist (x, measure = "geodesic")
 formatC (max (abs (ds - dg)), format = "e")
-#> [1] "1.1632e+03"
+#> [1] "7.4506e-09"
 ```
 All results are in metres, so the two differ by only around 10 nanometres.
 

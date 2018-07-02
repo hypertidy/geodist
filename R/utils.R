@@ -11,8 +11,7 @@
 geodist_benchmark <- function (lat = 0, d = 1, n = 1e2)
 {
     lon <- 0
-    dist_methods <- c ("geodesic", "haversine", "vincenty",
-                       "vincenty_ellips", "cheap")
+    dist_methods <- c ("geodesic", "haversine", "vincenty", "cheap")
     delta <- get_delta (lon, lat, d)
     x <- cbind ((lon - delta / 2) + delta * runif (n),
                 (lat - delta / 2) + delta * runif (n))

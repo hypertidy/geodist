@@ -60,44 +60,41 @@ test_that("matrix structure for x y", {
 })
 
 test_that("geodesic extreme cases", {
-        if (test_all)
-        {
+              # TODO: Write some real tests here
               x <- rbind (c (0, 0),
                           c (0, 1))
               colnames (x) <- c ("x", "y")
               d <- geodist (x, measure = "geodesic")
-              expect_true (sum (diag (d)) > 0)
+              expect_true (sum (diag (d)) == 0)
 
               x <- rbind (c (0, 0),
                           c (0, 90))
               colnames (x) <- c ("x", "y")
               d <- geodist (x, measure = "geodesic")
-              expect_true (sum (diag (d)) > 0)
+              expect_true (sum (diag (d)) == 0)
 
               x <- rbind (c (0, 0),
                           c (1, 0))
               colnames (x) <- c ("x", "y")
               d <- geodist (x, measure = "geodesic")
-              expect_true (sum (diag (d)) > 0)
+              expect_true (sum (diag (d)) == 0)
 
               x <- rbind (c (0, 0),
                           c (180, 0))
               colnames (x) <- c ("x", "y")
               d <- geodist (x, measure = "geodesic")
-              expect_true (sum (diag (d)) > 0)
+              expect_true (sum (diag (d)) == 0)
               m <- 20003930
               expect_true (abs (d [1, 2] - m) < 2) # it doesn't equal zero
               expect_true (abs (d [2, 1] - m) < 2) # it doesn't equal zero
-        }
 })
 
 test_that ("geodist_benchmark", {
                d <- geodist_benchmark (lat = 1, d = 100, n = 100)
                expect_is (d, "matrix")
                expect_equal (nrow (d), 2)
-               expect_equal (ncol (d), 4)
+               expect_equal (ncol (d), 3)
                expect_equal (rownames (d), c ("absolute", "relative"))
                expect_equal (colnames (d),
-                             c ("haversine", "vincenty",
-                                "vincenty_ellips", "cheap"))
+                             c ("haversine", "vincenty", "cheap"))
 })

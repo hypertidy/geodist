@@ -114,8 +114,10 @@ around 1.6.
 lat <- 30
 d <- 10 ^ (1:35 / 5) # 1m to 100 km
 y <- lapply (d, function (i) geodist_benchmark (lat = lat, d = i))
-yabs <- do.call (rbind, lapply (y, function (i) i [1, ])) [, c (1, 2, 4)]
-yrel <- 100 * do.call (rbind, lapply (y, function (i) i [2, ])) [, c (1, 2, 4)]
+#yabs <- do.call (rbind, lapply (y, function (i) i [1, ])) [, c (1, 2, 4)]
+#yrel <- 100 * do.call (rbind, lapply (y, function (i) i [2, ])) [, c (1, 2, 4)]
+yabs <- do.call (rbind, lapply (y, function (i) i [1, ]))
+yrel <- 100 * do.call (rbind, lapply (y, function (i) i [2, ]))
 
 yvals <- list (yabs, yrel)
 cols <- c ("skyblue", "lawngreen", "tomato")
@@ -149,7 +151,7 @@ for (i in 1:2)
                     lines (rep (j, 2), range (yvals [[i]]),
                            col = "grey", lty = 2))
 
-    for (j in 1:3)
+    for (j in (1:ncol (yabs)) [-1])
         lines (d / 1000, yvals [[i]] [, j], col = cols [j])
     legend ("topleft", lwd = 1, col = cols, bty = "n",
             legend = colnames (yvals [[i]]))
@@ -195,7 +197,7 @@ n <- 1e2
 x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
 colnames (x) <- c ("x", "y")
 xsf <- x_to_sf (x)
-sf_dist <- function (x) sf::st_distance (x, x)
+sf_dist <- function (xsf) sf::st_distance (xsf, xsf)
 geo_dist <- function (x) geodist (x, measure = "geodesic")
 rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),

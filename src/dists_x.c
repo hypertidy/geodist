@@ -84,51 +84,6 @@ SEXP R_vincenty (SEXP x_)
     return out;
 }
 
-//' R_vincenty_ellips
-//' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
-//' @noRd
-SEXP R_vincenty_ellips (SEXP x_)
-{
-    size_t n = floor (length (x_) / 2);
-    size_t n2 = n * n;
-    SEXP out = PROTECT (allocVector (REALSXP, n2));
-    double *rx, *rout;
-    rx = REAL (x_);
-    rout = REAL (out);
-
-    double U [n];
-    for (size_t i = 0; i < n; i++)
-    {
-        U [i] = atan ((1.0 - flattening) * tan (rx [n + i] * M_PI / 180.0));
-        rout [i * n + i] = 0.0;
-    }
-
-    for (size_t i = 0; i < (n - 1); i++)
-    {
-        if (i % 100 == 0)
-            R_CheckUserInterrupt ();
-        for (size_t j = (i + 1); j < n; j++)
-        {
-            double L = ((rx [j] - rx [i]) * M_PI / 180.0);
-
-            size_t indx1 = i * n + j;
-            size_t indx2 = j * n + i;
-            double s = one_vincenty_ellips (U [i], U [j], L);
-            if (s < 0.0) // default to spherical vincenty
-                s = one_vincenty (rx [i], rx [n + i], rx [j], rx [n + j],
-                        sin (rx [n + i] * M_PI / 180.0),
-                        cos (rx [n + i] * M_PI / 180.0),
-                        sin (rx [n + j] * M_PI / 180.0),
-                        cos (rx [n + j] * M_PI / 180.0));
-            rout [indx1] = rout [indx2] = s;
-        }
-    }
-
-    UNPROTECT (1);
-
-    return out;
-}
-
 //' R_cheap
 //' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
 //' @noRd
@@ -185,6 +140,9 @@ SEXP R_geodesic (SEXP x_)
     double *rx, *rout;
     rx = REAL (x_);
     rout = REAL (out);
+
+    for (size_t i = 0; i < n; i++)
+        rout [i * n + i] = 0.0;
 
     for (size_t i = 0; i < (n - 1); i++)
     {

@@ -44,8 +44,7 @@
 #' d0_2 <- geodist (x, measure = "geodesic") # nanometre-accurate version of d0
 geodist <- function (x, y, sequential = FALSE, pad = FALSE, measure = "cheap")
 {
-    measures <- c ("haversine", "vincenty", "cheap", "vincenty_ellips",
-                   "geodesic")
+    measures <- c ("haversine", "vincenty", "cheap", "geodesic")
     measure <- match.arg (tolower (measure), measures)
     x <- convert_to_matrix (x)
     if (!missing (y))
@@ -93,8 +92,6 @@ geodist_x <- function (x, measure)
         matrix (.Call("R_haversine", as.vector (x)), nrow = nrow (x))
     else if (measure == "vincenty")
         matrix (.Call("R_vincenty", as.vector (x)), nrow = nrow (x))
-    else if (measure == "vincenty_ellips")
-        matrix (.Call("R_vincenty_ellips", as.vector (x)), nrow = nrow (x))
     else if (measure == "geodesic")
         matrix (.Call("R_geodesic", as.vector (x)), nrow = nrow (x))
     else
@@ -107,9 +104,6 @@ geodist_xy <- function (x, y, measure)
         res <- .Call ("R_haversine_xy", as.vector (x), as.vector (y))
     else if (measure == "vincenty")
         res <- .Call ("R_vincenty_xy", as.vector (x), as.vector (y))
-    else if (measure == "vincenty_ellips")
-        res <- matrix (.Call("R_vincenty_ellips_xy", 
-                             as.vector (x), as.vector (y)))
     else if (measure == "geodesic")
         res <- .Call("R_geodesic_xy", as.vector (x), as.vector (y))
     else if (measure == "cheap")

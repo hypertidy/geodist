@@ -95,9 +95,9 @@ to the nanometre-accuracy standard of [Karney
 
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
-#>            haversine    vincenty vincenty_ellips       cheap
-#> absolute 0.762938028 0.762938028     0.762938028 0.565866290
-#> relative 0.002058837 0.002058837     0.002058837 0.001577529
+#>            haversine    vincenty       cheap
+#> absolute 0.836551561 0.836551562 0.594188257
+#> relative 0.002155514 0.002155514 0.001616718
 ```
 
 All distances (`d)` are in metres, so that result indicates that all
@@ -128,10 +128,10 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d3 <- geodist (x, measure = "vincenty"),
                        d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.058    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.185    3.190
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.276    4.759
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.106   53.552
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.060    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.174    2.900
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.265    4.417
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.091   51.517
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -156,15 +156,15 @@ n <- 1e2
 x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
 colnames (x) <- c ("x", "y")
 xsf <- x_to_sf (x)
-sf_dist <- function (x) sf::st_distance (x, x)
+sf_dist <- function (xsf) sf::st_distance (xsf, xsf)
 geo_dist <- function (x) geodist (x, measure = "geodesic")
 rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
                       geo_dist (x)) [, 1:4]
 #> Linking to GEOS 3.6.2, GDAL 2.3.0, proj.4 5.0.1
 #>           test replications elapsed relative
-#> 2  geo_dist(x)           10   0.066    1.000
-#> 1 sf_dist(xsf)           10   0.210    3.182
+#> 2  geo_dist(x)           10   0.064    1.000
+#> 1 sf_dist(xsf)           10   0.209    3.266
 ```
 
 Confirm that the two give almost identical results:
@@ -173,7 +173,7 @@ Confirm that the two give almost identical results:
 ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
 dg <- geodist (x, measure = "geodesic")
 formatC (max (abs (ds - dg)), format = "e")
-#> [1] "1.1632e+03"
+#> [1] "7.4506e-09"
 ```
 
 All results are in metres, so the two differ by only around 10
@@ -191,8 +191,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
                        fgeosph ()) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.022    1.000
-#> 2  fgeosph()           10   0.048    2.182
+#> 1 fgeodist()           10   0.024    1.000
+#> 2  fgeosph()           10   0.047    1.958
 ```
 
 ### Test Results
@@ -204,19 +204,72 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Sun Jul  1 19:45:57 2018"
+#> [1] "Mon Jul  2 09:58:45 2018"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist
 #> ✔ | OK F W S | Context
+#> 
+⠏ |  0       | misc tests
+⠋ |  1       | misc tests
+⠙ |  2       | misc tests
+⠹ |  3       | misc tests
+⠸ |  4       | misc tests
+⠼ |  5       | misc tests
+⠴ |  6       | misc tests
+⠦ |  7       | misc tests
+⠧ |  8       | misc tests
+⠇ |  9       | misc tests
+⠏ | 10       | misc tests
+⠋ | 11       | misc tests
+⠙ | 12       | misc tests
+⠹ | 13       | misc tests
+⠸ | 14       | misc tests
+⠼ | 15       | misc tests
+⠴ | 16       | misc tests
+⠦ | 17       | misc tests
 ✔ | 17       | misc tests
+#> 
+⠏ |  0       | geodist input formats
+⠋ |  1       | geodist input formats
+⠙ |  2       | geodist input formats
+⠹ |  3       | geodist input formats
+⠸ |  4       | geodist input formats
+⠼ |  5       | geodist input formats
+⠴ |  6       | geodist input formats
+⠦ |  7       | geodist input formats
+⠧ |  8       | geodist input formats
+⠇ |  9       | geodist input formats
+⠏ | 10       | geodist input formats
+⠋ | 11       | geodist input formats
+⠙ | 12       | geodist input formats
 ✔ | 12       | geodist input formats
-✔ | 24       | geodist measures [0.2 s]
+#> 
+⠏ |  0       | geodist measures
+⠋ |  1       | geodist measures
+⠙ |  2       | geodist measures
+⠹ |  3       | geodist measures
+⠸ |  4       | geodist measures
+⠼ |  5       | geodist measures
+⠴ |  6       | geodist measures
+⠦ |  7       | geodist measures
+⠧ |  8       | geodist measures
+⠇ |  9       | geodist measures
+⠏ | 10       | geodist measures
+⠋ | 11       | geodist measures
+⠙ | 12       | geodist measures
+⠹ | 13       | geodist measures
+⠸ | 14       | geodist measures
+⠼ | 15       | geodist measures
+⠴ | 16       | geodist measures
+⠦ | 17       | geodist measures
+⠧ | 18       | geodist measures
+✔ | 18       | geodist measures
 #> 
 #> ══ Results ════════════════════════════════════════════════════════════════
-#> Duration: 0.3 s
+#> Duration: 0.2 s
 #> 
-#> OK:       53
+#> OK:       47
 #> Failed:   0
 #> Warnings: 0
 #> Skipped:  0

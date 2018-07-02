@@ -86,10 +86,10 @@ implemented in the package [`sf`](https://cran.r-project.org/package=sf). (Note
 that `geodist` does not accept
 [`sf`](https://cran.r-project.org/package=sf)-format objects; the
 [`sf`](https://cran.r-project.org/package=sf) package itself should be used for
-that.) Note that The [mapbox cheap ruler
+that.) The [mapbox cheap ruler
 algorithm](https://github.com/mapbox/cheap-ruler-cpp) is intended to provide
-approximate yet very fast distance calculations within small (typically
-intra-urban) areas.
+approximate yet very fast distance calculations within small areas (tens to a few
+hundred kilometres across).
 
 
 ### Benchmarks of geodetic accuracy
@@ -101,14 +101,14 @@ nanometre-accuracy standard of [Karney
 ```{r}
 geodist_benchmark (lat = 30, d = 1000)
 ```
-All distances (`d)` are in metres, so that result indicates that all measures
-are accurate to within 1m over distances out to several km. The following plots
-compare the absolute and relative accuracies of the different distance measures
-implemented here.  The mapbox cheap ruler algorithm is the most accurate for
-distances out to around 100km, beyond which it becomes extremely inaccurate.
-Average relative errors of Vincenty distances remain generally constant at
-around 0.2%, while relative errors of cheap-ruler distances out to 100km are
-around 1.6.
+All distances (`d)` are in metres, and all measures are accurate to within 1m
+over distances out to several km (at the chosen latitude of 30 degrees). The
+following plots compare the absolute and relative accuracies of the different
+distance measures implemented here.  The mapbox cheap ruler algorithm is the
+most accurate for distances out to around 100km, beyond which it becomes
+extremely inaccurate.  Average relative errors of Vincenty distances remain
+generally constant at around 0.2%, while relative errors of cheap-ruler
+distances out to 100km are around 0.16%.
 
 
 ```{r plot, eval = FALSE, echo = FALSE}
@@ -227,6 +227,9 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeosph ()) [, 1:4]
 ```
 
+`geodist` is thus around 3 times faster than `sf` for highly accurate geodesic
+distance calculations, and around twice as fast as `geosphere` for calculation
+of sequential distances.
 
 
 ### Test Results

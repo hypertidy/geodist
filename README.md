@@ -46,7 +46,7 @@ library(geodist)
 ``` r
 # current verison
 packageVersion("geodist")
-#> [1] '0.0.0.9000'
+#> [1] '0.0.1'
 ```
 
 ## Detailed Usage
@@ -83,10 +83,10 @@ as implemented in the package
 [`sf`](https://cran.r-project.org/package=sf). (Note that `geodist` does
 not accept [`sf`](https://cran.r-project.org/package=sf)-format objects;
 the [`sf`](https://cran.r-project.org/package=sf) package itself should
-be used for that.) Note that The [mapbox cheap ruler
+be used for that.) The [mapbox cheap ruler
 algorithm](https://github.com/mapbox/cheap-ruler-cpp) is intended to
 provide approximate yet very fast distance calculations within small
-(typically intra-urban) areas.
+areas (tens to a few hundred kilometres across).
 
 ### Benchmarks of geodetic accuracy
 
@@ -98,18 +98,19 @@ to the nanometre-accuracy standard of [Karney
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
 #>            haversine    vincenty       cheap
-#> absolute 0.734638856 0.734638856 0.564186803
-#> relative 0.002013229 0.002013229 0.001581673
+#> absolute 0.821979685 0.821979685 0.573589772
+#> relative 0.002206036 0.002206036 0.001613667
 ```
 
-All distances (`d)` are in metres, so that result indicates that all
-measures are accurate to within 1m over distances out to several km. The
-following plots compare the absolute and relative accuracies of the
-different distance measures implemented here. The mapbox cheap ruler
-algorithm is the most accurate for distances out to around 100km, beyond
-which it becomes extremely inaccurate. Average relative errors of
-Vincenty distances remain generally constant at around 0.2%, while
-relative errors of cheap-ruler distances out to 100km are around 1.6.
+All distances (`d)` are in metres, and all measures are accurate to
+within 1m over distances out to several km (at the chosen latitude of 30
+degrees). The following plots compare the absolute and relative
+accuracies of the different distance measures implemented here. The
+mapbox cheap ruler algorithm is the most accurate for distances out to
+around 100km, beyond which it becomes extremely inaccurate. Average
+relative errors of Vincenty distances remain generally constant at
+around 0.2%, while relative errors of cheap-ruler distances out to 100km
+are around 0.16%.
 
 ![](vignettes/fig1.png)
 
@@ -130,10 +131,10 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d3 <- geodist (x, measure = "vincenty"),
                        d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.066    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.176    2.667
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.272    4.121
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.188   48.303
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.158    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.243    1.538
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.394    2.494
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   4.559   28.854
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -163,10 +164,10 @@ geo_dist <- function (x) geodist (x, measure = "geodesic")
 rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
                       geo_dist (x)) [, 1:4]
-#> Linking to GEOS 3.6.2, GDAL 2.3.0, proj.4 5.0.1
+#> Linking to GEOS 3.5.0, GDAL 2.1.3, proj.4 4.9.2
 #>           test replications elapsed relative
-#> 2  geo_dist(x)           10   0.067    1.000
-#> 1 sf_dist(xsf)           10   0.212    3.164
+#> 2  geo_dist(x)           10   0.080    1.000
+#> 1 sf_dist(xsf)           10   0.353    4.412
 ```
 
 Confirm that the two give almost identical results:
@@ -175,7 +176,7 @@ Confirm that the two give almost identical results:
 ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
 dg <- geodist (x, measure = "geodesic")
 formatC (max (abs (ds - dg)), format = "e")
-#> [1] "1.1176e-08"
+#> [1] "7.4506e-09"
 ```
 
 All results are in metres, so the two differ by only around 10
@@ -193,9 +194,13 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
                        fgeosph ()) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.023     1.00
-#> 2  fgeosph()           10   0.049     2.13
+#> 1 fgeodist()           10   0.024    1.000
+#> 2  fgeosph()           10   0.100    4.167
 ```
+
+`geodist` is thus around 4 times faster than both `sf` for highly accurate
+geodesic distance calculations, and `geosphere` for calculation of sequential
+distances.
 
 ### Test Results
 
@@ -206,17 +211,17 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Mon Jul  2 10:10:40 2018"
+#> [1] "Mon Jul  2 11:21:57 2018"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist
 #> ✔ | OK F W S | Context
-✔ | 17       | misc tests
+✔ | 17       | misc tests [0.1 s]
 ✔ | 12       | geodist input formats
 ✔ | 18       | geodist measures
 #> 
 #> ══ Results ════════════════════════════════════════════════════════════════
-#> Duration: 0.2 s
+#> Duration: 0.3 s
 #> 
 #> OK:       47
 #> Failed:   0

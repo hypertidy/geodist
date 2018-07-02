@@ -46,7 +46,8 @@ test_that("matrix structure for x only", {
               colnames (x) <- c ("x", "y")
               d1 <- geodist (x, measure = "haversine")
               d2 <- havdist (x)
-              expect_identical (d1, d2)
+              if (test_all)
+                  expect_identical (d1, d2)
 })
 
 test_that("matrix structure for x y", {
@@ -56,7 +57,8 @@ test_that("matrix structure for x y", {
               colnames (x) <- colnames (y) <- c ("x", "y")
               d1 <- geodist (x, y, measure = "haversine")
               d2 <- havdist (x, y)
-              expect_identical (d1, d2)
+              if (test_all)
+                  expect_identical (d1, d2)
 })
 
 test_that("geodesic extreme cases", {

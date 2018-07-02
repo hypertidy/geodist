@@ -1,12 +1,12 @@
 Package: geodist
-Title: Ultra lightweight package for geo distance calculations
+Title: Ultra Lightweight Package for Geodesic Distance Calculations
 Version: 0.0.1
 Authors@R: c(
     person("Mark", "Padgham", email="mark.padgham@email.com", role=c("aut", "cre")),
     person("Michael D.", "Sumner", role="aut"),
     person("Charles F.F", "Karney", role="cph",
         comment="Original author of included code for geodesic distances"))
-Description: Ultra lightweight, ultra fast calculation of geo distances.
+Description: Ultra lightweight, ultra fast calculation of geodesic distances.
 Depends: R (>= 3.2)
 License: GPL-3
 Suggests:

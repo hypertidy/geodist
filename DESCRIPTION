@@ -8,7 +8,7 @@ Authors@R: c(
         comment="Original author of included code for geodesic distances"))
 Description: Ultra lightweight, ultra fast calculation of geodesic distances.
 Depends: R (>= 3.2)
-License: MIT
+License: MIT + file LICENSE
 Suggests:
     knitr,
     testthat

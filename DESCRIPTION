@@ -9,7 +9,7 @@ Authors@R: c(
 Description: Dependency-free, ultra fast calculation of geodesic distances.
     Includes the reference nanometre-accuracy geodesic distances of Karney
     (2013) <doi:10.1007/s00190-012-0578-z>, as used by the 'sf' package, as well
-    as Haversine and Vincenty distances. Default distance measure is the "mapbox
+    as Haversine and Vincenty distances. Default distance measure is the "Mapbox
     cheap ruler" which is generally more accurate than Haversine or Vincenty for
     distances out to a few hundred kilometres, and is considerably faster. The
     main function accepts one or two inputs in almost any generic rectangular

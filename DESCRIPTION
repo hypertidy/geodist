@@ -1,13 +1,20 @@
 Package: geodist
-Title: Ultra Lightweight Package for Geodesic Distance Calculations
+Title: Fast, Dependency-Free Geodesic Distance Calculations
 Version: 0.0.1
 Authors@R: c(
     person("Mark", "Padgham", email="mark.padgham@email.com", role=c("aut", "cre")),
     person("Michael D.", "Sumner", role="aut"),
     person("Charles F.F", "Karney", role="cph",
         comment="Original author of included code for geodesic distances"))
-Description: Ultra lightweight, ultra fast calculation of geodesic distances.
-Depends: R (>= 3.2)
+Description: Dependency-free, ultra fast calculation of geodesic distances.
+    Includes the reference nanometre-accuracy geodesic distances of Karney
+    (2013) <doi:10.1007/s00190-012-0578-z>, as used by the 'sf' package, as well
+    as Haversine and Vincenty distances. Default distance measure is the "mapbox
+    cheap ruler" which is generally more accurate than Haversine or Vincenty for
+    distances out to a few hundred kilometres, and is considerably faster. The
+    main function accepts one or two inputs in almost any generic rectangular
+    form, and returns either matrices of pairwise distances, or vectors of
+    sequential distances.
 License: MIT + file LICENSE
 Suggests:
     knitr,

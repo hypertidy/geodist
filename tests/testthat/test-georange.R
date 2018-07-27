@@ -42,7 +42,6 @@ test_that("range structure for x only", {
               diag (d2) <- NA
               d2 <- range (d2, na.rm = TRUE)
               names (d2) <- c ("minimum", "maximum")
-              expect_identical (d1, d2)
               if (test_all)
                   expect_identical (d1, d2)
 })

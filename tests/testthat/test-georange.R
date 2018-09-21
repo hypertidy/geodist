@@ -6,13 +6,43 @@ test_that ("sequential structure", {
               n <- 1e2
               x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
               y <- cbind (-180 + 360 * runif (2 * n), -90 + 180 * runif (2 * n))
+              expect_message (d1 <- georange (x, sequential = TRUE,
+                                              measure = "haversine"),
+                              "object has no named columns")
               colnames (x) <- colnames (y) <- c ("x", "y")
-              d1 <- georange (x, sequential = TRUE, measure = "haversine")
+              expect_silent (d1 <- georange (x, sequential = TRUE,
+                                             measure = "haversine"))
+              expect_message (d2 <- georange (x, y, sequential = TRUE,
+                                              measure = "haversine"),
+                              "Sequential distances calculated along values of")
+              expect_identical (d1, d2)
+
               expect_equal (length (d1), 2)
               expect_equal (names (d1), c ("minimum", "maximum"))
               expect_true (d1 [2] > d1 [1])
+              d3 <- georange (x, sequential = TRUE, measure = "haversine")
+              expect_equal (length (d3), 2)
+})
+
+test_that ("different measures", {
+              n <- 1e2
+              x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
+              colnames (x) <- c ("x", "y")
+              d1 <- georange (x, sequential = TRUE, measure = "cheap")
               d2 <- georange (x, sequential = TRUE, measure = "haversine")
-              expect_equal (length (d2), 2)
+              d3 <- georange (x, sequential = TRUE, measure = "vincenty")
+              d4 <- georange (x, sequential = TRUE, measure = "geodesic")
+              expect_true (!identical (d1, d2))
+              expect_true (!identical (d1, d3))
+              expect_true (!identical (d1, d4))
+              expect_true (!identical (d2, d3))
+              expect_true (!identical (d2, d4))
+              expect_true (!identical (d3, d4))
+              d5 <- georange (x, sequential = TRUE)
+              expect_identical (d1, d5)
+              expect_error (d6 <- georange (x, sequential = TRUE,
+                                            measure = "junk"),
+                            "'arg' should be one of")
 })
 
 havdist <- function (x, y)

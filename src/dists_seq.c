@@ -4,7 +4,7 @@
 #include "common.h"
 #include "WSG84-defs.h"
 
-//' R_haversine
+//' R_haversine_seq
 //' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
 //' @noRd
 SEXP R_haversine_seq (SEXP x_)
@@ -30,7 +30,7 @@ SEXP R_haversine_seq (SEXP x_)
     return out;
 }
 
-//' R_vincenty
+//' R_vincenty_seq
 //' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
 //' @noRd
 SEXP R_vincenty_seq (SEXP x_)
@@ -58,7 +58,7 @@ SEXP R_vincenty_seq (SEXP x_)
     return out;
 }
 
-//' R_cheap
+//' R_cheap_seq
 //' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
 //' @noRd
 SEXP R_cheap_seq (SEXP x_)

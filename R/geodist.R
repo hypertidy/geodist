@@ -30,9 +30,10 @@
 #' code{sf::st_dist()} function.
 #'
 #' @export
-#' @useDynLib geodist R_haversine R_vincenty R_cheap
-#' @useDynLib geodist R_haversine_xy R_vincenty_xy R_cheap_xy
-#' @useDynLib geodist R_haversine_seq R_vincenty_seq R_cheap_seq
+#' @useDynLib geodist R_haversine R_vincenty R_cheap R_geodesic
+#' @useDynLib geodist R_haversine_xy R_vincenty_xy R_cheap_xy R_geodesic_xy
+#' @useDynLib geodist R_haversine_paired R_vincenty_paired R_cheap_paired R_geodesic_paired
+#' @useDynLib geodist R_haversine_seq R_vincenty_seq R_cheap_seq R_geodesic_seq
 #'
 #' @examples
 #' n <- 50

@@ -6,7 +6,8 @@
 \alias{geodist-package}
 \title{geodist.}
 \usage{
-geodist(x, y, sequential = FALSE, pad = FALSE, measure = "cheap")
+geodist(x, y, paired = FALSE, sequential = FALSE, pad = FALSE,
+  measure = "cheap")
 }
 \arguments{
 \item{x}{Rectangular object (matrix, \code{data.frame}, \pkg{tibble},
@@ -14,6 +15,9 @@ whatever) containing longitude and latitude coordinates.}
 
 \item{y}{Optional second object which, if passed, results in distances
 calculated between each object in \code{x} and each in \code{y}.}
+
+\item{paired}{If \code{TRUE}, calculate paired distances between each entry
+in \code{x} and \code{y}, returning a single vector.}
 
 \item{sequential}{If \code{TRUE}, calculate (vector of) distances
 sequentially along \code{x} (when no \code{y} is passed), otherwise calculate

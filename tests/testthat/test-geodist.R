@@ -100,3 +100,25 @@ test_that ("geodist_benchmark", {
                expect_equal (colnames (d),
                              c ("haversine", "vincenty", "cheap"))
 })
+
+test_that ("geodist paired", {
+              n <- 1e2
+              x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
+              y <- cbind (-180 + 360 * runif (2 * n), -90 + 180 * runif (2 * n))
+              colnames (x) <- colnames (y) <- c ("x", "y")
+              expect_error (d1 <- geodist (x, y, paired = TRUE),
+                            "x and y must have the same number of rows")
+              y <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
+              expect_silent (d1 <- geodist (x, y, paired = TRUE))
+              expect_is (d1, "numeric")
+              expect_equal (length (d1), n)
+
+              expect_silent (d2 <- geodist (x, y, paired = TRUE,
+                                            measure = "haversine"))
+              expect_silent (d3 <- geodist (x, y, paired = TRUE,
+                                            measure = "vincenty"))
+              expect_silent (d4 <- geodist (x, y, paired = TRUE,
+                                            measure = "geodesic"))
+              expect_true (cor (d2, d3) > 0.99)
+              expect_true (cor (d2, d4) > 0.99)
+})

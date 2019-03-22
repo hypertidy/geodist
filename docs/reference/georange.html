@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>geodist. — geodist • geodist</title>
+<title>georange — georange • geodist</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,10 @@
 
 
 
-<meta property="og:title" content="geodist. — geodist" />
+<meta property="og:title" content="georange — georange" />
 
-<meta property="og:description" content="Convert one or two rectangular objects containing lon-lat coordinates into
-vector or matrix of geodesic distances." />
+<meta property="og:description" content="Calculate range of distances (min-max) between all points in one or two
+rectangular objects containing lon-lat coordinates." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,20 +106,19 @@ vector or matrix of geodesic distances." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>geodist.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hypertidy/geodist/blob/master/R/geodist-package.r'><code>R/geodist-package.r</code></a>, <a href='https://github.com/hypertidy/geodist/blob/master/R/geodist.R'><code>R/geodist.R</code></a></small>
-    <div class="hidden name"><code>geodist.Rd</code></div>
+    <h1>georange</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hypertidy/geodist/blob/master/R/georange.R'><code>R/georange.R</code></a></small>
+    <div class="hidden name"><code>georange.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Convert one or two rectangular objects containing lon-lat coordinates into
-vector or matrix of geodesic distances.</p>
+    <p>Calculate range of distances (min-max) between all points in one or two
+rectangular objects containing lon-lat coordinates.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>geodist</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>paired</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sequential</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pad</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>measure</span> <span class='kw'>=</span> <span class='st'>"cheap"</span>)</pre>
+    <pre class="usage"><span class='fu'>georange</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>sequential</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>measure</span> <span class='kw'>=</span> <span class='st'>"cheap"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,21 +134,10 @@ whatever) containing longitude and latitude coordinates.</p></td>
 calculated between each object in <code>x</code> and each in <code>y</code>.</p></td>
     </tr>
     <tr>
-      <th>paired</th>
-      <td><p>If <code>TRUE</code>, calculate paired distances between each entry
-in <code>x</code> and <code>y</code>, returning a single vector.</p></td>
-    </tr>
-    <tr>
       <th>sequential</th>
       <td><p>If <code>TRUE</code>, calculate (vector of) distances
 sequentially along <code>x</code> (when no <code>y</code> is passed), otherwise calculate
 matrix of pairwise distances between all points.</p></td>
-    </tr>
-    <tr>
-      <th>pad</th>
-      <td><p>If <code>sequential = TRUE</code> values are padded with initial
-<code>NA</code> to return <code>n</code> values for input with <code>n</code> rows, otherwise
-return <code>n - 1</code> values.</p></td>
     </tr>
     <tr>
       <th>measure</th>
@@ -160,11 +148,8 @@ specifying desired method of geodesic distance calculation; see Notes.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>If only <code>x</code> passed and <code>sequential = FALSE</code>, a square
-symmetric matrix containing distances between all items in <code>x</code>; If only
-<code>x</code> passed and <code>sequential = TRUE</code>, a vector of sequential
-distances between rows of <code>x</code>; otherwise if <code>y</code> is passed, a matrix
-of <code><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow(x)</a></code> rows and <code><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow(y)</a></code> columns.</p>
+    <p>A named vector of two numeric values: minimum and maximum, giving the
+respective distances in metres.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -180,11 +165,11 @@ codesf::st_dist() function.</p>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>cbind</a></span> (-<span class='fl'>10</span> + <span class='fl'>20</span> * <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span> (<span class='no'>n</span>), -<span class='fl'>10</span> + <span class='fl'>20</span> * <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span> (<span class='no'>n</span>))
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>cbind</a></span> (-<span class='fl'>10</span> + <span class='fl'>20</span> * <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span> (<span class='fl'>2</span> * <span class='no'>n</span>), -<span class='fl'>10</span> + <span class='fl'>20</span> * <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span> (<span class='fl'>2</span> * <span class='no'>n</span>))
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span> (<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span> (<span class='no'>y</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span> (<span class='st'>"x"</span>, <span class='st'>"y"</span>)
-<span class='no'>d0</span> <span class='kw'>&lt;-</span> <span class='fu'>geodist</span> (<span class='no'>x</span>) <span class='co'># A 50-by-50 matrix</span>
-<span class='no'>d1</span> <span class='kw'>&lt;-</span> <span class='fu'>geodist</span> (<span class='no'>x</span>, <span class='no'>y</span>) <span class='co'># A 50-by-100 matrix</span>
-<span class='no'>d2</span> <span class='kw'>&lt;-</span> <span class='fu'>geodist</span> (<span class='no'>x</span>, <span class='kw'>sequential</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># Vector of length 49</span>
-<span class='no'>d2</span> <span class='kw'>&lt;-</span> <span class='fu'>geodist</span> (<span class='no'>x</span>, <span class='kw'>sequential</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pad</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># Vector of length 50</span>
-<span class='no'>d0_2</span> <span class='kw'>&lt;-</span> <span class='fu'>geodist</span> (<span class='no'>x</span>, <span class='kw'>measure</span> <span class='kw'>=</span> <span class='st'>"geodesic"</span>) <span class='co'># nanometre-accurate version of d0</span></div></pre>
+<span class='co'># All of the following returns vector of two values: minimum and maximum:</span>
+<span class='no'>d0</span> <span class='kw'>&lt;-</span> <span class='fu'>georange</span> (<span class='no'>x</span>)
+<span class='no'>d1</span> <span class='kw'>&lt;-</span> <span class='fu'>georange</span> (<span class='no'>x</span>, <span class='no'>y</span>)
+<span class='no'>d2</span> <span class='kw'>&lt;-</span> <span class='fu'>georange</span> (<span class='no'>x</span>, <span class='kw'>sequential</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>d0_2</span> <span class='kw'>&lt;-</span> <span class='fu'>georange</span> (<span class='no'>x</span>, <span class='kw'>measure</span> <span class='kw'>=</span> <span class='st'>"geodesic"</span>) <span class='co'># nanometre-accurate version of d0</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

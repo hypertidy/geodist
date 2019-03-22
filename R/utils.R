@@ -64,12 +64,12 @@ find_xy_cols <- function (obj)
     {
         ix <- which (grepl ("x", nms, ignore.case = TRUE) |
                      grepl ("lon", nms, ignore.case = TRUE))
-        if (length (ix) > 0)
+        if (length (ix) > 1)
             ix <- which (grepl ("^x", nms, ignore.case = TRUE) |
                          grepl ("lon", nms, ignore.case = TRUE))
         iy <- which (grepl ("y", nms, ignore.case = TRUE) |
                      grepl ("lat", nms, ignore.case = TRUE))
-        if (length (iy) > 0)
+        if (length (iy) > 1)
             iy <- which (grepl ("^y", nms, ignore.case = TRUE) |
                          grepl ("lat", nms, ignore.case = TRUE))
     } else

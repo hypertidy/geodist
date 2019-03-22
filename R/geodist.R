@@ -57,6 +57,7 @@ geodist <- function (x, y, paired = FALSE,
             if (nrow (x) != nrow (y))
                 stop ("x and y must have the same number of ",
                       "rows for paired distances")
+            y <- convert_to_matrix (y)
             geodist_paired (x, y, measure)
         } else if (sequential)
         {

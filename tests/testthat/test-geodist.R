@@ -109,6 +109,7 @@ test_that ("geodist paired", {
               expect_error (d1 <- geodist (x, y, paired = TRUE),
                             "x and y must have the same number of rows")
               y <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
+              colnames (y) <- c ("x", "y")
               expect_silent (d1 <- geodist (x, y, paired = TRUE))
               expect_is (d1, "numeric")
               expect_equal (length (d1), n)

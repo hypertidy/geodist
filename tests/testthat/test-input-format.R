@@ -51,3 +51,22 @@ test_that ("other columns", {
                d1 <- geodist (x1, y1)
                expect_identical (d, d1)
 })
+
+test_that ("column names, ", {
+               n <- 50
+               x <- cbind (-10 + 20 * runif (n), -10 + 20 * runif (n))
+               y <- cbind (-10 + 20 * runif (n), -10 + 20 * runif (n))
+               colnames (x) <- colnames (y) <- c ("x", "x")
+               expect_error (d <- geodist (x, y, paired = TRUE),
+                             paste0 ("Unable to determine longitude and ",
+                                     "latitude columns"))
+               colnames (x) <- colnames (y) <- c ("_x_x_", "_x_y_")
+               expect_error (d <- geodist (x, y, paired = TRUE),
+                             paste0 ("Unable to determine longitude and ",
+                                     "latitude columns"))
+               colnames (x) <- colnames (y) <- c ("_x_x", "_x_y")
+               expect_silent (d1 <- geodist (x, y, paired = TRUE))
+               colnames (x) <- colnames (y) <- c ("_a_x_", "_a_y_")
+               expect_silent (d2 <- geodist (x, y, paired = TRUE))
+               expect_identical (d1, d2)
+})

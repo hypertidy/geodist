@@ -62,16 +62,31 @@ find_xy_cols <- function (obj)
 
     if (!is.null (nms))
     {
-        ix <- which (grepl ("x", nms, ignore.case = TRUE) |
-                     grepl ("lon", nms, ignore.case = TRUE))
+        ix <- grep ("x|lon", nms, ignore.case = TRUE)
         if (length (ix) > 1)
-            ix <- which (grepl ("^x", nms, ignore.case = TRUE) |
-                         grepl ("lon", nms, ignore.case = TRUE))
-        iy <- which (grepl ("y", nms, ignore.case = TRUE) |
-                     grepl ("lat", nms, ignore.case = TRUE))
+        {
+            ix <- grep ("^x|lon", nms, ignore.case = TRUE)
+            if (length (ix) != 1)
+            {
+                ix <- grep ("x$|lon", nms, ignore.case = TRUE)
+                if (length (ix) != 1)
+                    ix <- grep ("^x$|lon", nms, ignore.case = TRUE)
+            }
+        }
+        iy <- grep ("y|lat", nms, ignore.case = TRUE)
         if (length (iy) > 1)
-            iy <- which (grepl ("^y", nms, ignore.case = TRUE) |
-                         grepl ("lat", nms, ignore.case = TRUE))
+        {
+            iy <- grep ("^y|lat", nms, ignore.case = TRUE)
+            if (length (iy != 1))
+            {
+                iy <- grep ("y$|lat", nms, ignore.case = TRUE)
+                if (length (iy) != 1)
+                    iy <- grep ("^y$|lat", nms, ignore.case = TRUE)
+            }
+        }
+        if (length (ix) != 1 | length (iy) != 1)
+            stop ("Unable to determine longitude and latitude columns; ",
+                  "perhaps try re-naming columns.")
     } else
     {
         message ("object has no named columns; assuming order is lon then lat")

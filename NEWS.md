@@ -1,7 +1,12 @@
-# v0.0.1.099
+# v0.0.2
 
 Major changes:
-- Add georange function to calculate extreme ranges only; thanks to @marcosci
+    - Add georange function to calculate extreme ranges only; thanks to @marcosci
+    - Add 'paired' option to 'geodist()' function to calcualte pair-wise
+      distances between 'x' and 'y' matrices
+
+Minor changes:
+    - Improve handling of column names
 
 
 # v0.0.1

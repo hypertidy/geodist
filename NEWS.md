@@ -1,3 +1,8 @@
+# v0.0.3
+
+Minor changes:
+    - bug fix in sequential calculation with cheap distances; thanks to @mem48
+
 # v0.0.2
 
 Major changes:

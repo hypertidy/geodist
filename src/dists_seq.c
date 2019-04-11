@@ -69,12 +69,26 @@ SEXP R_cheap_seq (SEXP x_)
     rx = REAL (x_);
     rout = REAL (out);
 
+    // Get maximal latitude range
+    double ymin = 9999.9, ymax = -9999.9;
+    for (size_t i = 0; i < n; i++)
+    {
+        if (rx [n + i] < ymin)
+            ymin = rx [n + i];
+        else if (rx [n + i] > ymax)
+            ymax = rx [n + i];
+    }
+    // and set constant cosine multiplier
+    ymin = ymin * M_PI / 180;
+    ymax = ymax * M_PI / 180;
+    double cosy = cos ((ymin + ymax) / 2.0);
+
     rout [0] = NA_REAL;
 
     for (size_t i = 1; i < n; i++)
     {
-        double cosy = cos ((rx [i - 1] * M_PI / 180.0 +
-                            rx [i] * M_PI / 180.0) / 2.0);
+        if (i % 100 == 0)
+            R_CheckUserInterrupt ();
         rout [i] = one_cheap (rx [i - 1], rx [n + i - 1],
                 rx [i], rx [n + i], cosy);
     }

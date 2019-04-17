@@ -80,16 +80,20 @@ geodist <- function (x, y, paired = FALSE,
     }
 }
 
+# NOTE: All .Call's include `getNativeSymbolInfo` to avoid error that
+# "R_cheap_paired not resolved from current namespace" - see
+# https://stackoverflow.com/questions/43662542/not-resolved-from-current-namespace-error-when-calling-c-routines-from-r
+
 geodist_paired <- function (x, y, measure)
 {
     if (measure == "haversine")
-        res <- .Call("R_haversine_paired", as.vector (x), as.vector (y))
+        res <- .Call (getNativeSymbolInfo ("R_haversine_paired"), as.vector (x), as.vector (y))
     else if (measure == "vincenty")
-        res <- .Call("R_vincenty_paired", as.vector (x), as.vector (y))
+        res <- .Call (getNativeSymbolInfo ("R_vincenty_paired"), as.vector (x), as.vector (y))
     else if (measure == "geodesic")
-        res <- .Call("R_geodesic_paired", as.vector (x), as.vector (y))
+        res <- .Call (getNativeSymbolInfo ("R_geodesic_paired"), as.vector (x), as.vector (y))
     else
-        res <- .Call("R_cheap_paired", as.vector (x), as.vector (y))
+        res <- .Call (getNativeSymbolInfo ("R_cheap_paired"), as.vector (x), as.vector (y))
 
     return (res)
 }
@@ -97,13 +101,18 @@ geodist_paired <- function (x, y, measure)
 geodist_seq <- function (x, measure, pad)
 {
     if (measure == "haversine")
-        res <- matrix (.Call("R_haversine_seq", as.vector (x)), nrow = nrow (x))
+        res <- matrix (.Call (getNativeSymbolInfo ("R_haversine_seq"),
+                             as.vector (x)), nrow = nrow (x))
     else if (measure == "vincenty")
-        res <- matrix (.Call("R_vincenty_seq", as.vector (x)), nrow = nrow (x))
+        res <- matrix (.Call (getNativeSymbolInfo ("R_vincenty_seq"),
+                             as.vector (x)), nrow = nrow (x))
     else if (measure == "geodesic")
-        res <- matrix (.Call("R_geodesic_seq", as.vector (x)), nrow = nrow (x))
+        res <- matrix (.Call (getNativeSymbolInfo ("R_geodesic_seq"),
+                             as.vector (x)), nrow = nrow (x))
     else
-        res <- matrix (.Call("R_cheap_seq", as.vector (x)), nrow = nrow (x))
+        res <- matrix (.Call (getNativeSymbolInfo ("R_cheap_seq"),
+                             as.vector (x)), nrow = nrow (x))
+    
     indx <- 1:length (res)
     if (!pad)
         indx <- 2:length (res)
@@ -114,24 +123,24 @@ geodist_seq <- function (x, measure, pad)
 geodist_x <- function (x, measure)
 {
     if (measure == "haversine")
-        matrix (.Call("R_haversine", as.vector (x)), nrow = nrow (x))
+        matrix (.Call (getNativeSymbolInfo ("R_haversine"), as.vector (x)), nrow = nrow (x))
     else if (measure == "vincenty")
-        matrix (.Call("R_vincenty", as.vector (x)), nrow = nrow (x))
+        matrix (.Call (getNativeSymbolInfo ("R_vincenty"), as.vector (x)), nrow = nrow (x))
     else if (measure == "geodesic")
-        matrix (.Call("R_geodesic", as.vector (x)), nrow = nrow (x))
+        matrix (.Call (getNativeSymbolInfo ("R_geodesic"), as.vector (x)), nrow = nrow (x))
     else
-        matrix (.Call("R_cheap", as.vector (x)), nrow = nrow (x))
+        matrix (.Call (getNativeSymbolInfo ("R_cheap"), as.vector (x)), nrow = nrow (x))
 }
 
 geodist_xy <- function (x, y, measure)
 {
     if (measure == "haversine")
-        res <- .Call ("R_haversine_xy", as.vector (x), as.vector (y))
+        res <- .Call (getNativeSymbolInfo ("R_haversine_xy"), as.vector (x), as.vector (y))
     else if (measure == "vincenty")
-        res <- .Call ("R_vincenty_xy", as.vector (x), as.vector (y))
+        res <- .Call (getNativeSymbolInfo ("R_vincenty_xy"), as.vector (x), as.vector (y))
     else if (measure == "geodesic")
-        res <- .Call("R_geodesic_xy", as.vector (x), as.vector (y))
+        res <- .Call (getNativeSymbolInfo ("R_geodesic_xy"), as.vector (x), as.vector (y))
     else if (measure == "cheap")
-        res <- .Call ("R_cheap_xy", as.vector (x), as.vector (y))
+        res <- .Call (getNativeSymbolInfo ("R_cheap_xy"), as.vector (x), as.vector (y))
     t (matrix (res, nrow = nrow (y)))
 }

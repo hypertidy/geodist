@@ -14,9 +14,6 @@
 #' code{sf::st_dist()} function.
 #'
 #' @export
-#' @useDynLib geodist R_haversine_range R_vincenty_range R_cheap_range
-#' R_haversine_xy_range R_vincenty_xy R_cheap_xy_range
-#' R_haversine_seq_range R_vincenty_seq R_cheap_seq_range
 #'
 #' @examples
 #' n <- 50

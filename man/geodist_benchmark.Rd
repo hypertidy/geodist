@@ -7,7 +7,7 @@
 geodist_benchmark(lat = 0, d = 1, n = 100)
 }
 \arguments{
-\item{lat}{Central latgitude where errors should be measured}
+\item{lat}{Central latitude where errors should be measured}
 
 \item{d}{Distance in metres over which errors should be measured}
 

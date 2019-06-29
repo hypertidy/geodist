@@ -2,7 +2,7 @@
 #'
 #' Benchmark errors for different geodist measures
 #'
-#' @param lat Central latgitude where errors should be measured
+#' @param lat Central latitude where errors should be measured
 #' @param d Distance in metres over which errors should be measured
 #' @param n Number of random values used to generate estimates
 #' @export

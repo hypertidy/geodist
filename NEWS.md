@@ -7,7 +7,7 @@ Minor changes:
 
 Major changes:
     - Add georange function to calculate extreme ranges only; thanks to @marcosci
-    - Add 'paired' option to 'geodist()' function to calcualte pair-wise
+    - Add 'paired' option to 'geodist()' function to calculate pair-wise
       distances between 'x' and 'y' matrices
 
 Minor changes:

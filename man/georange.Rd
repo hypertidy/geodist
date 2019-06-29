@@ -30,8 +30,8 @@ rectangular objects containing lon-lat coordinates.
 }
 \note{
 \code{measure = "cheap"} denotes the mapbox cheap ruler
-\url{https://github.com/mapbox/cheap-ruler-cpp}; \code{measure = "geodetic"}
-denotes the very accurate geodetic methods given in Kearney (2013)
+\url{https://github.com/mapbox/cheap-ruler-cpp}; \code{measure = "geodesic"}
+denotes the very accurate geodesic methods given in Kearney (2013)
 "Algorithms for geodesics" J Geod 87:43-55, and as provided by the 
 code{sf::st_dist()} function.
 }

@@ -75,7 +75,7 @@ approximate yet very fast distance calculations within small areas (typically
 the size of single cities or study sites).
 
 
-### Benchmarks of geodetic accuracy
+### Benchmarks of geodesic accuracy
 
 The `geodist_benchmark()` function - the only other function provided by the
 `geodist` package - compares the accuracy of the different metrics to the

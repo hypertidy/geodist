@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 An ultra-lightweight, zero-dependency package for very fast calculation of
 geodesic distances. Main eponymous function, `geodist()`, accepts only one or
-two primary arguments, which must be rectagular objects with unambiguously
+two primary arguments, which must be rectangular objects with unambiguously
 labelled longitude and latitude columns (that is, some variant of `lon`/`lat`,
 or `x`/`y`).
 ```{r, eval = FALSE}
@@ -92,7 +92,7 @@ approximate yet very fast distance calculations within small areas (tens to a fe
 hundred kilometres across).
 
 
-### Benchmarks of geodetic accuracy
+### Benchmarks of geodesic accuracy
 
 The `geodist_benchmark()` function - the only other function provided by the
 `geodist` package - compares the accuracy of the different metrics to the

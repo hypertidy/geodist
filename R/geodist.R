@@ -33,7 +33,7 @@
 #'
 #' @examples
 #' n <- 50
-#' Default "cheap" distance measure is only accurate for short distances:
+#' # Default "cheap" distance measure is only accurate for short distances:
 #' x <- cbind (runif (n, -0.1, 0.1), runif (n, -0.1, 0.1))
 #' y <- cbind (runif (2 * n, -0.1, 0.1), runif (2 * n, -0.1, 0.1))
 #' colnames (x) <- colnames (y) <- c ("x", "y")
@@ -94,8 +94,8 @@ geodist_paired <- function (x, y, measure)
 geodist_seq <- function (x, measure, pad)
 {
     if (measure == "haversine")
-        res <- matrix (.Call ("R_haversine_seq",
-                             as.vector (x)), nrow = nrow (x))
+        res <- matrix (.Call ("R_haversine_seq", as.vector (x)),
+                       nrow = nrow (x))
     else if (measure == "vincenty")
         res <- matrix (.Call ("R_vincenty_seq", as.vector (x)), nrow = nrow (x))
     else if (measure == "geodesic")

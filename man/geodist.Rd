@@ -50,7 +50,7 @@ code{sf::st_dist()} function.
 }
 \examples{
 n <- 50
-Default "cheap" distance measure is only accurate for short distances:
+# Default "cheap" distance measure is only accurate for short distances:
 x <- cbind (runif (n, -0.1, 0.1), runif (n, -0.1, 0.1))
 y <- cbind (runif (2 * n, -0.1, 0.1), runif (2 * n, -0.1, 0.1))
 colnames (x) <- colnames (y) <- c ("x", "y")

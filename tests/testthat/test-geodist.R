@@ -12,7 +12,7 @@ test_that ("sequential structure", {
               d2 <- geodist (x, sequential = TRUE, pad = TRUE,
                              measure = "haversine")
               expect_equal (length (d2), nrow (x))
-              # Sequential should equal off-diagonal off full matrix (but note
+              # Sequential should equal off-diagonal of full matrix (but note
               # that this test  will fail for "cheap" distances)
               dmat <- geodist (x, measure = "haversine")
               indx <- row (dmat) - col (dmat)
@@ -122,4 +122,34 @@ test_that ("geodist paired", {
                                             measure = "geodesic"))
               expect_true (cor (d2, d3) > 0.99)
               expect_true (cor (d2, d4) > 0.99)
+})
+
+test_that ("geodist_vec", {
+               n <- 1e2
+               x1 <- runif (n, -0.1, 0.1)
+               y1 <- runif (n, -0.1, 0.1)
+               x2 <- runif (n, -0.1, 0.1)
+               y2 <- runif (n, -0.1, 0.1)
+               x <- cbind ("x" = x1, "y" = y1)
+               y <- cbind ("x" = x2, "y" = y2)
+
+               measures <- c ("cheap", "haversine", "vincenty", "geodesic")
+               for (m in measures)
+               {
+                   d1 <- geodist (x, y, paired = TRUE, measure = m)
+                   d2 <- geodist_vec (x1, y1, x2, y2, paired = TRUE, measure = m)
+                   expect_identical (d1, d2)
+
+                   d1 <- geodist (x, sequential = TRUE, measure = m)
+                   d2 <- geodist_vec (x1, y1, sequential = TRUE, measure = m)
+                   expect_identical (d1, d2)
+
+                   d1 <- geodist (x, measure = m)
+                   d2 <- geodist_vec (x1, y1, measure = m)
+                   expect_identical (d1, d2)
+
+                   d1 <- geodist (x, y, measure = m)
+                   d2 <- geodist_vec (x1, y1, x2, y2, measure = m)
+                   expect_identical (d1, d2)
+               }
 })

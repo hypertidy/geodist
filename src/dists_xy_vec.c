@@ -25,8 +25,8 @@ SEXP R_haversine_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 
     for (size_t i = 0; i < n1; i++)
     {
-        if (i % 100 == 0)
-            R_CheckUserInterrupt ();
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt (); // # nocov
         double cosy1 = cos (ry1 [i] * M_PI / 180.0); // y-value of x data
         for (size_t j = 0; j < n2; j++)
         {
@@ -60,8 +60,8 @@ SEXP R_vincenty_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 
     for (size_t i = 0; i < n1; i++)
     {
-        if (i % 100 == 0)
-            R_CheckUserInterrupt ();
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt (); // # nocov
         double siny1 = sin (ry1 [i] * M_PI / 180.0); // y-value of x data
         double cosy1 = cos (ry1 [i] * M_PI / 180.0); // y-value of x data
         for (size_t j = 0; j < n2; j++)
@@ -117,8 +117,8 @@ SEXP R_cheap_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 
     for (size_t i = 0; i < n1; i++)
     {
-        if (i % 100 == 0)
-            R_CheckUserInterrupt ();
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt (); // # nocov
         for (size_t j = 0; j < n2; j++)
         {
             rout [i * n2 + j] = one_cheap (rx1 [i], ry1 [i],
@@ -151,8 +151,8 @@ SEXP R_geodesic_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 
     for (size_t i = 0; i < n1; i++)
     {
-        if (i % 100 == 0)
-            R_CheckUserInterrupt ();
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt (); // # nocov
         for (size_t j = 0; j < n2; j++)
         {
             rout [i * n2 + j] = one_geodesic (rx1 [i], ry1 [i],

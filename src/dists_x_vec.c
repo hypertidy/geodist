@@ -30,8 +30,8 @@ SEXP R_haversine_vec (SEXP x_, SEXP y_)
 
     for (size_t i = 0; i < (n - 1); i++)
     {
-        if (i % 100 == 0)
-            R_CheckUserInterrupt ();
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt (); // # nocov
         for (size_t j = (i + 1); j < n; j++)
         {
             size_t indx1 = i * n + j;
@@ -71,8 +71,8 @@ SEXP R_vincenty_vec (SEXP x_, SEXP y_)
 
     for (size_t i = 0; i < (n - 1); i++)
     {
-        if (i % 100 == 0)
-            R_CheckUserInterrupt ();
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt (); // # nocov
         for (size_t j = (i + 1); j < n; j++)
         {
             size_t indx1 = i * n + j;
@@ -119,8 +119,8 @@ SEXP R_cheap_vec (SEXP x_, SEXP y_)
 
     for (size_t i = 0; i < (n - 1); i++)
     {
-        if (i % 100 == 0)
-            R_CheckUserInterrupt ();
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt (); // # nocov
         for (size_t j = (i + 1); j < n; j++)
         {
             size_t indx1 = i * n + j;
@@ -154,8 +154,8 @@ SEXP R_geodesic_vec (SEXP x_, SEXP y_)
 
     for (size_t i = 0; i < (n - 1); i++)
     {
-        if (i % 100 == 0)
-            R_CheckUserInterrupt ();
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt (); // # nocov
         for (size_t j = (i + 1); j < n; j++)
         {
             size_t indx1 = i * n + j;

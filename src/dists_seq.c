@@ -87,8 +87,8 @@ SEXP R_cheap_seq (SEXP x_)
 
     for (size_t i = 1; i < n; i++)
     {
-        if (i % 100 == 0)
-            R_CheckUserInterrupt ();
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt (); // # nocov
         rout [i] = one_cheap (rx [i - 1], rx [n + i - 1],
                 rx [i], rx [n + i], cosy);
     }

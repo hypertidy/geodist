@@ -24,7 +24,7 @@ SEXP R_haversine_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
     for (size_t i = 0; i < n; i++)
     {
         if (i % 1000 == 0)
-            R_CheckUserInterrupt ();
+            R_CheckUserInterrupt (); // # nocov
         double cosy1 = cos (ry1 [i] * M_PI / 180.0); // y-value of x data
         double cosy2 = cos (ry2 [i] * M_PI / 180.0);
         rout [i] = one_haversine (rx1 [i], ry1 [i], rx2 [i], ry2 [i],
@@ -54,7 +54,7 @@ SEXP R_vincenty_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
     for (size_t i = 0; i < n; i++)
     {
         if (i % 1000 == 0)
-            R_CheckUserInterrupt ();
+            R_CheckUserInterrupt (); // # nocov
         double siny1 = sin (ry1 [i] * M_PI / 180.0); // y-value of x data
         double cosy1 = cos (ry1 [i] * M_PI / 180.0); // y-value of x data
         double siny2 = sin (ry2 [i] * M_PI / 180.0);
@@ -103,7 +103,7 @@ SEXP R_cheap_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
     for (size_t i = 0; i < n; i++)
     {
         if (i % 1000 == 0)
-            R_CheckUserInterrupt ();
+            R_CheckUserInterrupt (); // # nocov
         rout [i] = one_cheap (rx1 [i], ry1 [i], rx2 [i], ry2 [i], cosy);
     }
 
@@ -131,7 +131,7 @@ SEXP R_geodesic_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
     for (size_t i = 0; i < n; i++)
     {
         if (i % 1000 == 0)
-            R_CheckUserInterrupt ();
+            R_CheckUserInterrupt (); // # nocov
         rout [i] = one_geodesic (rx1 [i], ry1 [i], rx2 [i], ry2 [i]);
     }
 

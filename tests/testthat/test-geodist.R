@@ -133,6 +133,18 @@ test_that ("geodist_vec", {
                x <- cbind ("x" = x1, "y" = y1)
                y <- cbind ("x" = x2, "y" = y2)
 
+               # errors:
+               expect_message (d <- geodist_vec (x1, y1, x2, y2,
+                                                  sequential = TRUE),
+                               paste0 ("Sequential distances calculated along ",
+                                       "values of 'x' only"))
+               expect_error (d <- geodist_vec (),
+                             "x1 and y1 must be provided")
+               expect_error (d <- geodist_vec (x1 = x, y1 = y),
+                             "geodist_vec only accepts vector inputs")
+               expect_error (d <- geodist_vec (x1, y1 [1:10]),
+                             "x1 and y1 must have the same length")
+
                measures <- c ("cheap", "haversine", "vincenty", "geodesic")
                for (m in measures)
                {

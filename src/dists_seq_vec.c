@@ -90,8 +90,8 @@ SEXP R_cheap_seq_vec (SEXP x_, SEXP y_)
 
     for (size_t i = 1; i < n; i++)
     {
-        if (i % 100 == 0)
-            R_CheckUserInterrupt ();
+        if (i % 1000 == 0)
+            R_CheckUserInterrupt (); // # nocov
         rout [i] = one_cheap (rx [i - 1], ry [i - 1],
                 rx [i], ry [i], cosy);
     }

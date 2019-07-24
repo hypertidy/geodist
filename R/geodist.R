@@ -34,8 +34,8 @@
 #' @examples
 #' n <- 50
 #' Default "cheap" distance measure is only accurate for short distances:
-#' x <- cbind (runif (n, -0.1, 0.1), -1 + 2 * runif (n, -0.1, 0.1))
-#' y <- cbind (runif (2 * n, -0.1, 0.1), -1 + 2 * runif (2 * n, -0.1, 0.1))
+#' x <- cbind (runif (n, -0.1, 0.1), runif (n, -0.1, 0.1))
+#' y <- cbind (runif (2 * n, -0.1, 0.1), runif (2 * n, -0.1, 0.1))
 #' colnames (x) <- colnames (y) <- c ("x", "y")
 #' d0 <- geodist (x) # A 50-by-50 matrix
 #' d1 <- geodist (x, y) # A 50-by-100 matrix

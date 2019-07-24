@@ -50,8 +50,9 @@ code{sf::st_dist()} function.
 }
 \examples{
 n <- 50
-x <- cbind (-10 + 20 * runif (n), -10 + 20 * runif (n))
-y <- cbind (-10 + 20 * runif (2 * n), -10 + 20 * runif (2 * n))
+Default "cheap" distance measure is only accurate for short distances:
+x <- cbind (runif (n, -0.1, 0.1), -1 + 2 * runif (n, -0.1, 0.1))
+y <- cbind (runif (2 * n, -0.1, 0.1), -1 + 2 * runif (2 * n, -0.1, 0.1))
 colnames (x) <- colnames (y) <- c ("x", "y")
 d0 <- geodist (x) # A 50-by-50 matrix
 d1 <- geodist (x, y) # A 50-by-100 matrix

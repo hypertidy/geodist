@@ -98,7 +98,7 @@ find_xy_cols <- function (obj)
 
 #' convert_to_matrix
 #'
-#' Convert a rectangular object to a matrix of two columns, lon and lat
+#' Convert a rectangular object to a matrix of two columns, lon and lat.
 #'
 #' @param obj Rectagular object
 #' @return Numeric matrix of two columns: lon and lat
@@ -109,9 +109,20 @@ convert_to_matrix <- function (obj)
     if (is.vector (obj))
         obj <- matrix (obj, nrow = 1)
     if (is.numeric (obj))
-        cbind (as.numeric (obj [, xy_cols [1]]),
-               as.numeric (obj [, xy_cols [2]]))
-    else
-        cbind (as.numeric (obj [[xy_cols [1] ]]),
-               as.numeric (obj [[xy_cols [2] ]]))
+    {
+        if (!(is.numeric (obj [, xy_cols [1]]) &
+              is.numeric (obj [, xy_cols [2]])))
+            cbind (as.numeric (obj [, xy_cols [1]]),
+                   as.numeric (obj [, xy_cols [2]]))
+        else
+            cbind (obj [, xy_cols [1]], obj [, xy_cols [2]])
+    } else
+    {
+        if (!(is.numeric (obj [[xy_cols [1] ]]) &
+              is.numeric (obj [[xy_cols [2] ]])))
+            cbind (as.numeric (obj [[xy_cols [1] ]]),
+                   as.numeric (obj [[xy_cols [2] ]]))
+        else
+            cbind (obj [[xy_cols [1] ]], obj [[xy_cols [2] ]])
+    }
 }

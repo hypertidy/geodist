@@ -3,11 +3,16 @@
 \docType{package}
 \name{geodist}
 \alias{geodist}
-\alias{geodist-package}
 \title{geodist.}
 \usage{
-geodist(x, y, paired = FALSE, sequential = FALSE, pad = FALSE,
-  measure = "cheap")
+geodist(
+  x,
+  y,
+  paired = FALSE,
+  sequential = FALSE,
+  pad = FALSE,
+  measure = "cheap"
+)
 }
 \arguments{
 \item{x}{Rectangular object (matrix, \code{data.frame}, \pkg{tibble},

@@ -4,8 +4,16 @@
 \alias{geodist_vec}
 \title{geodist_vec}
 \usage{
-geodist_vec(x1, y1, x2, y2, paired = FALSE, sequential = FALSE,
-  pad = FALSE, measure = "cheap")
+geodist_vec(
+  x1,
+  y1,
+  x2,
+  y2,
+  paired = FALSE,
+  sequential = FALSE,
+  pad = FALSE,
+  measure = "cheap"
+)
 }
 \arguments{
 \item{x1}{Numeric vector of longitude coordinates}

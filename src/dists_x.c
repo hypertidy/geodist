@@ -102,7 +102,7 @@ SEXP R_cheap (SEXP x_)
     {
         if (rx [n + i] < ymin)
             ymin = rx [n + i];
-        else if (rx [n + i] > ymax)
+        if (rx [n + i] > ymax)
             ymax = rx [n + i];
         rout [i * n + i] = 0.0;
     }

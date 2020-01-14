@@ -24,7 +24,7 @@ SEXP R_haversine_seq_range (SEXP x_)
                 cos (rx [n + i - 1] * M_PI / 180.0));
         if (d < min)
             min = d;
-        else if (d > max)
+        if (d > max)
             max = d;
     }
 
@@ -60,7 +60,7 @@ SEXP R_vincenty_seq_range (SEXP x_)
                 rx [i], rx [n + i], siny1, cosy1, siny2, cosy2);
         if (d < min)
             min = d;
-        else if (d > max)
+        if (d > max)
             max = d;
     }
 
@@ -94,7 +94,7 @@ SEXP R_cheap_seq_range (SEXP x_)
                 rx [i], rx [n + i], cosy);
         if (d < min)
             min = d;
-        else if (d > max)
+        if (d > max)
             max = d;
     }
 
@@ -126,7 +126,7 @@ SEXP R_geodesic_seq_range (SEXP x_)
                 rx [i], rx [n + i]);
         if (d < min)
             min = d;
-        else if (d > max)
+        if (d > max)
             max = d;
     }
 

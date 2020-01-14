@@ -82,11 +82,11 @@ SEXP R_cheap_paired (SEXP x_, SEXP y_)
     {
         if (rx [n + i] < ymin)
             ymin = rx [n + i];
-        else if (rx [n + i] > ymax)
+        if (rx [n + i] > ymax)
             ymax = rx [n + i];
         if (ry [n + i] < ymin)
             ymin = ry [n + i];
-        else if (ry [n + i] > ymax)
+        if (ry [n + i] > ymax)
             ymax = ry [n + i];
     }
     // and set constant cosine multiplier

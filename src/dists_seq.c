@@ -75,7 +75,7 @@ SEXP R_cheap_seq (SEXP x_)
     {
         if (rx [n + i] < ymin)
             ymin = rx [n + i];
-        else if (rx [n + i] > ymax)
+        if (rx [n + i] > ymax)
             ymax = rx [n + i];
     }
     // and set constant cosine multiplier

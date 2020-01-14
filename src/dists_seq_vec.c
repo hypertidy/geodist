@@ -78,7 +78,7 @@ SEXP R_cheap_seq_vec (SEXP x_, SEXP y_)
     {
         if (ry [i] < ymin)
             ymin = ry [i];
-        else if (ry [i] > ymax)
+        if (ry [i] > ymax)
             ymax = ry [i];
     }
     // and set constant cosine multiplier

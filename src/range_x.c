@@ -33,7 +33,7 @@ SEXP R_haversine_range (SEXP x_)
                     rx [j], rx [n + j], cosy1 [i], cosy1 [j]);
             if (d < min)
                 min = d;
-            else if (d > max)
+            if (d > max)
                 max = d;
         }
     }
@@ -79,7 +79,7 @@ SEXP R_vincenty_range (SEXP x_)
                     siny1 [i], cosy1 [i], siny1 [j], cosy1 [j]);
             if (d < min)
                 min = d;
-            else if (d > max)
+            if (d > max)
                 max = d;
         }
     }
@@ -130,7 +130,7 @@ SEXP R_cheap_range (SEXP x_)
                     rx [j], rx [n + j], cosy);
             if (d < min)
                 min = d;
-            else if (d > max)
+            if (d > max)
                 max = d;
         }
     }
@@ -167,7 +167,7 @@ SEXP R_geodesic_range (SEXP x_)
                     rx [j], rx [n + j]);
             if (d < min)
                 min = d;
-            else if (d > max)
+            if (d > max)
                 max = d;
         }
     }

@@ -96,16 +96,17 @@ SEXP R_cheap_xy (SEXP x_, SEXP y_)
     {
         if (rx [nx + i] < ymin)
             ymin = rx [nx + i];
-        else if (rx [nx + i] > ymax)
+        if (rx [nx + i] > ymax)
             ymax = rx [nx + i];
     }
     for (size_t i = 0; i < ny; i++)
     {
         if (ry [ny + i] < ymin)
             ymin = ry [ny + i];
-        else if (ry [ny + i] > ymax)
+        if (ry [ny + i] > ymax)
             ymax = ry [ny + i];
     }
+    Rprintf ("(ymin, ymax) = (%f, %f)\n", ymin, ymax);
     // and set constant cosine multiplier
     ymin = ymin * M_PI / 180;
     ymax = ymax * M_PI / 180;

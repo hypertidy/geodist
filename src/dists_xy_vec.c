@@ -100,14 +100,14 @@ SEXP R_cheap_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
     {
         if (ry1 [i] < ymin)
             ymin = ry1 [i];
-        else if (ry1 [i] > ymax)
+        if (ry1 [i] > ymax)
             ymax = ry1 [i];
     }
     for (size_t i = 0; i < n2; i++)
     {
         if (ry2 [i] < ymin)
             ymin = ry2 [i];
-        else if (ry2 [i] > ymax)
+        if (ry2 [i] > ymax)
             ymax = ry2 [i];
     }
     // and set constant cosine multiplier

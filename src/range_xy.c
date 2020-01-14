@@ -32,7 +32,7 @@ SEXP R_haversine_xy_range (SEXP x_, SEXP y_)
                     ry [j], ry [ny + j], cosy1, cosy2);
             if (d < min)
                 min = d;
-            else if (d > max)
+            if (d > max)
                 max = d;
         }
     }
@@ -76,7 +76,7 @@ SEXP R_vincenty_xy_range (SEXP x_, SEXP y_)
                     ry [j], ry [ny + j], siny1, cosy1, siny2, cosy2);
             if (d < min)
                 min = d;
-            else if (d > max)
+            if (d > max)
                 max = d;
         }
     }
@@ -109,14 +109,14 @@ SEXP R_cheap_xy_range (SEXP x_, SEXP y_)
     {
         if (rx [nx + i] < ymin)
             ymin = rx [nx + i];
-        else if (rx [nx + i] > ymax)
+        if (rx [nx + i] > ymax)
             ymax = rx [nx + i];
     }
     for (size_t i = 0; i < ny; i++)
     {
         if (ry [ny + i] < ymin)
             ymin = ry [ny + i];
-        else if (ry [ny + i] > ymax)
+        if (ry [ny + i] > ymax)
             ymax = ry [ny + i];
     }
     // and set constant cosine multiplier
@@ -136,7 +136,7 @@ SEXP R_cheap_xy_range (SEXP x_, SEXP y_)
                     ry [j], ry [ny + j], cosy);
             if (d < min)
                 min = d;
-            else if (d > max)
+            if (d > max)
                 max = d;
         }
     }
@@ -177,7 +177,7 @@ SEXP R_geodesic_xy_range (SEXP x_, SEXP y_)
                     ry [j], ry [ny + j]);
             if (d < min)
                 min = d;
-            else if (d > max)
+            if (d > max)
                 max = d;
         }
     }

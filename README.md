@@ -15,9 +15,9 @@ developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repo
 
 An ultra-lightweight, zero-dependency package for very fast calculation
 of geodesic distances. Main eponymous function, `geodist()`, accepts
-only one or two primary arguments, which must be rectagular objects with
-unambiguously labelled longitude and latitude columns (that is, some
-variant of `lon`/`lat`, or `x`/`y`).
+only one or two primary arguments, which must be rectangular objects
+with unambiguously labelled longitude and latitude columns (that is,
+some variant of `lon`/`lat`, or `x`/`y`).
 
 ``` r
 n <- 50
@@ -46,7 +46,7 @@ library(geodist)
 ``` r
 # current verison
 packageVersion("geodist")
-#> [1] '0.0.1'
+#> [1] '0.0.3.4'
 ```
 
 ## Detailed Usage
@@ -88,7 +88,7 @@ algorithm](https://github.com/mapbox/cheap-ruler-cpp) is intended to
 provide approximate yet very fast distance calculations within small
 areas (tens to a few hundred kilometres across).
 
-### Benchmarks of geodetic accuracy
+### Benchmarks of geodesic accuracy
 
 The `geodist_benchmark()` function - the only other function provided by
 the `geodist` package - compares the accuracy of the different metrics
@@ -98,8 +98,8 @@ to the nanometre-accuracy standard of [Karney
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
 #>            haversine    vincenty       cheap
-#> absolute 0.821979685 0.821979685 0.573589772
-#> relative 0.002206036 0.002206036 0.001613667
+#> absolute 0.834007400 0.834007400 0.577743126
+#> relative 0.002192882 0.002192882 0.001607569
 ```
 
 All distances (`d)` are in metres, and all measures are accurate to
@@ -131,10 +131,10 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d3 <- geodist (x, measure = "vincenty"),
                        d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.158    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.243    1.538
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.394    2.494
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   4.559   28.854
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.126    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.178    1.413
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.284    2.254
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.196   25.365
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -144,7 +144,6 @@ form with the following code:
 
 ``` r
 require (magrittr)
-#> Loading required package: magrittr
 x_to_sf <- function (x)
 {
     sapply (seq (nrow (x)), function (i)
@@ -164,10 +163,10 @@ geo_dist <- function (x) geodist (x, measure = "geodesic")
 rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
                       geo_dist (x)) [, 1:4]
-#> Linking to GEOS 3.5.0, GDAL 2.1.3, proj.4 4.9.2
+#> Linking to GEOS 3.8.0, GDAL 3.0.3, PROJ 6.3.0
 #>           test replications elapsed relative
-#> 2  geo_dist(x)           10   0.080    1.000
-#> 1 sf_dist(xsf)           10   0.353    4.412
+#> 2  geo_dist(x)           10   0.070    1.000
+#> 1 sf_dist(xsf)           10   0.187    2.671
 ```
 
 Confirm that the two give almost identical results:
@@ -184,8 +183,7 @@ nanometres.
 
 The [`geosphere` package](https://cran.r-project.org/package=geosphere)
 also offers sequential calculation which is benchmarked with the
-following
-code:
+following code:
 
 ``` r
 fgeodist <- function () geodist (x, measure = "vincenty", sequential = TRUE)
@@ -194,13 +192,13 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
                        fgeosph ()) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.024    1.000
-#> 2  fgeosph()           10   0.100    4.167
+#> 1 fgeodist()           10   0.023    1.000
+#> 2  fgeosph()           10   0.040    1.739
 ```
 
-`geodist` is thus around 4 times faster than both `sf` for highly accurate
-geodesic distance calculations, and `geosphere` for calculation of sequential
-distances.
+`geodist` is thus around 3 times faster than `sf` for highly accurate
+geodesic distance calculations, and around twice as fast as `geosphere`
+for calculation of sequential distances.
 
 ### Test Results
 
@@ -211,19 +209,20 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Mon Jul  2 11:21:57 2018"
+#> [1] "Mon Feb 10 16:05:01 2020"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist
-#> ✔ | OK F W S | Context
-✔ | 17       | misc tests [0.1 s]
-✔ | 12       | geodist input formats
-✔ | 18       | geodist measures
+#> ✔ |  OK F W S | Context
+#> ⠏ |   0       | misc tests⠼ |  45       | misc tests✔ |  46       | misc tests [0.1 s]
+#> ⠏ |   0       | georange✔ |  37       | georange
+#> ⠏ |   0       | geodist input formats✔ |  18       | geodist input formats
+#> ⠏ |   0       | geodist measures✔ |  18       | geodist measures
 #> 
-#> ══ Results ════════════════════════════════════════════════════════════════
+#> ══ Results ═════════════════════════════════════════════════════════════════════
 #> Duration: 0.3 s
 #> 
-#> OK:       47
+#> OK:       119
 #> Failed:   0
 #> Warnings: 0
 #> Skipped:  0

@@ -182,7 +182,7 @@ Geodesic distance calculation is available in the [`sf`
 package](https://cran.r-project.org/package=sf). Comparing computation speeds
 requires conversion of sets of numeric lon-lat points to `sf` form with the
 following code:
-```{r x_to_sf}
+```{r x_to_sf, message = FALSE}
 require (magrittr)
 x_to_sf <- function (x)
 {

@@ -3,7 +3,7 @@
 #' An alternative interface to the main \link{geodist} function that directly
 #' accepts inputs as individual vectors of coordinates, rather than the matrix
 #' or `data.frame` inputs of the main function. This interface is provided for
-#' cases where computational efficient is important, and will generally provide
+#' cases where computational efficiency is important, and will generally provide
 #' faster results than the main function.
 #'
 #' @param x1 Numeric vector of longitude coordinates

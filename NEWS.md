@@ -1,5 +1,8 @@
 # v0.0.3.X
 
+Major changes:
+    - Add 'geodist_vec()' function to accept individual vectors
+
 Minor changes:
     - bug fix for cheap distances between single point; thanks to @mem48
 

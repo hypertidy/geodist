@@ -15,3 +15,4 @@ data-raw/
 ^appveyor\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^codemeta\.json$

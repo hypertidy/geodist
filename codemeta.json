@@ -1,5 +1,8 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "geodist",
   "description": "Dependency-free, ultra fast calculation of geodesic distances.\n    Includes the reference nanometre-accuracy geodesic distances of Karney\n    (2013) <doi:10.1007/s00190-012-0578-z>, as used by the 'sf' package, as well\n    as Haversine and Vincenty distances. Default distance measure is the \"Mapbox\n    cheap ruler\" which is generally more accurate than Haversine or Vincenty for\n    distances out to a few hundred kilometres, and is considerably faster. The\n    main function accepts one or two inputs in almost any generic rectangular\n    form, and returns either matrices of pairwise distances, or vectors of\n    sequential distances.",
@@ -7,7 +10,7 @@
   "codeRepository": "https://github.com/hypertidy/geodist",
   "issueTracker": "https://github.com/hypertidy/geodist/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.3.4",
+  "version": "0.0.4",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -80,8 +83,12 @@
   "softwareRequirements": [],
   "releaseNotes": "https://github.com/hypertidy/geodist/blob/master/NEWS.md",
   "readme": "https://github.com/hypertidy/geodist/blob/master/README.md",
-  "fileSize": "69.428KB",
-  "contIntegration": ["https://travis-ci.org/hypertidy/geodist", "https://ci.appveyor.com/project/hypertidy/geodist", "https://codecov.io/gh/hypertidy/geodist"],
+  "fileSize": "69.436KB",
+  "contIntegration": [
+    "https://travis-ci.org/hypertidy/geodist",
+    "https://ci.appveyor.com/project/hypertidy/geodist",
+    "https://codecov.io/gh/hypertidy/geodist"
+  ],
   "developmentStatus": "http://www.repostatus.org/#active",
   "relatedLink": "https://CRAN.R-project.org/package=geodist"
 }

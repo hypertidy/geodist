@@ -1,6 +1,8 @@
-# CRAN notes for geodist_0.0.3 submission
+# CRAN notes for geodist_0.0.4 submission
 
-## Notes
+This submission generates no errors, warning or notes on the following R versions and operating systems:
 
-This submissions generates only one NOTE on windows old-rel regarding possibly
-mis-spelled words in DESCRIPTION: Haversine, Karney, Mapbox, Vincenty, nanometre
+* Ubuntu (on `travis-ci`): R-oldrelease, R-release, R-devel
+- OSX: R-release
+* win-builder (R-release, R-devel, R-oldrelease)
+- clang UBSAN on R-devel

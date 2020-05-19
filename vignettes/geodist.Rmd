@@ -101,8 +101,8 @@ around 0.16%.
 lat <- 30
 d <- 10 ^ (1:35 / 5) # 1m to 100 km
 y <- lapply (d, function (i) geodist_benchmark (lat = lat, d = i))
-yabs <- do.call (rbind, lapply (y, function (i) i [1, ])) [, c (1, 2, 4)]
-yrel <- 100 * do.call (rbind, lapply (y, function (i) i [2, ])) [, c (1, 2, 4)]
+yabs <- do.call (rbind, lapply (y, function (i) i [1, ]))
+yrel <- 100 * do.call (rbind, lapply (y, function (i) i [2, ]))
 
 yvals <- list (yabs, yrel)
 cols <- c ("skyblue", "lawngreen", "tomato")

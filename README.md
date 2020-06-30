@@ -46,7 +46,7 @@ library(geodist)
 ``` r
 # current verison
 packageVersion("geodist")
-#> [1] '0.0.3.4'
+#> [1] '0.0.4.3'
 ```
 
 ## Detailed Usage
@@ -72,8 +72,10 @@ dim (geodist (x))
 #> [1] 10 10
 ```
 
-Distances currently implemented are Haversine, Vincenty (spherical and
-elliptical)), the very fast [mapbox cheap
+All outputs are distances in metres, calculated with a variety of
+spherical and elliptical distance measures. Distance measures currently
+implemented are Haversine, Vincenty (spherical and elliptical)), the
+very fast [mapbox cheap
 ruler](https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp)
 (see their [blog
 post](https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016)),
@@ -98,8 +100,8 @@ to the nanometre-accuracy standard of [Karney
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
 #>            haversine    vincenty       cheap
-#> absolute 0.834007400 0.834007400 0.577743126
-#> relative 0.002192882 0.002192882 0.001607569
+#> absolute 0.836749881 0.836749881 0.568786608
+#> relative 0.002195731 0.002195731 0.001580571
 ```
 
 All distances (`d)` are in metres, and all measures are accurate to
@@ -131,10 +133,10 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d3 <- geodist (x, measure = "vincenty"),
                        d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.126    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.178    1.413
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.284    2.254
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.196   25.365
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.084    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.222    2.643
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.225    2.679
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.039   36.179
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -163,10 +165,10 @@ geo_dist <- function (x) geodist (x, measure = "geodesic")
 rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
                       geo_dist (x)) [, 1:4]
-#> Linking to GEOS 3.8.0, GDAL 3.0.3, PROJ 6.3.0
+#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
 #>           test replications elapsed relative
-#> 2  geo_dist(x)           10   0.070    1.000
-#> 1 sf_dist(xsf)           10   0.187    2.671
+#> 2  geo_dist(x)           10   0.066    1.000
+#> 1 sf_dist(xsf)           10   0.210    3.182
 ```
 
 Confirm that the two give almost identical results:
@@ -175,7 +177,7 @@ Confirm that the two give almost identical results:
 ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
 dg <- geodist (x, measure = "geodesic")
 formatC (max (abs (ds - dg)), format = "e")
-#> [1] "7.4506e-09"
+#> [1] "9.3132e-09"
 ```
 
 All results are in metres, so the two differ by only around 10
@@ -192,8 +194,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
                        fgeosph ()) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.023    1.000
-#> 2  fgeosph()           10   0.040    1.739
+#> 1 fgeodist()           10   0.022        1
+#> 2  fgeosph()           10   0.044        2
 ```
 
 `geodist` is thus around 3 times faster than `sf` for highly accurate
@@ -209,7 +211,7 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Mon Feb 10 16:05:01 2020"
+#> [1] "Tue Jun 30 09:01:40 2020"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist

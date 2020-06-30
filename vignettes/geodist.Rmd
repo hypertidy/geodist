@@ -58,8 +58,9 @@ colnames (x) <- c ("lon", "lat", "a", "b")
 dim (geodist (x))
 #> [1] 10 10
 ```
-Distances currently implemented are Haversine, Vincenty (spherical), the very
-fast [mapbox cheap
+All outputs are distances in metres, calculated with a variety of spherical and
+elliptical distance measures. Distance measures currently implemented are
+Haversine, Vincenty (spherical), the very fast [mapbox cheap
 ruler](https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp)
 (see their [blog
 post](https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016)),

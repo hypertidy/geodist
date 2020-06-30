@@ -12,15 +12,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Fast, Dependency-Free Geodesic Distance Calculations">
-<meta property="og:description" content='Dependency-free, ultra fast calculation of geodesic distances.
-    Includes the reference nanometre-accuracy geodesic distances of Karney
-    (2013) &lt;doi:10.1007/s00190-012-0578-z&gt;, as used by the sf package, as well
-    as Haversine and Vincenty distances. Default distance measure is the "Mapbox
-    cheap ruler" which is generally more accurate than Haversine or Vincenty for
-    distances out to a few hundred kilometres, and is considerably faster. The
-    main function accepts one or two inputs in almost any generic rectangular
-    form, and returns either matrices of pairwise distances, or vectors of
-    sequential distances.'>
+<meta property="og:description" content='Dependency-free, ultra fast calculation of geodesic
+    distances.  Includes the reference nanometre-accuracy geodesic
+    distances of Karney (2013) &lt;doi:10.1007/s00190-012-0578-z&gt;, as used by
+    the sf package, as well as Haversine and Vincenty distances. Default
+    distance measure is the "Mapbox cheap ruler" which is generally more
+    accurate than Haversine or Vincenty for distances out to a few hundred
+    kilometres, and is considerably faster. The main function accepts one
+    or two inputs in almost any generic rectangular form, and returns
+    either matrices of pairwise distances, or vectors of sequential
+    distances.'>
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -39,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">geodist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.004</span>
       </span>
     </div>
 
@@ -103,7 +104,7 @@
 <div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">geodist</span>)</pre></div>
 <div class="sourceCode" id="cb4"><pre class="r"><span class="co"># current verison</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html">packageVersion</a></span>(<span class="st">"geodist"</span>)
-<span class="co">#&gt; [1] '0.0.3.4'</span></pre></div>
+<span class="co">#&gt; [1] '0.0.4.3'</span></pre></div>
 </div>
 <div id="detailed-usage" class="section level2">
 <h2 class="hasAnchor">
@@ -124,15 +125,15 @@
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span> (<span class="no">x</span>) <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span> (<span class="st">"lon"</span>, <span class="st">"lat"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span> (<span class="fu"><a href="reference/geodist.html">geodist</a></span> (<span class="no">x</span>))
 <span class="co">#&gt; [1] 10 10</span></pre></div>
-<p>Distances currently implemented are Haversine, Vincenty (spherical and elliptical)), the very fast <a href="https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp">mapbox cheap ruler</a> (see their <a href="https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016">blog post</a>), and the “reference” implementation of <a href="https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf">Karney (2013)</a>, as implemented in the package <a href="https://cran.r-project.org/package=sf"><code>sf</code></a>. (Note that <code>geodist</code> does not accept <a href="https://cran.r-project.org/package=sf"><code>sf</code></a>-format objects; the <a href="https://cran.r-project.org/package=sf"><code>sf</code></a> package itself should be used for that.) The <a href="https://github.com/mapbox/cheap-ruler-cpp">mapbox cheap ruler algorithm</a> is intended to provide approximate yet very fast distance calculations within small areas (tens to a few hundred kilometres across).</p>
+<p>All outputs are distances in metres, calculated with a variety of spherical and elliptical distance measures. Distance measures currently implemented are Haversine, Vincenty (spherical and elliptical)), the very fast <a href="https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp">mapbox cheap ruler</a> (see their <a href="https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016">blog post</a>), and the “reference” implementation of <a href="https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf">Karney (2013)</a>, as implemented in the package <a href="https://cran.r-project.org/package=sf"><code>sf</code></a>. (Note that <code>geodist</code> does not accept <a href="https://cran.r-project.org/package=sf"><code>sf</code></a>-format objects; the <a href="https://cran.r-project.org/package=sf"><code>sf</code></a> package itself should be used for that.) The <a href="https://github.com/mapbox/cheap-ruler-cpp">mapbox cheap ruler algorithm</a> is intended to provide approximate yet very fast distance calculations within small areas (tens to a few hundred kilometres across).</p>
 <div id="benchmarks-of-geodesic-accuracy" class="section level3">
 <h3 class="hasAnchor">
 <a href="#benchmarks-of-geodesic-accuracy" class="anchor"></a>Benchmarks of geodesic accuracy</h3>
 <p>The <code><a href="reference/geodist_benchmark.html">geodist_benchmark()</a></code> function - the only other function provided by the <code>geodist</code> package - compares the accuracy of the different metrics to the nanometre-accuracy standard of <a href="https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf">Karney (2013)</a>.</p>
 <div class="sourceCode" id="cb6"><pre class="r"><span class="fu"><a href="reference/geodist_benchmark.html">geodist_benchmark</a></span> (<span class="kw">lat</span> <span class="kw">=</span> <span class="fl">30</span>, <span class="kw">d</span> <span class="kw">=</span> <span class="fl">1000</span>)
 <span class="co">#&gt;            haversine    vincenty       cheap</span>
-<span class="co">#&gt; absolute 0.834007400 0.834007400 0.577743126</span>
-<span class="co">#&gt; relative 0.002192882 0.002192882 0.001607569</span></pre></div>
+<span class="co">#&gt; absolute 0.836749881 0.836749881 0.568786608</span>
+<span class="co">#&gt; relative 0.002195731 0.002195731 0.001580571</span></pre></div>
 <p>All distances (<code>d)</code> are in metres, and all measures are accurate to within 1m over distances out to several km (at the chosen latitude of 30 degrees). The following plots compare the absolute and relative accuracies of the different distance measures implemented here. The mapbox cheap ruler algorithm is the most accurate for distances out to around 100km, beyond which it becomes extremely inaccurate. Average relative errors of Vincenty distances remain generally constant at around 0.2%, while relative errors of cheap-ruler distances out to 100km are around 0.16%.</p>
 <p><img src="articles/fig1.png"></p>
 </div>
@@ -151,10 +152,10 @@
                        <span class="no">d3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/geodist.html">geodist</a></span> (<span class="no">x</span>, <span class="kw">measure</span> <span class="kw">=</span> <span class="st">"vincenty"</span>),
                        <span class="no">d4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/geodist.html">geodist</a></span> (<span class="no">x</span>, <span class="kw">measure</span> <span class="kw">=</span> <span class="st">"geodesic"</span>)) [, <span class="fl">1</span>:<span class="fl">4</span>]
 <span class="co">#&gt;                                      test replications elapsed relative</span>
-<span class="co">#&gt; 1     d1 &lt;- geodist(x, measure = "cheap")           10   0.126    1.000</span>
-<span class="co">#&gt; 2 d2 &lt;- geodist(x, measure = "haversine")           10   0.178    1.413</span>
-<span class="co">#&gt; 3  d3 &lt;- geodist(x, measure = "vincenty")           10   0.284    2.254</span>
-<span class="co">#&gt; 4  d4 &lt;- geodist(x, measure = "geodesic")           10   3.196   25.365</span></pre></div>
+<span class="co">#&gt; 1     d1 &lt;- geodist(x, measure = "cheap")           10   0.084    1.000</span>
+<span class="co">#&gt; 2 d2 &lt;- geodist(x, measure = "haversine")           10   0.222    2.643</span>
+<span class="co">#&gt; 3  d3 &lt;- geodist(x, measure = "vincenty")           10   0.225    2.679</span>
+<span class="co">#&gt; 4  d4 &lt;- geodist(x, measure = "geodesic")           10   3.039   36.179</span></pre></div>
 <p>Geodesic distance calculation is available in the <a href="https://cran.r-project.org/package=sf"><code>sf</code> package</a>. Comparing computation speeds requires conversion of sets of numeric lon-lat points to <code>sf</code> form with the following code:</p>
 <div class="sourceCode" id="cb8"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span> (<span class="no">magrittr</span>)
 <span class="no">x_to_sf</span> <span class="kw">&lt;-</span> <span class="kw">function</span> (<span class="no">x</span>)
@@ -173,15 +174,15 @@
 <span class="kw pkg">rbenchmark</span><span class="kw ns">::</span><span class="fu">benchmark</span> (<span class="kw">replications</span> <span class="kw">=</span> <span class="fl">10</span>, <span class="kw">order</span> <span class="kw">=</span> <span class="st">"test"</span>,
                       <span class="fu">sf_dist</span> (<span class="no">xsf</span>),
                       <span class="fu">geo_dist</span> (<span class="no">x</span>)) [, <span class="fl">1</span>:<span class="fl">4</span>]
-<span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.3, PROJ 6.3.0</span>
+<span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1</span>
 <span class="co">#&gt;           test replications elapsed relative</span>
-<span class="co">#&gt; 2  geo_dist(x)           10   0.070    1.000</span>
-<span class="co">#&gt; 1 sf_dist(xsf)           10   0.187    2.671</span></pre></div>
+<span class="co">#&gt; 2  geo_dist(x)           10   0.066    1.000</span>
+<span class="co">#&gt; 1 sf_dist(xsf)           10   0.210    3.182</span></pre></div>
 <p>Confirm that the two give almost identical results:</p>
 <div class="sourceCode" id="cb10"><pre class="r"><span class="no">ds</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span> (<span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span> (<span class="fu">sf_dist</span> (<span class="no">xsf</span>)), <span class="kw">nrow</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span> (<span class="no">xsf</span>))
 <span class="no">dg</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/geodist.html">geodist</a></span> (<span class="no">x</span>, <span class="kw">measure</span> <span class="kw">=</span> <span class="st">"geodesic"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/formatc.html">formatC</a></span> (<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span> (<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span> (<span class="no">ds</span> - <span class="no">dg</span>)), <span class="kw">format</span> <span class="kw">=</span> <span class="st">"e"</span>)
-<span class="co">#&gt; [1] "7.4506e-09"</span></pre></div>
+<span class="co">#&gt; [1] "9.3132e-09"</span></pre></div>
 <p>All results are in metres, so the two differ by only around 10 nanometres.</p>
 <p>The <a href="https://cran.r-project.org/package=geosphere"><code>geosphere</code> package</a> also offers sequential calculation which is benchmarked with the following code:</p>
 <div class="sourceCode" id="cb11"><pre class="r"><span class="no">fgeodist</span> <span class="kw">&lt;-</span> <span class="kw">function</span> () <span class="fu"><a href="reference/geodist.html">geodist</a></span> (<span class="no">x</span>, <span class="kw">measure</span> <span class="kw">=</span> <span class="st">"vincenty"</span>, <span class="kw">sequential</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
@@ -190,8 +191,8 @@
                        <span class="fu">fgeodist</span> (),
                        <span class="fu">fgeosph</span> ()) [, <span class="fl">1</span>:<span class="fl">4</span>]
 <span class="co">#&gt;         test replications elapsed relative</span>
-<span class="co">#&gt; 1 fgeodist()           10   0.023    1.000</span>
-<span class="co">#&gt; 2  fgeosph()           10   0.040    1.739</span></pre></div>
+<span class="co">#&gt; 1 fgeodist()           10   0.022        1</span>
+<span class="co">#&gt; 2  fgeosph()           10   0.044        2</span></pre></div>
 <p><code>geodist</code> is thus around 3 times faster than <code>sf</code> for highly accurate geodesic distance calculations, and around twice as fast as <code>geosphere</code> for calculation of sequential distances.</p>
 </div>
 <div id="test-results" class="section level3">
@@ -200,7 +201,7 @@
 <div class="sourceCode" id="cb12"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span> (<span class="no">devtools</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span> (<span class="no">testthat</span>)</pre></div>
 <div class="sourceCode" id="cb13"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/date.html">date</a></span>()
-<span class="co">#&gt; [1] "Mon Feb 10 16:05:01 2020"</span>
+<span class="co">#&gt; [1] "Tue Jun 30 09:01:40 2020"</span>
 <span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">test</span>(<span class="st">"tests/"</span>)
 <span class="co">#&gt; Loading geodist</span>
 <span class="co">#&gt; Testing geodist</span>

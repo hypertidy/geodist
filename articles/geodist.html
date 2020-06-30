@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geodist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.004</span>
       </span>
     </div>
 
@@ -76,7 +76,7 @@
       <h1 data-toc-skip>geodist</h1>
                         <h4 class="author">Mark Padgham</h4>
             
-            <h4 class="date">2020-05-19</h4>
+            <h4 class="date">2020-06-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/hypertidy/geodist/blob/master/vignettes/geodist.Rmd"><code>vignettes/geodist.Rmd</code></a></small>
       <div class="hidden name"><code>geodist.Rmd</code></div>
@@ -116,7 +116,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span> (<span class="no">x</span>) <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span> (<span class="st">"lon"</span>, <span class="st">"lat"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span> (<span class="fu"><a href="../reference/geodist.html">geodist</a></span> (<span class="no">x</span>))
 <span class="co">#&gt; [1] 10 10</span></pre></body></html></div>
-<p>Distances currently implemented are Haversine, Vincenty (spherical), the very fast <a href="https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp">mapbox cheap ruler</a> (see their <a href="https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016">blog post</a>), and the “reference” implementation of <a href="https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf">Karney (2013)</a>, as implemented in the package <a href="https://cran.r-project.org/package=sf"><code>sf</code></a>. (Note that <code>geodist</code> does not accept <a href="https://cran.r-project.org/package=sf"><code>sf</code></a>-format objects; the <a href="https://cran.r-project.org/package=sf"><code>sf</code></a> package itself should be used for that.) Note that The <a href="https://github.com/mapbox/cheap-ruler-cpp">mapbox cheap ruler algorithm</a> is intended to provide approximate yet very fast distance calculations within small areas (typically the size of single cities or study sites).</p>
+<p>All outputs are distances in metres, calculated with a variety of spherical and elliptical distance measures. Distance measures currently implemented are Haversine, Vincenty (spherical), the very fast <a href="https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp">mapbox cheap ruler</a> (see their <a href="https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016">blog post</a>), and the “reference” implementation of <a href="https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf">Karney (2013)</a>, as implemented in the package <a href="https://cran.r-project.org/package=sf"><code>sf</code></a>. (Note that <code>geodist</code> does not accept <a href="https://cran.r-project.org/package=sf"><code>sf</code></a>-format objects; the <a href="https://cran.r-project.org/package=sf"><code>sf</code></a> package itself should be used for that.) Note that The <a href="https://github.com/mapbox/cheap-ruler-cpp">mapbox cheap ruler algorithm</a> is intended to provide approximate yet very fast distance calculations within small areas (typically the size of single cities or study sites).</p>
 <div id="benchmarks-of-geodesic-accuracy" class="section level3">
 <h3 class="hasAnchor">
 <a href="#benchmarks-of-geodesic-accuracy" class="anchor"></a>Benchmarks of geodesic accuracy</h3>

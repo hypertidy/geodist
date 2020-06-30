@@ -5,19 +5,19 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "geodist",
-  "description": "Dependency-free, ultra fast calculation of geodesic distances.\n    Includes the reference nanometre-accuracy geodesic distances of Karney\n    (2013) <doi:10.1007/s00190-012-0578-z>, as used by the 'sf' package, as well\n    as Haversine and Vincenty distances. Default distance measure is the \"Mapbox\n    cheap ruler\" which is generally more accurate than Haversine or Vincenty for\n    distances out to a few hundred kilometres, and is considerably faster. The\n    main function accepts one or two inputs in almost any generic rectangular\n    form, and returns either matrices of pairwise distances, or vectors of\n    sequential distances.",
+  "description": "Dependency-free, ultra fast calculation of geodesic\n    distances.  Includes the reference nanometre-accuracy geodesic\n    distances of Karney (2013) <doi:10.1007/s00190-012-0578-z>, as used by\n    the 'sf' package, as well as Haversine and Vincenty distances. Default\n    distance measure is the \"Mapbox cheap ruler\" which is generally more\n    accurate than Haversine or Vincenty for distances out to a few hundred\n    kilometres, and is considerably faster. The main function accepts one\n    or two inputs in almost any generic rectangular form, and returns\n    either matrices of pairwise distances, or vectors of sequential\n    distances.",
   "name": "geodist: Fast, Dependency-Free Geodesic Distance Calculations",
   "codeRepository": "https://github.com/hypertidy/geodist",
   "issueTracker": "https://github.com/hypertidy/geodist/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.4.1",
+  "version": "0.0.4.003",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.0 (2020-04-24)",
+  "runtimePlatform": "R version 4.0.1 (2020-06-06)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -83,7 +83,7 @@
   "softwareRequirements": [],
   "releaseNotes": "https://github.com/hypertidy/geodist/blob/master/NEWS.md",
   "readme": "https://github.com/hypertidy/geodist/blob/master/README.md",
-  "fileSize": "69.436KB",
+  "fileSize": "70.081KB",
   "contIntegration": [
     "https://travis-ci.org/hypertidy/geodist",
     "https://ci.appveyor.com/project/hypertidy/geodist",

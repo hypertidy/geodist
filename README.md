@@ -1,5 +1,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![R build
+status](https://github.com/hypertidy/geodist/workflows/R-CMD-check/badge.svg)](https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check)
 [![Build
 Status](https://travis-ci.org/hypertidy/geodist.svg)](https://travis-ci.org/hypertidy/geodist)
 [![AppVeyor Build
@@ -107,9 +109,9 @@ to the nanometre-accuracy standard of [Karney
 
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
-#>            haversine    vincenty      cheap
-#> absolute 0.803284646 0.803284646 0.57345010
-#> relative 0.002133165 0.002133165 0.00158866
+#>            haversine    vincenty       cheap
+#> absolute 0.806228667 0.806228667 0.553308240
+#> relative 0.002202156 0.002202156 0.001602702
 ```
 
 All distances (`d)` are in metres, and all measures are accurate to
@@ -141,10 +143,10 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d3 <- geodist (x, measure = "vincenty"),
                        d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.070    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.168    2.400
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.227    3.243
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.337   47.671
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.069    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.168    2.435
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.229    3.319
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.313   48.014
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -175,8 +177,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                       geo_dist (x)) [, 1:4]
 #> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
 #>           test replications elapsed relative
-#> 2  geo_dist(x)           10   0.072    1.000
-#> 1 sf_dist(xsf)           10   0.220    3.056
+#> 2  geo_dist(x)           10   0.071    1.000
+#> 1 sf_dist(xsf)           10   0.226    3.183
 ```
 
 Confirm that the two give almost identical results:
@@ -185,7 +187,7 @@ Confirm that the two give almost identical results:
 ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
 dg <- geodist (x, measure = "geodesic")
 formatC (max (abs (ds - dg)), format = "e")
-#> [1] "9.3132e-09"
+#> [1] "1.1176e-08"
 ```
 
 All results are in metres, so the two differ by only around 10
@@ -203,7 +205,7 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeosph ()) [, 1:4]
 #>         test replications elapsed relative
 #> 1 fgeodist()           10   0.022    1.000
-#> 2  fgeosph()           10   0.047    2.136
+#> 2  fgeosph()           10   0.045    2.045
 ```
 
 `geodist` is thus around 3 times faster than `sf` for highly accurate
@@ -219,7 +221,7 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Thu Jul  2 11:19:22 2020"
+#> [1] "Thu Jul  2 11:28:06 2020"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist

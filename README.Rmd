@@ -39,23 +39,24 @@ d2 <- geodist (x, sequential = TRUE, pad = TRUE) # Vector of length 50
 
 ## Installation
 
-You can install geodist from github with:
-
+You can install latest stable version of `geodist` from CRAN with:
+```{r cran-installation, eval = FALSE}
+install.packages("geodist") # current CRAN version
+```
+Alternatively, current development versions can be installed using any of the
+following options:
 ```{r gh-installation, eval = FALSE}
-# install.packages("devtools")
-devtools::install_github("hypertidy/geodist")
+# install.packages("remotes")
+remotes::install_git("https://git.sr.ht/~mpadge/geodist")
+remotes::install_bitbucket("hypertidy/geodist")
+remotes::install_gitlab("hypertidy/geodist")
+remotes::install_github("hypertidy/geodist")
 ```
-```{r, echo = FALSE, message = FALSE}
-devtools::load_all (".", export_all = FALSE)
+Then load with
+```{r library}
+library (geodist)
+packageVersion ("geodist")
 ```
-```{r, eval=FALSE}
-library(geodist)
-```
-```{r}
-# current verison
-packageVersion("geodist")
-```
-
 
 ## Detailed Usage
 

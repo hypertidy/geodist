@@ -76,12 +76,8 @@ geodist_vec <- function (x1, y1, x2, y2, paired = FALSE,
             res <- geodist_x_vec (x1, y1, measure)
     }
 
-    if (measure == "cheap") {
-        if (max (d) > 100000)
-            message ("Maximum distance is > 100km. The 'cheap' measure is ",
-                     "inaccurate over such\nlarge distances, you'd likely ",
-                     "be better using a different 'measure'.")
-    }
+    if (measure == "cheap")
+        check_max_d (res, measure)
 
     return (res)
 }

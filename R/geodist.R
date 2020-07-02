@@ -77,7 +77,8 @@ geodist <- function (x, y, paired = FALSE,
             res <- geodist_x (x, measure)
     }
 
-    check_max_d (res, measure)
+    if (measure == "cheap")
+        check_max_d (res, measure)
 
     return (res)
 }

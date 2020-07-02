@@ -128,10 +128,8 @@ convert_to_matrix <- function (obj)
 }
 
 check_max_d <- function (d, measure) {
-    if (measure == "cheap") {
-        if (max (d) > 100000)
-            message ("Maximum distance is > 100km. The 'cheap' measure is ",
-                     "inaccurate over such\nlarge distances, you'd likely ",
-                     "be better using a different 'measure'.")
-    }
+    if (max (d, na.rm = TRUE) > 100000)
+        message ("Maximum distance is > 100km. The 'cheap' measure is ",
+                 "inaccurate over such\nlarge distances, you'd likely ",
+                 "be better using a different 'measure'.")
 }

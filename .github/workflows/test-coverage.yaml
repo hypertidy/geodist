@@ -44,5 +44,5 @@ jobs:
         #  git config --global user.name "GitHub Actions User"
 
       - name: Test coverage
-        run: covr::codecov(line_exclusions=list('src/geodesic.c'))
+        run: covr::codecov(line_exclusions = list('src/geodesic.c'))
         shell: Rscript {0}

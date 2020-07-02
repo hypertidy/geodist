@@ -37,8 +37,8 @@ notifications:
     on_success: change
     on_failure: change
 
-r_packages:
-      - covr
+    #r_packages:
+    #  - covr
 
-after_success:
-    - Rscript -e "covr::codecov(line_exclusions = list('src/geodesic.c'))"
+        #after_success:
+        #- Rscript -e "covr::codecov(line_exclusions = list('src/geodesic.c'))"

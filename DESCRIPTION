@@ -1,6 +1,6 @@
 Package: geodist
 Title: Fast, Dependency-Free Geodesic Distance Calculations
-Version: 0.0.4.004
+Version: 0.0.4.005
 Authors@R: 
     c(person(given = "Mark",
              family = "Padgham",

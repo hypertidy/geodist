@@ -40,11 +40,12 @@ If only \code{x} passed and \code{sequential = FALSE}, a square
 symmetric matrix containing distances between all items in \code{x}; If only
 \code{x} passed and \code{sequential = TRUE}, a vector of sequential
 distances between rows of \code{x}; otherwise if \code{y} is passed, a matrix
-of \code{nrow(x)} rows and \code{nrow(y)} columns.
+of \code{nrow(x)} rows and \code{nrow(y)} columns. All return values are
+distances in metres.
 }
 \description{
 Convert one or two rectangular objects containing lon-lat coordinates into
-vector or matrix of geodesic distances.
+vector or matrix of geodesic distances in metres.
 }
 \note{
 \code{measure = "cheap"} denotes the mapbox cheap ruler

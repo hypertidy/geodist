@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="geodist. — geodist" />
 <meta property="og:description" content="Convert one or two rectangular objects containing lon-lat coordinates into
-vector or matrix of geodesic distances." />
+vector or matrix of geodesic distances in metres." />
 
 
 
@@ -73,7 +73,7 @@ vector or matrix of geodesic distances." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geodist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.009</span>
       </span>
     </div>
 
@@ -122,16 +122,16 @@ vector or matrix of geodesic distances." />
 
     <div class="ref-description">
     <p>Convert one or two rectangular objects containing lon-lat coordinates into
-vector or matrix of geodesic distances.</p>
+vector or matrix of geodesic distances in metres.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>geodist</span>(
-  <span class='no'>x</span>,
-  <span class='no'>y</span>,
-  <span class='kw'>paired</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>sequential</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pad</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>measure</span> <span class='kw'>=</span> <span class='st'>"cheap"</span>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/geodist/man/geodist.html'>geodist</a></span>(
+  <span class='kw'>x</span>,
+  <span class='kw'>y</span>,
+  paired = <span class='fl'>FALSE</span>,
+  sequential = <span class='fl'>FALSE</span>,
+  pad = <span class='fl'>FALSE</span>,
+  measure = <span class='st'>"cheap"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -177,7 +177,8 @@ specifying desired method of geodesic distance calculation; see Notes.</p></td>
 symmetric matrix containing distances between all items in <code>x</code>; If only
 <code>x</code> passed and <code>sequential = TRUE</code>, a vector of sequential
 distances between rows of <code>x</code>; otherwise if <code>y</code> is passed, a matrix
-of <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(x)</a></code> rows and <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(y)</a></code> columns.</p>
+of <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(x)</a></code> rows and <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(y)</a></code> columns. All return values are
+distances in metres.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p><code>measure = "cheap"</code> denotes the mapbox cheap ruler
@@ -187,16 +188,15 @@ denotes the very accurate geodesic methods given in Karney (2013)
 codesf::st_dist() function.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>50</span>
+    <pre class="examples"><div class='input'><span class='kw'>n</span> <span class='op'>&lt;-</span> <span class='fl'>50</span>
 <span class='co'># Default "cheap" distance measure is only accurate for short distances:</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span> (<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span> (<span class='no'>n</span>, -<span class='fl'>0.1</span>, <span class='fl'>0.1</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span> (<span class='no'>n</span>, -<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span> (<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span> (<span class='fl'>2</span> * <span class='no'>n</span>, -<span class='fl'>0.1</span>, <span class='fl'>0.1</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span> (<span class='fl'>2</span> * <span class='no'>n</span>, -<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span> (<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span> (<span class='no'>y</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span> (<span class='st'>"x"</span>, <span class='st'>"y"</span>)
-<span class='no'>d0</span> <span class='kw'>&lt;-</span> <span class='fu'>geodist</span> (<span class='no'>x</span>) <span class='co'># A 50-by-50 matrix</span>
-<span class='no'>d1</span> <span class='kw'>&lt;-</span> <span class='fu'>geodist</span> (<span class='no'>x</span>, <span class='no'>y</span>) <span class='co'># A 50-by-100 matrix</span>
-<span class='no'>d2</span> <span class='kw'>&lt;-</span> <span class='fu'>geodist</span> (<span class='no'>x</span>, <span class='kw'>sequential</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># Vector of length 49</span>
-<span class='no'>d2</span> <span class='kw'>&lt;-</span> <span class='fu'>geodist</span> (<span class='no'>x</span>, <span class='kw'>sequential</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pad</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># Vector of length 50</span>
-<span class='no'>d0_2</span> <span class='kw'>&lt;-</span> <span class='fu'>geodist</span> (<span class='no'>x</span>, <span class='kw'>measure</span> <span class='kw'>=</span> <span class='st'>"geodesic"</span>) <span class='co'># nanometre-accurate version of d0</span></div></pre>
+<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span> (<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span> (<span class='kw'>n</span>, <span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span> (<span class='kw'>n</span>, <span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span>))
+<span class='kw'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span> (<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span> (<span class='fl'>2</span> <span class='op'>*</span> <span class='kw'>n</span>, <span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span> (<span class='fl'>2</span> <span class='op'>*</span> <span class='kw'>n</span>, <span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span> (<span class='kw'>x</span>) <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span> (<span class='kw'>y</span>) <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span> (<span class='st'>"x"</span>, <span class='st'>"y"</span>)
+<span class='kw'>d0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/geodist/man/geodist.html'>geodist</a></span> (<span class='kw'>x</span>) <span class='co'># A 50-by-50 matrix</span>
+<span class='kw'>d1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/geodist/man/geodist.html'>geodist</a></span> (<span class='kw'>x</span>, <span class='kw'>y</span>) <span class='co'># A 50-by-100 matrix</span>
+<span class='kw'>d2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/geodist/man/geodist.html'>geodist</a></span> (<span class='kw'>x</span>, sequential = <span class='fl'>TRUE</span>) <span class='co'># Vector of length 49</span>
+<span class='kw'>d2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/geodist/man/geodist.html'>geodist</a></span> (<span class='kw'>x</span>, sequential = <span class='fl'>TRUE</span>, pad = <span class='fl'>TRUE</span>) <span class='co'># Vector of length 50</span></div><div class='output co'>#&gt; <span class='error'>Error in if (max(d) &gt; 1e+05) message("Maximum distance is &gt; 100km. The 'cheap' measure is ",     "inaccurate over such\nlarge distances, you'd likely ", "be better using a different 'measure'."): missing value where TRUE/FALSE needed</span></div><div class='input'><span class='kw'>d0_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/geodist/man/geodist.html'>geodist</a></span> (<span class='kw'>x</span>, measure = <span class='st'>"geodesic"</span>) <span class='co'># nanometre-accurate version of d0</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -212,7 +212,7 @@ codesf::st_dist() function.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

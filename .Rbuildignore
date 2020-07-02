@@ -17,3 +17,4 @@ data-raw/
 ^\.Rproj\.user$
 ^codemeta\.json$
 ^\.pre-commit-config\.yaml$
+^\.github$

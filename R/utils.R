@@ -126,3 +126,12 @@ convert_to_matrix <- function (obj)
             cbind (obj [[xy_cols [1] ]], obj [[xy_cols [2] ]])
     }
 }
+
+check_max_d <- function (d, measure) {
+    if (measure == "cheap") {
+        if (max (d) > 100000)
+            message ("Maximum distance is > 100km. The 'cheap' measure is ",
+                     "inaccurate over such\nlarge distances, you'd likely ",
+                     "be better using a different 'measure'.")
+    }
+}

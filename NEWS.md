@@ -1,5 +1,9 @@
 # v0.0.4.00x
 
+Minor changes:
+    - All functions now issue a message to use a different measure when default
+      `measure = "cheap"` and maximum distance > 100km (see #26)
+
 # v0.0.4
 
 Major changes:

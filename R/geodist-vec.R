@@ -59,22 +59,31 @@ geodist_vec <- function (x1, y1, x2, y2, paired = FALSE,
         check_vec_inputs (x2, y2, 2)
         if (paired)
         {
-            geodist_paired_vec (x1, y1, x2, y2, measure)
+            res <- geodist_paired_vec (x1, y1, x2, y2, measure)
         } else if (sequential)
         {
             message ("Sequential distances calculated along values of 'x' only")
-            geodist_seq_vec (x1, y2, measure, pad)
+            res <- geodist_seq_vec (x1, y2, measure, pad)
         } else
         {
-            geodist_xy_vec (x1, y1, x2, y2, measure)
+            res <- geodist_xy_vec (x1, y1, x2, y2, measure)
         }
     } else
     {
         if (sequential)
-            geodist_seq_vec (x1, y1, measure, pad)
+            res <- geodist_seq_vec (x1, y1, measure, pad)
         else
-            geodist_x_vec (x1, y1, measure)
+            res <- geodist_x_vec (x1, y1, measure)
     }
+
+    if (measure == "cheap") {
+        if (max (d) > 100000)
+            message ("Maximum distance is > 100km. The 'cheap' measure is ",
+                     "inaccurate over such\nlarge distances, you'd likely ",
+                     "be better using a different 'measure'.")
+    }
+
+    return (res)
 }
 
 check_vec_inputs <- function (x, y, n = 1)
@@ -90,15 +99,13 @@ check_vec_inputs <- function (x, y, n = 1)
 geodist_paired_vec <- function (x1, y1, x2, y2, measure)
 {
     if (measure == "haversine")
-        res <- .Call ("R_haversine_paired_vec", x1, y1, x2, y2)
+        .Call ("R_haversine_paired_vec", x1, y1, x2, y2)
     else if (measure == "vincenty")
-        res <- .Call ("R_vincenty_paired_vec", x1, y1, x2, y2)
+        .Call ("R_vincenty_paired_vec", x1, y1, x2, y2)
     else if (measure == "geodesic")
-        res <- .Call ("R_geodesic_paired_vec", x1, y1, x2, y2)
+        .Call ("R_geodesic_paired_vec", x1, y1, x2, y2)
     else
-        res <- .Call ("R_cheap_paired_vec", x1, y1, x2, y2)
-
-    return (res)
+        .Call ("R_cheap_paired_vec", x1, y1, x2, y2)
 }
 
 geodist_seq_vec <- function (x, y, measure, pad)

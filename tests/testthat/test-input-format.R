@@ -5,6 +5,8 @@ context("geodist input formats")
 #y <- tibble::tibble (x = -180 + 360 * runif (2 * n),
 #                     y = -90 + 180 * runif (2 * n))
 
+test_all <- identical (Sys.getenv ("MPADGE_LOCAL"), "true")
+
 test_that("geodist with df", {
               n <- 1e2
               x <- data.frame (x = -180 + 360 * runif (n),
@@ -28,7 +30,11 @@ test_that("geodist with matrix", {
               y <- cbind (-180 + 360 * runif (2 * n), -90 + 180 * runif (2 * n))
               expect_message (d1 <- geodist (x), "object has no named columns")
               colnames (x) <- c ("x", "y")
-              expect_silent (d1 <- geodist (x))
+              if (test_all)
+                  expect_message (d1 <- geodist (x),
+                                  "Maximum distance is > 100km")
+              else
+                  d1 <- geodist (x)
               expect_equal (dim (d1), c (n, n))
               diag (d1) <- Inf
               expect_true (all (d1 >= 0))
@@ -65,8 +71,17 @@ test_that ("column names, ", {
                              paste0 ("Unable to determine longitude and ",
                                      "latitude columns"))
                colnames (x) <- colnames (y) <- c ("_x_x", "_x_y")
-               expect_silent (d1 <- geodist (x, y, paired = TRUE))
+               if (test_all)
+                   expect_message (d1 <- geodist (x, y, paired = TRUE),
+                                  "Maximum distance is > 100km")
+               else
+                   d1 <- geodist (x, y, paired = TRUE)
+
                colnames (x) <- colnames (y) <- c ("_a_x_", "_a_y_")
-               expect_silent (d2 <- geodist (x, y, paired = TRUE))
+               if (test_all)
+                   expect_message (d2 <- geodist (x, y, paired = TRUE),
+                                   "Maximum distance is > 100km")
+               else
+                   d2 <- geodist (x, y, paired = TRUE)
                expect_identical (d1, d2)
 })

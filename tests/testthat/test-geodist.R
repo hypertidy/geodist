@@ -110,7 +110,11 @@ test_that ("geodist paired", {
                             "x and y must have the same number of rows")
               y <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
               colnames (y) <- c ("x", "y")
-              expect_silent (d1 <- geodist (x, y, paired = TRUE))
+              if (test_all)
+                  expect_message (d1 <- geodist (x, y, paired = TRUE),
+                              "Maximum distance is > 100km")
+              else
+                  d1 <- geodist (x, y, paired = TRUE)
               expect_is (d1, "numeric")
               expect_equal (length (d1), n)
 

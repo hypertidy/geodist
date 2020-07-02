@@ -57,39 +57,41 @@ geodist <- function (x, y, paired = FALSE,
                 stop ("x and y must have the same number of ",
                       "rows for paired distances")
             y <- convert_to_matrix (y)
-            geodist_paired (x, y, measure)
+            res <- geodist_paired (x, y, measure)
         } else if (sequential)
         {
             message ("Sequential distances calculated along values of 'x' only")
-            geodist_seq (x, measure, pad)
+            res <- geodist_seq (x, measure, pad)
         } else
         {
             y <- convert_to_matrix (y)
-            geodist_xy (x, y, measure)
+            res <- geodist_xy (x, y, measure)
             # t() because the src code loops over x then y, so y is the internal
             # loop
         }
     } else
     {
         if (sequential)
-            geodist_seq (x, measure, pad)
+            res <- geodist_seq (x, measure, pad)
         else
-            geodist_x (x, measure)
+            res <- geodist_x (x, measure)
     }
+
+    check_max_d (res, measure)
+
+    return (res)
 }
 
 geodist_paired <- function (x, y, measure)
 {
     if (measure == "haversine")
-        res <- .Call ("R_haversine_paired", as.vector (x), as.vector (y))
+        .Call ("R_haversine_paired", as.vector (x), as.vector (y))
     else if (measure == "vincenty")
-        res <- .Call ("R_vincenty_paired", as.vector (x), as.vector (y))
+        .Call ("R_vincenty_paired", as.vector (x), as.vector (y))
     else if (measure == "geodesic")
-        res <- .Call ("R_geodesic_paired", as.vector (x), as.vector (y))
+        .Call ("R_geodesic_paired", as.vector (x), as.vector (y))
     else
-        res <- .Call ("R_cheap_paired", as.vector (x), as.vector (y))
-
-    return (res)
+        .Call ("R_cheap_paired", as.vector (x), as.vector (y))
 }
 
 geodist_seq <- function (x, measure, pad)

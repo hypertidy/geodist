@@ -1,9 +1,10 @@
-# v0.0.4.00x
+# v0.0.5
 
 Minor changes:
     - Mirrored source repository on gitlab, bitbucket, sourcehut, and github
     - All functions now issue a message to use a different measure when default
       `measure = "cheap"` and maximum distance > 100km (see #26)
+    - C code made more robust (all input variables protected).
 
 # v0.0.4
 

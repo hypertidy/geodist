@@ -10,7 +10,7 @@
   "codeRepository": "https://github.com/hypertidy/geodist",
   "issueTracker": "https://github.com/hypertidy/geodist/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.5",
+  "version": "0.0.5.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -68,6 +68,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
       "provider": {
@@ -82,7 +94,7 @@
   "softwareRequirements": [],
   "releaseNotes": "https://github.com/hypertidy/geodist/blob/master/NEWS.md",
   "readme": "https://github.com/hypertidy/geodist/blob/master/README.md",
-  "fileSize": "440.425KB",
+  "fileSize": "440.833KB",
   "contIntegration": ["https://travis-ci.org/hypertidy/geodist", "https://ci.appveyor.com/project/hypertidy/geodist", "https://codecov.io/gh/hypertidy/geodist"],
   "developmentStatus": "http://www.repostatus.org/#active",
   "relatedLink": "https://CRAN.R-project.org/package=geodist"

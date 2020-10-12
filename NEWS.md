@@ -1,4 +1,4 @@
-# v0.0.5
+# v0.0.6
 
 Minor changes:
     - Mirrored source repository on gitlab, bitbucket, sourcehut, and github

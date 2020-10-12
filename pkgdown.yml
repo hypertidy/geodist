@@ -1,6 +1,7 @@
 pandoc: 2.7.3
-pkgdown: 1.6.0.9000
-pkgdown_sha: f3d5e4141b7893df4f0a122983f89a440d187625
-articles: []
-last_built: 2020-09-10T10:31Z
+pkgdown: 1.6.1.9000
+pkgdown_sha: e1e46f2e13c7efdb17bc4eae40bc3779c2b0b517
+articles:
+  geodist: geodist.html
+last_built: 2020-10-12T08:29Z
 

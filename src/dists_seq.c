@@ -10,7 +10,10 @@
 SEXP R_haversine_seq (SEXP x_)
 {
     size_t n = floor (length (x_) / 2);
+
     SEXP out = PROTECT (allocVector (REALSXP, n));
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+
     double *rx, *rout;
     rx = REAL (x_);
     rout = REAL (out);
@@ -25,7 +28,7 @@ SEXP R_haversine_seq (SEXP x_)
                 cos (rx [n + i - 1] * M_PI / 180.0));
     }
 
-    UNPROTECT (1);
+    UNPROTECT (2);
 
     return out;
 }
@@ -36,7 +39,10 @@ SEXP R_haversine_seq (SEXP x_)
 SEXP R_vincenty_seq (SEXP x_)
 {
     size_t n = floor (length (x_) / 2);
+
     SEXP out = PROTECT (allocVector (REALSXP, n));
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+
     double *rx, *rout;
     rx = REAL (x_);
     rout = REAL (out);
@@ -53,7 +59,7 @@ SEXP R_vincenty_seq (SEXP x_)
                 rx [i], rx [n + i], siny1, cosy1, siny2, cosy2);
     }
 
-    UNPROTECT (1);
+    UNPROTECT (2);
 
     return out;
 }
@@ -64,7 +70,10 @@ SEXP R_vincenty_seq (SEXP x_)
 SEXP R_cheap_seq (SEXP x_)
 {
     size_t n = floor (length (x_) / 2);
+
     SEXP out = PROTECT (allocVector (REALSXP, n));
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+
     double *rx, *rout;
     rx = REAL (x_);
     rout = REAL (out);
@@ -93,7 +102,7 @@ SEXP R_cheap_seq (SEXP x_)
                 rx [i], rx [n + i], cosy);
     }
 
-    UNPROTECT (1);
+    UNPROTECT (2);
 
     return out;
 }
@@ -104,7 +113,10 @@ SEXP R_cheap_seq (SEXP x_)
 SEXP R_geodesic_seq (SEXP x_)
 {
     size_t n = floor (length (x_) / 2);
+
     SEXP out = PROTECT (allocVector (REALSXP, n));
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+
     double *rx, *rout;
     rx = REAL (x_);
     rout = REAL (out);
@@ -117,8 +129,7 @@ SEXP R_geodesic_seq (SEXP x_)
                 rx [i], rx [n + i]);
     }
 
-    UNPROTECT (1);
+    UNPROTECT (2);
 
     return out;
 }
-

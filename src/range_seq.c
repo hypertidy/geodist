@@ -11,6 +11,7 @@ SEXP R_haversine_seq_range (SEXP x_)
 {
     size_t n = floor (length (x_) / 2);
     double *rx;
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
     rx = REAL (x_);
 
     double min = 100.0 * equator, max = -100.0 * equator;
@@ -34,7 +35,7 @@ SEXP R_haversine_seq_range (SEXP x_)
     rout [0] = min;
     rout [1] = max;
 
-    UNPROTECT (1);
+    UNPROTECT (2);
 
     return out;
 }
@@ -46,6 +47,7 @@ SEXP R_vincenty_seq_range (SEXP x_)
 {
     size_t n = floor (length (x_) / 2);
     double *rx;
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
     rx = REAL (x_);
 
     double min = 100.0 * equator, max = -100.0 * equator;
@@ -70,7 +72,7 @@ SEXP R_vincenty_seq_range (SEXP x_)
     rout [0] = min;
     rout [1] = max;
 
-    UNPROTECT (1);
+    UNPROTECT (2);
 
     return out;
 }
@@ -82,6 +84,7 @@ SEXP R_cheap_seq_range (SEXP x_)
 {
     size_t n = floor (length (x_) / 2);
     double *rx;
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
     rx = REAL (x_);
 
     double min = 100.0 * equator, max = -100.0 * equator;
@@ -104,7 +107,7 @@ SEXP R_cheap_seq_range (SEXP x_)
     rout [0] = min;
     rout [1] = max;
 
-    UNPROTECT (1);
+    UNPROTECT (2);
 
     return out;
 }
@@ -116,6 +119,7 @@ SEXP R_geodesic_seq_range (SEXP x_)
 {
     size_t n = floor (length (x_) / 2);
     double *rx;
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
     rx = REAL (x_);
 
     double min = 100.0 * equator, max = -100.0 * equator;
@@ -136,8 +140,7 @@ SEXP R_geodesic_seq_range (SEXP x_)
     rout [0] = min;
     rout [1] = max;
 
-    UNPROTECT (1);
+    UNPROTECT (2);
 
     return out;
 }
-

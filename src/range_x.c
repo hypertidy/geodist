@@ -13,6 +13,7 @@ SEXP R_haversine_range (SEXP x_)
 {
     size_t n = floor (length (x_) / 2);
     double *rx;
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
     rx = REAL (x_);
 
     double cosy1 [n]; // y-values are indexed in [n+1:n]
@@ -44,7 +45,7 @@ SEXP R_haversine_range (SEXP x_)
     rout [0] = min;
     rout [1] = max;
 
-    UNPROTECT (1);
+    UNPROTECT (2);
 
     return out;
 }
@@ -57,6 +58,7 @@ SEXP R_vincenty_range (SEXP x_)
     size_t n = floor (length (x_) / 2);
     size_t n2 = n * n;
     double *rx;
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
     rx = REAL (x_);
 
     double siny1 [n], cosy1 [n]; // y-values are indexed in [n+1:n]
@@ -90,7 +92,7 @@ SEXP R_vincenty_range (SEXP x_)
     rout [0] = min;
     rout [1] = max;
 
-    UNPROTECT (1);
+    UNPROTECT (2);
 
     return out;
 }
@@ -102,6 +104,7 @@ SEXP R_cheap_range (SEXP x_)
 {
     size_t n = floor (length (x_) / 2);
     double *rx;
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
     rx = REAL (x_);
 
     // Get maximal latitude range
@@ -141,7 +144,7 @@ SEXP R_cheap_range (SEXP x_)
     rout [0] = min;
     rout [1] = max;
 
-    UNPROTECT (1);
+    UNPROTECT (2);
 
     return out;
 }
@@ -153,6 +156,7 @@ SEXP R_geodesic_range (SEXP x_)
 {
     size_t n = floor (length (x_) / 2);
     double *rx;
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
     rx = REAL (x_);
 
     double min = 100.0 * equator, max = -100.0 * equator;
@@ -178,8 +182,7 @@ SEXP R_geodesic_range (SEXP x_)
     rout [0] = min;
     rout [1] = max;
 
-    UNPROTECT (1);
+    UNPROTECT (2);
 
     return out;
 }
-

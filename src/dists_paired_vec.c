@@ -13,7 +13,13 @@
 SEXP R_haversine_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 {
     size_t n = length (x1_);
+
     SEXP out = PROTECT (allocVector (REALSXP, n));
+    x1_ = PROTECT (Rf_coerceVector (x1_, REALSXP));
+    y1_ = PROTECT (Rf_coerceVector (y1_, REALSXP));
+    x2_ = PROTECT (Rf_coerceVector (x2_, REALSXP));
+    y2_ = PROTECT (Rf_coerceVector (y2_, REALSXP));
+
     double *rx1, *ry1, *rx2, *ry2, *rout;
     rx1 = REAL (x1_);
     ry1 = REAL (y1_);
@@ -31,7 +37,7 @@ SEXP R_haversine_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
                 cosy1, cosy2);
     }
 
-    UNPROTECT (1);
+    UNPROTECT (5);
 
     return out;
 }
@@ -43,7 +49,13 @@ SEXP R_haversine_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 SEXP R_vincenty_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 {
     size_t n = length (x1_);
+
     SEXP out = PROTECT (allocVector (REALSXP, n));
+    x1_ = PROTECT (Rf_coerceVector (x1_, REALSXP));
+    y1_ = PROTECT (Rf_coerceVector (y1_, REALSXP));
+    x2_ = PROTECT (Rf_coerceVector (x2_, REALSXP));
+    y2_ = PROTECT (Rf_coerceVector (y2_, REALSXP));
+
     double *rx1, *ry1, *rx2, *ry2, *rout;
     rx1 = REAL (x1_);
     ry1 = REAL (y1_);
@@ -63,7 +75,7 @@ SEXP R_vincenty_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
                 rx2 [i], ry2 [i], siny1, cosy1, siny2, cosy2);
     }
 
-    UNPROTECT (1);
+    UNPROTECT (5);
 
     return out;
 }
@@ -74,7 +86,13 @@ SEXP R_vincenty_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 SEXP R_cheap_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 {
     size_t n = length (x1_);
+
     SEXP out = PROTECT (allocVector (REALSXP, n));
+    x1_ = PROTECT (Rf_coerceVector (x1_, REALSXP));
+    y1_ = PROTECT (Rf_coerceVector (y1_, REALSXP));
+    x2_ = PROTECT (Rf_coerceVector (x2_, REALSXP));
+    y2_ = PROTECT (Rf_coerceVector (y2_, REALSXP));
+
     double *rx1, *ry1, *rx2, *ry2, *rout;
     rx1 = REAL (x1_);
     ry1 = REAL (y1_);
@@ -107,7 +125,7 @@ SEXP R_cheap_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
         rout [i] = one_cheap (rx1 [i], ry1 [i], rx2 [i], ry2 [i], cosy);
     }
 
-    UNPROTECT (1);
+    UNPROTECT (5);
 
     return out;
 }
@@ -120,7 +138,13 @@ SEXP R_cheap_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 SEXP R_geodesic_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 {
     size_t n = length (x1_);
+
     SEXP out = PROTECT (allocVector (REALSXP, n));
+    x1_ = PROTECT (Rf_coerceVector (x1_, REALSXP));
+    y1_ = PROTECT (Rf_coerceVector (y1_, REALSXP));
+    x2_ = PROTECT (Rf_coerceVector (x2_, REALSXP));
+    y2_ = PROTECT (Rf_coerceVector (y2_, REALSXP));
+
     double *rx1, *ry1, *rx2, *ry2, *rout;
     rx1 = REAL (x1_);
     ry1 = REAL (y1_);
@@ -135,7 +159,7 @@ SEXP R_geodesic_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
         rout [i] = one_geodesic (rx1 [i], ry1 [i], rx2 [i], ry2 [i]);
     }
 
-    UNPROTECT (1);
+    UNPROTECT (5);
 
     return out;
 }

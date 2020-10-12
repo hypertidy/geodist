@@ -16,7 +16,11 @@ SEXP R_haversine_xy (SEXP x_, SEXP y_)
     size_t ny = floor (length (y_) / 2);
     size_t n2 = nx * ny;
     //Rprintf ("(nx, ny) = (%d , %d )\n", nx, ny);
+
     SEXP out = PROTECT (allocVector (REALSXP, n2));
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+    y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
+
     double *rx, *ry, *rout;
     rx = REAL (x_);
     ry = REAL (y_);
@@ -35,7 +39,7 @@ SEXP R_haversine_xy (SEXP x_, SEXP y_)
         }
     }
 
-    UNPROTECT (1);
+    UNPROTECT (3);
 
     return out;
 }
@@ -49,8 +53,11 @@ SEXP R_vincenty_xy (SEXP x_, SEXP y_)
     size_t nx = floor (length (x_) / 2);
     size_t ny = floor (length (y_) / 2);
     size_t n2 = nx * ny;
-    //Rprintf ("(nx, ny) = (%d , %d )\n", nx, ny);
+
     SEXP out = PROTECT (allocVector (REALSXP, n2));
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+    y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
+
     double *rx, *ry, *rout;
     rx = REAL (x_);
     ry = REAL (y_);
@@ -71,7 +78,7 @@ SEXP R_vincenty_xy (SEXP x_, SEXP y_)
         }
     }
 
-    UNPROTECT (1);
+    UNPROTECT (3);
 
     return out;
 }
@@ -84,7 +91,11 @@ SEXP R_cheap_xy (SEXP x_, SEXP y_)
     size_t nx = floor (length (x_) / 2);
     size_t ny = floor (length (y_) / 2);
     size_t n2 = nx * ny;
+
     SEXP out = PROTECT (allocVector (REALSXP, n2));
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+    y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
+
     double *rx, *ry, *rout;
     rx = REAL (x_);
     ry = REAL (y_);
@@ -122,7 +133,7 @@ SEXP R_cheap_xy (SEXP x_, SEXP y_)
         }
     }
 
-    UNPROTECT (1);
+    UNPROTECT (3);
 
     return out;
 }
@@ -137,8 +148,11 @@ SEXP R_geodesic_xy (SEXP x_, SEXP y_)
     size_t nx = floor (length (x_) / 2);
     size_t ny = floor (length (y_) / 2);
     size_t n2 = nx * ny;
-    //Rprintf ("(nx, ny) = (%d , %d )\n", nx, ny);
+
     SEXP out = PROTECT (allocVector (REALSXP, n2));
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+    y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
+
     double *rx, *ry, *rout;
     rx = REAL (x_);
     ry = REAL (y_);
@@ -155,7 +169,7 @@ SEXP R_geodesic_xy (SEXP x_, SEXP y_)
         }
     }
 
-    UNPROTECT (1);
+    UNPROTECT (3);
 
     return out;
 }

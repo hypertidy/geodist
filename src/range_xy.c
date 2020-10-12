@@ -14,6 +14,10 @@ SEXP R_haversine_xy_range (SEXP x_, SEXP y_)
 {
     size_t nx = floor (length (x_) / 2);
     size_t ny = floor (length (y_) / 2);
+
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+    y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
+
     double *rx, *ry;
     rx = REAL (x_);
     ry = REAL (y_);
@@ -43,7 +47,7 @@ SEXP R_haversine_xy_range (SEXP x_, SEXP y_)
     rout [0] = min;
     rout [1] = max;
 
-    UNPROTECT (1);
+    UNPROTECT (3);
 
     return out;
 }
@@ -56,6 +60,10 @@ SEXP R_vincenty_xy_range (SEXP x_, SEXP y_)
 {
     size_t nx = floor (length (x_) / 2);
     size_t ny = floor (length (y_) / 2);
+
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+    y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
+
     double *rx, *ry;
     rx = REAL (x_);
     ry = REAL (y_);
@@ -87,7 +95,7 @@ SEXP R_vincenty_xy_range (SEXP x_, SEXP y_)
     rout [0] = min;
     rout [1] = max;
 
-    UNPROTECT (1);
+    UNPROTECT (3);
 
     return out;
 }
@@ -99,6 +107,10 @@ SEXP R_cheap_xy_range (SEXP x_, SEXP y_)
 {
     size_t nx = floor (length (x_) / 2);
     size_t ny = floor (length (y_) / 2);
+
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+    y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
+
     double *rx, *ry;
     rx = REAL (x_);
     ry = REAL (y_);
@@ -147,7 +159,7 @@ SEXP R_cheap_xy_range (SEXP x_, SEXP y_)
     rout [0] = min;
     rout [1] = max;
 
-    UNPROTECT (1);
+    UNPROTECT (3);
 
     return out;
 }
@@ -161,6 +173,10 @@ SEXP R_geodesic_xy_range (SEXP x_, SEXP y_)
 {
     size_t nx = floor (length (x_) / 2);
     size_t ny = floor (length (y_) / 2);
+
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+    y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
+
     double *rx, *ry;
     rx = REAL (x_);
     ry = REAL (y_);
@@ -188,7 +204,7 @@ SEXP R_geodesic_xy_range (SEXP x_, SEXP y_)
     rout [0] = min;
     rout [1] = max;
 
-    UNPROTECT (1);
+    UNPROTECT (3);
 
     return out;
 }

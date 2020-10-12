@@ -13,7 +13,11 @@
 SEXP R_haversine_paired (SEXP x_, SEXP y_)
 {
     size_t n = floor (length (x_) / 2);
+
     SEXP out = PROTECT (allocVector (REALSXP, n));
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+    y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
+
     double *rx, *ry, *rout;
     rx = REAL (x_);
     ry = REAL (y_);
@@ -29,7 +33,7 @@ SEXP R_haversine_paired (SEXP x_, SEXP y_)
                 cosy1, cosy2);
     }
 
-    UNPROTECT (1);
+    UNPROTECT (3);
 
     return out;
 }
@@ -41,7 +45,11 @@ SEXP R_haversine_paired (SEXP x_, SEXP y_)
 SEXP R_vincenty_paired (SEXP x_, SEXP y_)
 {
     size_t n = floor (length (x_) / 2);
+
     SEXP out = PROTECT (allocVector (REALSXP, n));
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+    y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
+
     double *rx, *ry, *rout;
     rx = REAL (x_);
     ry = REAL (y_);
@@ -59,7 +67,7 @@ SEXP R_vincenty_paired (SEXP x_, SEXP y_)
                 ry [i], ry [n + i], siny1, cosy1, siny2, cosy2);
     }
 
-    UNPROTECT (1);
+    UNPROTECT (3);
 
     return out;
 }
@@ -70,7 +78,11 @@ SEXP R_vincenty_paired (SEXP x_, SEXP y_)
 SEXP R_cheap_paired (SEXP x_, SEXP y_)
 {
     size_t n = floor (length (x_) / 2);
+
     SEXP out = PROTECT (allocVector (REALSXP, n));
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+    y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
+
     double *rx, *ry, *rout;
     rx = REAL (x_);
     ry = REAL (y_);
@@ -101,7 +113,7 @@ SEXP R_cheap_paired (SEXP x_, SEXP y_)
         rout [i] = one_cheap (rx [i], rx [n + i], ry [i], ry [n + i], cosy);
     }
 
-    UNPROTECT (1);
+    UNPROTECT (3);
 
     return out;
 }
@@ -114,7 +126,11 @@ SEXP R_cheap_paired (SEXP x_, SEXP y_)
 SEXP R_geodesic_paired (SEXP x_, SEXP y_)
 {
     size_t n = floor (length (x_) / 2);
+
     SEXP out = PROTECT (allocVector (REALSXP, n));
+    x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
+    y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
+
     double *rx, *ry, *rout;
     rx = REAL (x_);
     ry = REAL (y_);
@@ -127,7 +143,7 @@ SEXP R_geodesic_paired (SEXP x_, SEXP y_)
         rout [i] = one_geodesic (rx [i], rx [n + i], ry [i], ry [n + i]);
     }
 
-    UNPROTECT (1);
+    UNPROTECT (3);
 
     return out;
 }

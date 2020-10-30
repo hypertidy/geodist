@@ -247,6 +247,7 @@ devtools::test("tests/")
 #> Skipped:  0
 ```
 
+
 ## Contributors
 
 
@@ -254,7 +255,7 @@ devtools::test("tests/")
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
-This project uses the [`allcontributor` package](https://github.com/mpadge/allcontributor) following the [all-contributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
+This project uses the [`allcontributors` package](https://github.com/mpadge/allcontributors) following the [all-contributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
 
 ## Code
 
@@ -309,7 +310,7 @@ This project uses the [`allcontributor` package](https://github.com/mpadge/allco
 </td>
 <td align="center">
 <a href="https://github.com/marcosci">
-<img src="https://avatars0.githubusercontent.com/u/10864574?u=13bfb23ecc1d288b639a07febea935696ccbe2b2&v=4" width="100px;" alt=""/>
+<img src="https://avatars2.githubusercontent.com/u/10864574?u=e5b7e55e122646f47174a9e621ebc91fff177d9b&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amarcosci">marcosci</a>
 </td>

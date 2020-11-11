@@ -13,7 +13,8 @@ developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repo
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/geodist)](http://cran.r-project.org/web/packages/geodist)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geodist)
 
-# geodist
+geodist
+=======
 
 An ultra-lightweight, zero-dependency package for very fast calculation
 of geodesic distances. Main eponymous function, `geodist()`, accepts
@@ -21,66 +22,64 @@ only one or two primary arguments, which must be rectangular objects
 with unambiguously labelled longitude and latitude columns (that is,
 some variant of `lon`/`lat`, or `x`/`y`).
 
-``` r
-n <- 50
-x <- cbind (-10 + 20 * runif (n), -10 + 20 * runif (n))
-y <- cbind (-10 + 20 * runif (2 * n), -10 + 20 * runif (2 * n))
-colnames (x) <- colnames (y) <- c ("x", "y")
-d0 <- geodist (x) # A 50-by-50 matrix
-d1 <- geodist (x, y) # A 50-by-100 matrix
-d2 <- geodist (x, sequential = TRUE) # Vector of length 49
-d2 <- geodist (x, sequential = TRUE, pad = TRUE) # Vector of length 50
-```
+    n <- 50
+    x <- cbind (-10 + 20 * runif (n), -10 + 20 * runif (n))
+    y <- cbind (-10 + 20 * runif (2 * n), -10 + 20 * runif (2 * n))
+    colnames (x) <- colnames (y) <- c ("x", "y")
+    d0 <- geodist (x) # A 50-by-50 matrix
+    d1 <- geodist (x, y) # A 50-by-100 matrix
+    d2 <- geodist (x, sequential = TRUE) # Vector of length 49
+    d2 <- geodist (x, sequential = TRUE, pad = TRUE) # Vector of length 50
 
-## Installation
+Installation
+------------
 
 You can install latest stable version of `geodist` from CRAN with:
 
-``` r
-install.packages("geodist") # current CRAN version
-```
+    install.packages("geodist") # current CRAN version
 
 Alternatively, current development versions can be installed using any
 of the following options:
 
-``` r
-# install.packages("remotes")
-remotes::install_git("https://git.sr.ht/~mpadge/geodist")
-remotes::install_bitbucket("hypertidy/geodist")
-remotes::install_gitlab("hypertidy/geodist")
-remotes::install_github("hypertidy/geodist")
-```
+    # install.packages("remotes")
+    remotes::install_git("https://git.sr.ht/~mpadge/geodist")
+    remotes::install_bitbucket("hypertidy/geodist")
+    remotes::install_gitlab("hypertidy/geodist")
+    remotes::install_github("hypertidy/geodist")
 
 Then load with
 
-``` r
-library (geodist)
-packageVersion ("geodist")
-#> [1] '0.0.4'
-```
+    library (geodist)
+    packageVersion ("geodist")
+    #> [1] '0.0.6.2'
 
-## Detailed Usage
+Detailed Usage
+--------------
 
 Input(s) to the `geodist()` function can be in arbitrary rectangular
 format.
 
-``` r
-n <- 1e1
-x <- tibble::tibble (x = -180 + 360 * runif (n),
-                     y = -90 + 180 * runif (n))
-dim (geodist (x))
-#> [1] 10 10
-y <- tibble::tibble (x = -180 + 360 * runif (2 * n),
-                     y = -90 + 180 * runif (2 * n))
-dim (geodist (x, y))
-#> [1] 10 20
-x <- cbind (-180 + 360 * runif (n),
-             -90 + 100 * runif (n),
-             seq (n), runif (n))
-colnames (x) <- c ("lon", "lat", "a", "b")
-dim (geodist (x))
-#> [1] 10 10
-```
+    n <- 1e1
+    x <- tibble::tibble (x = -180 + 360 * runif (n),
+                         y = -90 + 180 * runif (n))
+    dim (geodist (x))
+    #> Maximum distance is > 100km. The 'cheap' measure is inaccurate over such
+    #> large distances, you'd likely be better using a different 'measure'.
+    #> [1] 10 10
+    y <- tibble::tibble (x = -180 + 360 * runif (2 * n),
+                         y = -90 + 180 * runif (2 * n))
+    dim (geodist (x, y))
+    #> Maximum distance is > 100km. The 'cheap' measure is inaccurate over such
+    #> large distances, you'd likely be better using a different 'measure'.
+    #> [1] 10 20
+    x <- cbind (-180 + 360 * runif (n),
+                 -90 + 100 * runif (n),
+                 seq (n), runif (n))
+    colnames (x) <- c ("lon", "lat", "a", "b")
+    dim (geodist (x))
+    #> Maximum distance is > 100km. The 'cheap' measure is inaccurate over such
+    #> large distances, you'd likely be better using a different 'measure'.
+    #> [1] 10 10
 
 All outputs are distances in metres, calculated with a variety of
 spherical and elliptical distance measures. Distance measures currently
@@ -107,12 +106,10 @@ the `geodist` package - compares the accuracy of the different metrics
 to the nanometre-accuracy standard of [Karney
 (2013)](https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf).
 
-``` r
-geodist_benchmark (lat = 30, d = 1000)
-#>            haversine    vincenty       cheap
-#> absolute 0.806228667 0.806228667 0.553308240
-#> relative 0.002202156 0.002202156 0.001602702
-```
+    geodist_benchmark (lat = 30, d = 1000)
+    #>            haversine    vincenty       cheap
+    #> absolute 0.764903619 0.764903619 0.563597869
+    #> relative 0.002086465 0.002086465 0.001594928
 
 All distances (`d)` are in metres, and all measures are accurate to
 within 1m over distances out to several km (at the chosen latitude of 30
@@ -131,64 +128,56 @@ are around 0.16%.
 The following code demonstrates the relative speed advantages of the
 different distance measures implemented in the `geodist` package.
 
-``` r
-n <- 1e3
-dx <- dy <- 0.01
-x <- cbind (-100 + dx * runif (n), 20 + dy * runif (n))
-y <- cbind (-100 + dx * runif (2 * n), 20 + dy * runif (2 * n))
-colnames (x) <- colnames (y) <- c ("x", "y")
-rbenchmark::benchmark (replications = 10, order = "test",
-                       d1 <- geodist (x, measure = "cheap"),
-                       d2 <- geodist (x, measure = "haversine"),
-                       d3 <- geodist (x, measure = "vincenty"),
-                       d4 <- geodist (x, measure = "geodesic")) [, 1:4]
-#>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.069    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.168    2.435
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.229    3.319
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.313   48.014
-```
+    n <- 1e3
+    dx <- dy <- 0.01
+    x <- cbind (-100 + dx * runif (n), 20 + dy * runif (n))
+    y <- cbind (-100 + dx * runif (2 * n), 20 + dy * runif (2 * n))
+    colnames (x) <- colnames (y) <- c ("x", "y")
+    rbenchmark::benchmark (replications = 10, order = "test",
+                           d1 <- geodist (x, measure = "cheap"),
+                           d2 <- geodist (x, measure = "haversine"),
+                           d3 <- geodist (x, measure = "vincenty"),
+                           d4 <- geodist (x, measure = "geodesic")) [, 1:4]
+    #>                                      test replications elapsed relative
+    #> 1     d1 <- geodist(x, measure = "cheap")           10   0.088    1.000
+    #> 2 d2 <- geodist(x, measure = "haversine")           10   0.177    2.011
+    #> 3  d3 <- geodist(x, measure = "vincenty")           10   0.235    2.670
+    #> 4  d4 <- geodist(x, measure = "geodesic")           10   3.290   37.386
 
 Geodesic distance calculation is available in the [`sf`
 package](https://cran.r-project.org/package=sf). Comparing computation
 speeds requires conversion of sets of numeric lon-lat points to `sf`
 form with the following code:
 
-``` r
-require (magrittr)
-x_to_sf <- function (x)
-{
-    sapply (seq (nrow (x)), function (i)
-            sf::st_point (x [i, ]) %>%
-                sf::st_sfc ()) %>%
-    sf::st_sfc (crs = 4326)
-}
-```
+    require (magrittr)
+    x_to_sf <- function (x)
+    {
+        sapply (seq (nrow (x)), function (i)
+                sf::st_point (x [i, ]) %>%
+                    sf::st_sfc ()) %>%
+        sf::st_sfc (crs = 4326)
+    }
 
-``` r
-n <- 1e2
-x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
-colnames (x) <- c ("x", "y")
-xsf <- x_to_sf (x)
-sf_dist <- function (xsf) sf::st_distance (xsf, xsf)
-geo_dist <- function (x) geodist (x, measure = "geodesic")
-rbenchmark::benchmark (replications = 10, order = "test",
-                      sf_dist (xsf),
-                      geo_dist (x)) [, 1:4]
-#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
-#>           test replications elapsed relative
-#> 2  geo_dist(x)           10   0.071    1.000
-#> 1 sf_dist(xsf)           10   0.226    3.183
-```
+    n <- 1e2
+    x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
+    colnames (x) <- c ("x", "y")
+    xsf <- x_to_sf (x)
+    sf_dist <- function (xsf) sf::st_distance (xsf, xsf)
+    geo_dist <- function (x) geodist (x, measure = "geodesic")
+    rbenchmark::benchmark (replications = 10, order = "test",
+                          sf_dist (xsf),
+                          geo_dist (x)) [, 1:4]
+    #> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.2
+    #>           test replications elapsed relative
+    #> 2  geo_dist(x)           10    0.07    1.000
+    #> 1 sf_dist(xsf)           10    0.22    3.143
 
 Confirm that the two give almost identical results:
 
-``` r
-ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
-dg <- geodist (x, measure = "geodesic")
-formatC (max (abs (ds - dg)), format = "e")
-#> [1] "1.1176e-08"
-```
+    ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
+    dg <- geodist (x, measure = "geodesic")
+    formatC (max (abs (ds - dg)), format = "e")
+    #> [1] "1.1176e-08"
 
 All results are in metres, so the two differ by only around 10
 nanometres.
@@ -197,16 +186,14 @@ The [`geosphere` package](https://cran.r-project.org/package=geosphere)
 also offers sequential calculation which is benchmarked with the
 following code:
 
-``` r
-fgeodist <- function () geodist (x, measure = "vincenty", sequential = TRUE)
-fgeosph <- function () geosphere::distVincentySphere (x)
-rbenchmark::benchmark (replications = 10, order = "test",
-                       fgeodist (),
-                       fgeosph ()) [, 1:4]
-#>         test replications elapsed relative
-#> 1 fgeodist()           10   0.022    1.000
-#> 2  fgeosph()           10   0.045    2.045
-```
+    fgeodist <- function () geodist (x, measure = "vincenty", sequential = TRUE)
+    fgeosph <- function () geosphere::distVincentySphere (x)
+    rbenchmark::benchmark (replications = 10, order = "test",
+                           fgeodist (),
+                           fgeosph ()) [, 1:4]
+    #>         test replications elapsed relative
+    #> 1 fgeodist()           10   0.021    1.000
+    #> 2  fgeosph()           10   0.047    2.238
 
 `geodist` is thus around 3 times faster than `sf` for highly accurate
 geodesic distance calculations, and around twice as fast as `geosphere`
@@ -214,53 +201,41 @@ for calculation of sequential distances.
 
 ### Test Results
 
-``` r
-require (devtools)
-require (testthat)
-```
+    require (devtools)
+    require (testthat)
 
-``` r
-date()
-#> [1] "Thu Jul  2 11:28:06 2020"
-devtools::test("tests/")
-#> Loading geodist
-#> Testing geodist
-#> ✔ |  OK F W S | Context
-#> ⠏ |   0       | misc tests✖ |  26 1     | misc tests
-#> ────────────────────────────────────────────────────────────────────────────────
-#> test-geodist.R:141: error: geodist_vec
-#> object 'd' not found
-#> Backtrace:
-#>  1. testthat::expect_message(...) tests/testthat/test-geodist.R:141:15
-#>  6. geodist::geodist_vec(x1, y1, x2, y2, sequential = TRUE)
-#> ────────────────────────────────────────────────────────────────────────────────
-#> ⠏ |   0       | georange✔ |  37       | georange
-#> ⠏ |   0       | geodist input formats✔ |  18       | geodist input formats
-#> ⠏ |   0       | geodist measures✔ |  18       | geodist measures
-#> 
-#> ══ Results ═════════════════════════════════════════════════════════════════════
-#> Duration: 0.2 s
-#> 
-#> OK:       99
-#> Failed:   1
-#> Warnings: 0
-#> Skipped:  0
-```
+    date()
+    #> [1] "Wed Nov 11 13:03:40 2020"
+    devtools::test("tests/")
+    #> Loading geodist
+    #> Testing geodist
+    #> ✔ |  OK F W S | Context
+    #> ⠏ |   0       | geodist                                                                                                                                                                                                                       ⠏ |   0       | misc tests                                                                                                                                                                                                                    ⠙ |  22       | misc tests                                                                                                                                                                                                                    ✔ |  46       | misc tests [0.2 s]
+    #> ⠏ |   0       | georange                                                                                                                                                                                                                      ⠏ |   0       | georange                                                                                                                                                                                                                      ⠦ |   7       | georange                                                                                                                                                                                                                      ⠼ |  35       | georange                                                                                                                                                                                                                      ✔ |  37       | georange [0.2 s]
+    #> ⠏ |   0       | input-format                                                                                                                                                                                                                  ⠏ |   0       | geodist input formats                                                                                                                                                                                                         ✔ |  18       | geodist input formats
+    #> ⠏ |   0       | measures                                                                                                                                                                                                                      ⠏ |   0       | geodist measures                                                                                                                                                                                                              ⠧ |  18       | geodist measures                                                                                                                                                                                                              ✔ |  18       | geodist measures [0.2 s]
+    #> 
+    #> ══ Results ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+    #> Duration: 0.6 s
+    #> 
+    #> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 119 ]
 
-
-## Contributors
-
+Contributors
+------------
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
-This project uses the [`allcontributors` package](https://github.com/mpadge/allcontributors) following the [all-contributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
+This project uses the [`allcontributors`
+package](https://github.com/ropenscilabs/allcontributors) following the
+[all-contributors](https://allcontributors.org) specification.
+Contributions of any kind are welcome!
 
-## Code
+Code
+----
 
 <table>
-
 <tr>
 <td align="center">
 <a href="https://github.com/mpadge">
@@ -269,14 +244,12 @@ This project uses the [`allcontributors` package](https://github.com/mpadge/allc
 <a href="https://github.com/hypertidy/geodist/commits?author=mpadge">mpadge</a>
 </td>
 </tr>
-
 </table>
 
-
-## Issue Authors
+Issue Authors
+-------------
 
 <table>
-
 <tr>
 <td align="center">
 <a href="https://github.com/mdsumner">
@@ -321,8 +294,6 @@ This project uses the [`allcontributors` package](https://github.com/mpadge/allc
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amem48">mem48</a>
 </td>
 </tr>
-
-
 <tr>
 <td align="center">
 <a href="https://github.com/SymbolixAU">
@@ -361,9 +332,7 @@ This project uses the [`allcontributors` package](https://github.com/mpadge/allc
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3AMaschette">Maschette</a>
 </td>
 </tr>
-
 </table>
-
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->

@@ -223,19 +223,17 @@ for calculation of sequential distances.
 Contributors
 ------------
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
-This project uses the [`allcontributors`
-package](https://github.com/ropenscilabs/allcontributors) following the
-[all-contributors](https://allcontributors.org) specification.
-Contributions of any kind are welcome!
+All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropenscilabs/allcontributors) following the [all-contributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
 
-Code
-----
+### Code
 
 <table>
+
 <tr>
 <td align="center">
 <a href="https://github.com/mpadge">
@@ -244,12 +242,14 @@ Code
 <a href="https://github.com/hypertidy/geodist/commits?author=mpadge">mpadge</a>
 </td>
 </tr>
+
 </table>
 
-Issue Authors
--------------
+
+### Issues
 
 <table>
+
 <tr>
 <td align="center">
 <a href="https://github.com/mdsumner">
@@ -294,6 +294,8 @@ Issue Authors
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amem48">mem48</a>
 </td>
 </tr>
+
+
 <tr>
 <td align="center">
 <a href="https://github.com/SymbolixAU">
@@ -332,7 +334,9 @@ Issue Authors
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3AMaschette">Maschette</a>
 </td>
 </tr>
+
 </table>
+
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->

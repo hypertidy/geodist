@@ -10,7 +10,7 @@
   "codeRepository": "https://github.com/hypertidy/geodist",
   "issueTracker": "https://github.com/hypertidy/geodist/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.6.003",
+  "version": "0.0.6.4",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -94,12 +94,8 @@
   "softwareRequirements": [],
   "releaseNotes": "https://github.com/hypertidy/geodist/blob/master/NEWS.md",
   "readme": "https://github.com/hypertidy/geodist/blob/master/README.md",
-  "fileSize": "441.921KB",
-  "contIntegration": [
-    "https://travis-ci.org/hypertidy/geodist",
-    "https://ci.appveyor.com/project/hypertidy/geodist",
-    "https://codecov.io/gh/hypertidy/geodist"
-  ],
+  "fileSize": "442.026KB",
+  "contIntegration": ["https://travis-ci.org/hypertidy/geodist", "https://ci.appveyor.com/project/hypertidy/geodist", "https://codecov.io/gh/hypertidy/geodist"],
   "developmentStatus": "http://www.repostatus.org/#active",
   "relatedLink": "https://CRAN.R-project.org/package=geodist"
 }

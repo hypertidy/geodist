@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geodist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.004</span>
       </span>
     </div>
 
@@ -70,7 +70,7 @@
       <h1 data-toc-skip>geodist</h1>
                         <h4 class="author">Mark Padgham</h4>
             
-            <h4 class="date">2020-11-11</h4>
+            <h4 class="date">2020-11-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/hypertidy/geodist/blob/master/vignettes/geodist.Rmd"><code>vignettes/geodist.Rmd</code></a></small>
       <div class="hidden name"><code>geodist.Rmd</code></div>
@@ -147,7 +147,7 @@
 <span class="co">#&gt; 4  d4 &lt;- geodist(x, measure = "geodesic")           10   3.106   53.552</span></code></pre></div>
 <p>Geodesic distance calculation is available in the <a href="https://cran.r-project.org/package=sf"><code>sf</code> package</a>. Comparing computation speeds requires conversion of sets of numeric lon-lat points to <code>sf</code> form with the following code:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span> <span class="op">(</span><span class="va">magrittr</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span> <span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="va">x_to_sf</span> <span class="op">&lt;-</span> <span class="kw">function</span> <span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="op">{</span>
     <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span> <span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="kw">function</span> <span class="op">(</span><span class="va">i</span><span class="op">)</span>

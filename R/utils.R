@@ -62,28 +62,8 @@ find_xy_cols <- function (obj)
 
     if (!is.null (nms))
     {
-        ix <- grep ("x|lon", nms, ignore.case = TRUE)
-        if (length (ix) > 1)
-        {
-            ix <- grep ("^x|lon", nms, ignore.case = TRUE)
-            if (length (ix) != 1)
-            {
-                ix <- grep ("x$|lon", nms, ignore.case = TRUE)
-                if (length (ix) != 1)
-                    ix <- grep ("^x$|lon", nms, ignore.case = TRUE)
-            }
-        }
-        iy <- grep ("y|lat", nms, ignore.case = TRUE)
-        if (length (iy) > 1)
-        {
-            iy <- grep ("^y|lat", nms, ignore.case = TRUE)
-            if (length (iy != 1))
-            {
-                iy <- grep ("y$|lat", nms, ignore.case = TRUE)
-                if (length (iy) != 1)
-                    iy <- grep ("^y$|lat", nms, ignore.case = TRUE)
-            }
-        }
+        ix <- grep ("^x|x$|^lon|lon$", nms, ignore.case = TRUE)
+        iy <- grep ("^y|y$|^lat|lat$", nms, ignore.case = TRUE)
         if (length (ix) != 1 | length (iy) != 1)
             stop ("Unable to determine longitude and latitude columns; ",
                   "perhaps try re-naming columns.")

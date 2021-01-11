@@ -2,6 +2,7 @@
 
 ### Minor changes:
 
+- Improve matching of column names to lon/lat
 - Fix error when submitting tibbles (#32)
 
 

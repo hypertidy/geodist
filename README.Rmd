@@ -23,7 +23,7 @@ status](https://github.com/hypertidy/geodist/workflows/R-CMD-check/badge.svg)](h
 
 # geodist
 
-An ultra-lightweight, zero-dependency package for very fast calculation of
+blah An ultra-lightweight, zero-dependency package for very fast calculation of
 geodesic distances. Main eponymous function, `geodist()`, accepts only one or
 two primary arguments, which must be rectangular objects with unambiguously
 labelled longitude and latitude columns (that is, some variant of `lon`/`lat`,

@@ -2,10 +2,6 @@
 
 [![R build
 status](https://github.com/hypertidy/geodist/workflows/R-CMD-check/badge.svg)](https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check)
-[![Build
-Status](https://travis-ci.org/hypertidy/geodist.svg)](https://travis-ci.org/hypertidy/geodist)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/hypertidy/geodist?branch=master&svg=true)](https://ci.appveyor.com/project/hypertidy/geodist)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
@@ -116,8 +112,8 @@ to the nanometre-accuracy standard of [Karney
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
 #>            haversine    vincenty       cheap
-#> absolute 0.847988828 0.847988829 0.609161336
-#> relative 0.002150914 0.002150914 0.001624511
+#> absolute 0.790954905 0.790954905 0.579482464
+#> relative 0.002104721 0.002104721 0.001607779
 ```
 
 All distances (`d)` are in metres, and all measures are accurate to
@@ -149,10 +145,10 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d3 <- geodist (x, measure = "vincenty"),
                        d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.083    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.166    2.000
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.229    2.759
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.305   39.819
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.081    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.168    2.074
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.226    2.790
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.308   40.840
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -183,8 +179,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                       geo_dist (x)) [, 1:4]
 #> Linking to GEOS 3.8.1, GDAL 3.0.4, PROJ 6.3.2
 #>           test replications elapsed relative
-#> 2  geo_dist(x)           10   0.067    1.000
-#> 1 sf_dist(xsf)           10   0.218    3.254
+#> 2  geo_dist(x)           10   0.066    1.000
+#> 1 sf_dist(xsf)           10   0.218    3.303
 ```
 
 Confirm that the two give almost identical results:
@@ -193,7 +189,7 @@ Confirm that the two give almost identical results:
 ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
 dg <- geodist (x, measure = "geodesic")
 formatC (max (abs (ds - dg)), format = "e")
-#> [1] "1.1176e-08"
+#> [1] "9.3132e-09"
 ```
 
 All results are in metres, so the two differ by only around 10
@@ -210,8 +206,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
                        fgeosph ()) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.019    1.000
-#> 2  fgeosph()           10   0.043    2.263
+#> 1 fgeodist()           10   0.018    1.000
+#> 2  fgeosph()           10   0.042    2.333
 ```
 
 `geodist` is thus around 3 times faster than `sf` for highly accurate
@@ -227,36 +223,20 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Mon Jan 11 14:40:42 2021"
+#> [1] "Mon Jan 11 15:06:09 2021"
 devtools::test("tests/")
 #> Loading geodist
 #> Testing geodist
 #> ✔ |  OK F W S | Context
-#> ⠏ |   0       | geodist                                                                                                                                                                                                                       ⠏ |   0       | misc tests                                                                                                                                                                                                                    ⠧ |  38       | misc tests                                                                                                                                                                                                                    ✔ |  46       | misc tests [0.1 s]
-#> ⠏ |   0       | georange                                                                                                                                                                                                                      ⠏ |   0       | georange                                                                                                                                                                                                                      ⠙ |  22       | georange                                                                                                                                                                                                                      ✔ |  37       | georange [0.2 s]
-#> ⠏ |   0       | input-format                                                                                                                                                                                                                  ⠏ |   0       | geodist input formats                                                                                                                                                                                                         ⠸ |  13 1     | geodist input formats                                                                                                                                                                                                         ✖ |  15 2     | geodist input formats [0.1 s]
-#> ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-#> Error (test-input-format.R:57:16): other columns
-#> Error: Unable to determine longitude and latitude columns; perhaps try re-naming columns.
-#> Backtrace:
-#>  1. geodist::geodist(x1, y1) test-input-format.R:57:15
-#>  2. geodist::convert_to_matrix(x) /data/mega/code/repos/hypertidy/geodist/R/geodist.R:51:4
-#>  3. geodist::find_xy_cols(obj) /data/mega/code/repos/hypertidy/geodist/R/utils.R:88:4
-#> 
-#> Error (test-input-format.R:81:16): column names, 
-#> Error: Unable to determine longitude and latitude columns; perhaps try re-naming columns.
-#> Backtrace:
-#>  1. testthat::expect_message(...) test-input-format.R:81:15
-#>  6. geodist::geodist(x, y, paired = TRUE)
-#>  7. geodist::convert_to_matrix(x) /data/mega/code/repos/hypertidy/geodist/R/geodist.R:51:4
-#>  8. geodist::find_xy_cols(obj) /data/mega/code/repos/hypertidy/geodist/R/utils.R:88:4
-#> ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-#> ⠏ |   0       | measures                                                                                                                                                                                                                      ⠏ |   0       | geodist measures                                                                                                                                                                                                              ✔ |  18       | geodist measures
+#> ⠏ |   0       | geodist                                                                                                                                                                                                                       ⠏ |   0       | misc tests                                                                                                                                                                                                                    ⠇ |  29       | misc tests                                                                                                                                                                                                                    ✔ |  46       | misc tests [0.2 s]
+#> ⠏ |   0       | georange                                                                                                                                                                                                                      ⠏ |   0       | georange                                                                                                                                                                                                                      ⠼ |  15       | georange                                                                                                                                                                                                                      ✔ |  37       | georange [0.2 s]
+#> ⠏ |   0       | input-format                                                                                                                                                                                                                  ⠏ |   0       | geodist input formats                                                                                                                                                                                                         ✔ |  18       | geodist input formats
+#> ⠏ |   0       | measures                                                                                                                                                                                                                      ⠏ |   0       | geodist measures                                                                                                                                                                                                              ⠹ |  13       | geodist measures                                                                                                                                                                                                              ✔ |  18       | geodist measures [0.2 s]
 #> 
 #> ══ Results ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-#> Duration: 0.5 s
+#> Duration: 0.6 s
 #> 
-#> [ FAIL 2 | WARN 0 | SKIP 0 | PASS 116 ]
+#> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 119 ]
 ```
 
 ## Contributors

@@ -1,4 +1,4 @@
-# CRAN notes for geodist_0.0.4 submission
+# CRAN notes for geodist_0.0.7 submission
 
 This submission generates no errors, warning or notes on the following R versions and operating systems:
 

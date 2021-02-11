@@ -10,6 +10,9 @@
 #' geodist_benchmark (0, 1, 100)
 geodist_benchmark <- function (lat = 0, d = 1, n = 1e2) {
 
+    if (n < 2) {
+        stop ("Comparisons require at least n = 2 objects")
+    }
     if (n > 1e3) {
         stop ("benchmarking compares n ^ 2 estimates, and there's ",
               "nothing to be gained by extending beyond a million comparisons")

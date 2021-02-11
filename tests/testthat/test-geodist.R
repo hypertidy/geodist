@@ -99,6 +99,10 @@ test_that ("geodist_benchmark", {
                expect_equal (rownames (d), c ("absolute", "relative"))
                expect_equal (colnames (d),
                              c ("haversine", "vincenty", "cheap"))
+
+               # benchmarking is restricted to n <= 1e3
+               expect_error (geodist_benchmark (n = 1e3 + 1),
+                             "nothing to be gained by extending beyond a million")
 })
 
 test_that ("geodist paired", {

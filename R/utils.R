@@ -10,6 +10,11 @@
 #' geodist_benchmark (0, 1, 100)
 geodist_benchmark <- function (lat = 0, d = 1, n = 1e2)
 {
+    if (n > 1e3) {
+        stop ("benchmarking compares n ^ 2 estimates, and there's ",
+              "nothing to be gained by extending beyond a million comparisons")
+    }
+
     lon <- 0
     dist_methods <- c ("geodesic", "haversine", "vincenty", "cheap")
     delta <- get_delta (lon, lat, d)

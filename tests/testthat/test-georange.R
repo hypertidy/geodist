@@ -34,8 +34,9 @@ test_that ("different measures", {
               d3 <- georange (x, sequential = TRUE, measure = "vincenty")
               d4 <- georange (x, sequential = TRUE, measure = "geodesic")
               expect_true (!identical (d1, d2))
-              if (test_all) # haversine and vincenty are sometimes identical
-              {
+
+              if (test_all) { # haversine and vincenty are sometimes identical
+
                   expect_true (!identical (d1, d3))
                   expect_true (!identical (d1, d4))
                   #expect_true (!identical (d2, d3))
@@ -49,8 +50,8 @@ test_that ("different measures", {
                             "'arg' should be one of")
 })
 
-havdist <- function (x, y)
-{
+havdist <- function (x, y) {
+
     if (missing (y))
         y <- x
     x1mat <- array (x [, 1], dim = c (nrow (x), nrow (y)))

@@ -39,7 +39,8 @@ test_that("geodist with matrix", {
               diag (d1) <- Inf
               expect_true (all (d1 >= 0))
 
-              expect_message (d2 <- geodist (x, y), "object has no named columns")
+              expect_message (d2 <- geodist (x, y),
+                              "object has no named columns")
               expect_equal (dim (d2), c (n, 2 * n))
               diag (d2) <- Inf
               expect_true (all (d2 > 0))

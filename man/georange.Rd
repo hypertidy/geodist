@@ -32,7 +32,7 @@ rectangular objects containing lon-lat coordinates.
 \code{measure = "cheap"} denotes the mapbox cheap ruler
 \url{https://github.com/mapbox/cheap-ruler-cpp}; \code{measure = "geodesic"}
 denotes the very accurate geodesic methods given in Karney (2013)
-"Algorithms for geodesics" J Geod 87:43-55, and as provided by the 
+"Algorithms for geodesics" J Geod 87:43-55, and as provided by the
 code{sf::st_dist()} function.
 }
 \examples{

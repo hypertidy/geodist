@@ -22,8 +22,8 @@ test_that ("sequential structure", {
                               "Sequential distances calculated along values")
 })
 
-havdist <- function (x, y)
-{
+havdist <- function (x, y) {
+
     if (missing (y))
         y <- x
     x1mat <- array (x [, 1], dim = c (nrow (x), nrow (y)))
@@ -102,7 +102,7 @@ test_that ("geodist_benchmark", {
 
                # benchmarking is restricted to n <= 1e3
                expect_error (geodist_benchmark (n = 1e3 + 1),
-                             "nothing to be gained by extending beyond a million")
+                     "nothing to be gained by extending beyond a million")
 })
 
 test_that ("geodist paired", {
@@ -154,10 +154,11 @@ test_that ("geodist_vec", {
                              "x1 and y1 must have the same length")
 
                measures <- c ("cheap", "haversine", "vincenty", "geodesic")
-               for (m in measures)
-               {
+               for (m in measures) {
+
                    d1 <- geodist (x, y, paired = TRUE, measure = m)
-                   d2 <- geodist_vec (x1, y1, x2, y2, paired = TRUE, measure = m)
+                   d2 <- geodist_vec (x1, y1, x2, y2,
+                                      paired = TRUE, measure = m)
                    expect_identical (d1, d2)
 
                    d1 <- geodist (x, sequential = TRUE, measure = m)

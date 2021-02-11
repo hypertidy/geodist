@@ -10,7 +10,7 @@
 #' @note \code{measure = "cheap"} denotes the mapbox cheap ruler
 #' \url{https://github.com/mapbox/cheap-ruler-cpp}; \code{measure = "geodesic"}
 #' denotes the very accurate geodesic methods given in Karney (2013)
-#' "Algorithms for geodesics" J Geod 87:43-55, and as provided by the 
+#' "Algorithms for geodesics" J Geod 87:43-55, and as provided by the
 #' code{sf::st_dist()} function.
 #'
 #' @export
@@ -25,26 +25,26 @@
 #' d1 <- georange (x, y)
 #' d2 <- georange (x, sequential = TRUE)
 #' d0_2 <- georange (x, measure = "geodesic") # nanometre-accurate version of d0
-georange <- function (x, y, sequential = FALSE, measure = "cheap")
-{
+georange <- function (x, y, sequential = FALSE, measure = "cheap") {
+
     measures <- c ("haversine", "vincenty", "cheap", "geodesic")
     measure <- match.arg (tolower (measure), measures)
     x <- convert_to_matrix (x)
-    if (!missing (y))
-    {
-        if (sequential)
-        {
+    if (!missing (y)) {
+
+        if (sequential) {
+
             message ("Sequential distances calculated along values of 'x' only")
             georange_seq (x, measure)
-        } else
-        {
+        } else {
+
             y <- convert_to_matrix (y)
             georange_xy (x, y, measure)
             # t() because the src code loops over x then y, so y is the internal
             # loop
         }
-    } else
-    {
+    } else {
+
         if (sequential)
             georange_seq (x, measure)
         else
@@ -52,8 +52,8 @@ georange <- function (x, y, sequential = FALSE, measure = "cheap")
     }
 }
 
-georange_seq <- function (x, measure)
-{
+georange_seq <- function (x, measure) {
+
     if (measure == "haversine")
         res <- .Call ("R_haversine_seq_range", as.vector (x))
     else if (measure == "vincenty")
@@ -62,13 +62,14 @@ georange_seq <- function (x, measure)
         res <- .Call ("R_geodesic_seq_range", as.vector (x))
     else
         res <- .Call ("R_cheap_seq_range", as.vector (x))
-    
+
     names (res) <- c ("minimum", "maximum")
+
     return (res)
 }
 
-georange_x <- function (x, measure)
-{
+georange_x <- function (x, measure) {
+
     if (measure == "haversine")
         res <- .Call ("R_haversine_range", as.vector (x))
     else if (measure == "vincenty")
@@ -77,13 +78,14 @@ georange_x <- function (x, measure)
         res <- .Call ("R_geodesic_range", as.vector (x))
     else
         res <- .Call ("R_cheap_range", as.vector (x))
-    
+
     names (res) <- c ("minimum", "maximum")
+
     return (res)
 }
 
-georange_xy <- function (x, y, measure)
-{
+georange_xy <- function (x, y, measure) {
+
     if (measure == "haversine")
         res <- .Call ("R_haversine_xy_range", as.vector (x), as.vector (y))
     else if (measure == "vincenty")
@@ -94,5 +96,6 @@ georange_xy <- function (x, y, measure)
         res <- .Call ("R_cheap_xy_range", as.vector (x), as.vector (y))
 
     names (res) <- c ("minimum", "maximum")
+
     return (res)
 }

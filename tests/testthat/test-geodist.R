@@ -37,7 +37,7 @@ havdist <- function (x, y) {
     earth <- 6378137 # radius of Earth in m
     d <- syd * syd +
         cos (x2mat * pi / 180) * cos (y2mat * pi / 180) * sxd * sxd
-    2 * earth * asin (sqrt (d));
+    2 * earth * asin (sqrt (d))
 }
 
 test_that("matrix structure for x only", {

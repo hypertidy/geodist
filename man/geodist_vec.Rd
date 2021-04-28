@@ -12,7 +12,8 @@ geodist_vec(
   paired = FALSE,
   sequential = FALSE,
   pad = FALSE,
-  measure = "cheap"
+  measure = "cheap",
+  quiet = FALSE
 )
 }
 \arguments{
@@ -37,6 +38,9 @@ return \code{n - 1} values.}
 
 \item{measure}{One of "haversine" "vincenty", "geodesic", or "cheap"
 specifying desired method of geodesic distance calculation; see Notes.}
+
+\item{quiet}{If \code{FALSE}, check whether max of calculated distances
+is greater than accuracy threshhold and warn.}
 }
 \value{
 If only \code{(x1, y1)} are passed and \code{sequential = FALSE}, a

@@ -16,3 +16,5 @@ inst/WORDLIST
 # compiled object files
 *.o
 *.so
+geodist.Rproj
+src/geodist.dll

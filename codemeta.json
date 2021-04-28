@@ -10,13 +10,13 @@
   "codeRepository": "https://github.com/hypertidy/geodist",
   "issueTracker": "https://github.com/hypertidy/geodist/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.7.005",
+  "version": "0.0.7.6",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.3 (2020-10-10)",
+  "runtimePlatform": "R version 4.0.5 (2021-03-31)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -93,8 +93,8 @@
   ],
   "softwareRequirements": [],
   "releaseNotes": "https://github.com/hypertidy/geodist/blob/master/NEWS.md",
-  "readme": "https://github.com/hypertidy/geodist/blob/master/README.md",
-  "fileSize": "441.028KB",
+  "readme": "https://github.com/hypertidy/geodist/blob/main/README.md",
+  "fileSize": "564.037KB",
   "contIntegration": "https://codecov.io/gh/hypertidy/geodist",
   "developmentStatus": "http://www.repostatus.org/#active",
   "relatedLink": "https://CRAN.R-project.org/package=geodist"

@@ -241,115 +241,114 @@ devtools::test("tests/")
 
 ## Contributors
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
-All contributions to this project are gratefully acknowledged using the
-[`allcontributors`
-package](https://github.com/ropenscilabs/allcontributors) following the
-[all-contributors](https://allcontributors.org) specification.
-Contributions of any kind are welcome!
+All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropenscilabs/allcontributors) following the [all-contributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
 
 ### Code
 
 <table>
+
 <tr>
 <td align="center">
 <a href="https://github.com/mpadge">
-<img src="https://avatars1.githubusercontent.com/u/6697851?v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/6697851?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/commits?author=mpadge">mpadge</a>
 </td>
+<td align="center">
+<a href="https://github.com/daniellemccool">
+<img src="https://avatars.githubusercontent.com/u/5112209?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/hypertidy/geodist/commits?author=daniellemccool">daniellemccool</a>
+</td>
 </tr>
+
 </table>
+
 
 ### Issues
 
 <table>
+
 <tr>
 <td align="center">
 <a href="https://github.com/mdsumner">
-<img src="https://avatars1.githubusercontent.com/u/4107631?u=c7a3627c592123651d51d002f421c2bd00be172f&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/4107631?u=c7a3627c592123651d51d002f421c2bd00be172f&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amdsumner">mdsumner</a>
 </td>
 <td align="center">
 <a href="https://github.com/edzer">
-<img src="https://avatars0.githubusercontent.com/u/520851?u=9bc892c3523be428dc211f2ccbcf04e8e0e564ff&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/520851?u=9bc892c3523be428dc211f2ccbcf04e8e0e564ff&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Aedzer">edzer</a>
 </td>
 <td align="center">
 <a href="https://github.com/njtierney">
-<img src="https://avatars3.githubusercontent.com/u/6488485?u=3eacd57f61342d1c3cecd5c8ac741b1c4897e1de&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/6488485?u=3eacd57f61342d1c3cecd5c8ac741b1c4897e1de&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Anjtierney">njtierney</a>
 </td>
 <td align="center">
 <a href="https://github.com/mkuehn10">
-<img src="https://avatars0.githubusercontent.com/u/4229651?u=b46361a6063e22f9d902672cb7e776918a1c6951&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/4229651?u=b46361a6063e22f9d902672cb7e776918a1c6951&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amkuehn10">mkuehn10</a>
 </td>
 <td align="center">
 <a href="https://github.com/asardaes">
-<img src="https://avatars3.githubusercontent.com/u/7768461?u=fb573498b515f9bfcaeba8e256852060f6304d0b&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/7768461?u=fb573498b515f9bfcaeba8e256852060f6304d0b&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Aasardaes">asardaes</a>
 </td>
 <td align="center">
 <a href="https://github.com/marcosci">
-<img src="https://avatars2.githubusercontent.com/u/10864574?u=e5b7e55e122646f47174a9e621ebc91fff177d9b&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/10864574?u=e5b7e55e122646f47174a9e621ebc91fff177d9b&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amarcosci">marcosci</a>
 </td>
 <td align="center">
 <a href="https://github.com/mem48">
-<img src="https://avatars1.githubusercontent.com/u/15819577?u=4a4078aff5fa01d9ef82b5a504c3068d3ad21f0d&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/15819577?u=0c128db4e7567656c23e83e4314111fcea424526&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amem48">mem48</a>
 </td>
 </tr>
+
+
 <tr>
 <td align="center">
-<a href="https://github.com/SymbolixAU">
-<img src="https://avatars2.githubusercontent.com/u/18344164?u=022e0d3bdcca3e224021bae842672bda12b599df&v=4" width="100px;" alt=""/>
-</a><br>
-<a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3ASymbolixAU">SymbolixAU</a>
-</td>
-<td align="center">
 <a href="https://github.com/dcooley">
-<img src="https://avatars0.githubusercontent.com/u/8093396?u=2c8d9162f246d90d433034d212b29a19e0f245c1&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/8093396?u=2c8d9162f246d90d433034d212b29a19e0f245c1&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Adcooley">dcooley</a>
 </td>
 <td align="center">
 <a href="https://github.com/Robinlovelace">
-<img src="https://avatars3.githubusercontent.com/u/1825120?u=461318c239e721dc40668e4b0ce6cc47731328ac&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/1825120?u=461318c239e721dc40668e4b0ce6cc47731328ac&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3ARobinlovelace">Robinlovelace</a>
 </td>
 <td align="center">
-<a href="https://github.com/daniellemccool">
-<img src="https://avatars3.githubusercontent.com/u/5112209?u=0692066a22b017884c7055156f9e4e024ebde847&v=4" width="100px;" alt=""/>
-</a><br>
-<a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Adaniellemccool">daniellemccool</a>
-</td>
-<td align="center">
 <a href="https://github.com/espinielli">
-<img src="https://avatars0.githubusercontent.com/u/891692?v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/891692?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Aespinielli">espinielli</a>
 </td>
 <td align="center">
 <a href="https://github.com/Maschette">
-<img src="https://avatars2.githubusercontent.com/u/14663215?u=93694159d02e924e6413bd067d7746f1d16d64c1&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/14663215?u=93694159d02e924e6413bd067d7746f1d16d64c1&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3AMaschette">Maschette</a>
 </td>
 </tr>
+
 </table>
+
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->

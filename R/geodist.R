@@ -17,6 +17,8 @@
 #' return \code{n - 1} values.
 #' @param measure One of "haversine" "vincenty", "geodesic", or "cheap"
 #' specifying desired method of geodesic distance calculation; see Notes.
+#' @param quiet If \code{FALSE}, check whether max of calculated distances
+#' is greater than accuracy threshhold and warn.
 #' @return If only \code{x} passed and \code{sequential = FALSE}, a square
 #' symmetric matrix containing distances between all items in \code{x}; If only
 #' \code{x} passed and \code{sequential = TRUE}, a vector of sequential
@@ -44,7 +46,7 @@
 #' d2 <- geodist (x, sequential = TRUE, pad = TRUE) # Vector of length 50
 #' d0_2 <- geodist (x, measure = "geodesic") # nanometre-accurate version of d0
 geodist <- function (x, y, paired = FALSE,
-                     sequential = FALSE, pad = FALSE, measure = "cheap") {
+                     sequential = FALSE, pad = FALSE, measure = "cheap", quiet = FALSE) {
 
     measures <- c ("haversine", "vincenty", "cheap", "geodesic")
     measure <- match.arg (tolower (measure), measures)
@@ -79,7 +81,7 @@ geodist <- function (x, y, paired = FALSE,
             res <- geodist_x (x, measure)
     }
 
-    if (measure == "cheap")
+    if (measure == "cheap" & ! quiet)
         check_max_d (res, measure)
 
     return (res)

@@ -18,3 +18,4 @@ data-raw/
 ^codemeta\.json$
 ^\.pre-commit-config\.yaml$
 ^\.github$
+^\.hooks$

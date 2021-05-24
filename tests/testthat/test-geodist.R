@@ -177,20 +177,21 @@ test_that ("geodist_vec", {
                }
 })
 
-test_that ("argument quiet for measure cheap works",{
+test_that ("argument quiet for measure cheap works", {
     x1 <- c(0, 1)
     y1 <- c(0, 1)
     x2 <- c(2, 3)
     y2 <- c(2, 3)
     x <- cbind ("x" = x1, "y" = y1)
     y <- cbind ("x" = x2, "y" = y2)
-    
+
     expect_message (d1 <- geodist (x, y, paired = TRUE),
                     "Maximum distance is > 100km")
     expect_silent (d1 <- geodist (x, y, paired = TRUE, quiet = TRUE))
-    
+
     expect_message (d1 <- geodist_vec (x1, y1, x2, y2, paired = TRUE),
                     "Maximum distance is > 100km")
-    expect_silent (d1 <- geodist_vec (x1, y1, x2, y2, paired = TRUE, quiet = TRUE))
-    
+    expect_silent (d1 <- geodist_vec (x1, y1, x2, y2,
+                                      paired = TRUE, quiet = TRUE))
+
 })

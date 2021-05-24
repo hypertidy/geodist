@@ -49,7 +49,8 @@
 #' y2 <- -10 + 20 * runif (2 * n, -0.1, 0.1)
 #' d1 <- geodist_vec (x1, y1, x2, y2) # A 50-by-100 matrix
 geodist_vec <- function (x1, y1, x2, y2, paired = FALSE,
-                         sequential = FALSE, pad = FALSE, measure = "cheap", quiet = FALSE) {
+                         sequential = FALSE, pad = FALSE,
+                         measure = "cheap", quiet = FALSE) {
 
     measures <- c ("haversine", "vincenty", "cheap", "geodesic")
     measure <- match.arg (tolower (measure), measures)

@@ -46,7 +46,8 @@
 #' d2 <- geodist (x, sequential = TRUE, pad = TRUE) # Vector of length 50
 #' d0_2 <- geodist (x, measure = "geodesic") # nanometre-accurate version of d0
 geodist <- function (x, y, paired = FALSE,
-                     sequential = FALSE, pad = FALSE, measure = "cheap", quiet = FALSE) {
+                     sequential = FALSE, pad = FALSE,
+                     measure = "cheap", quiet = FALSE) {
 
     measures <- c ("haversine", "vincenty", "cheap", "geodesic")
     measure <- match.arg (tolower (measure), measures)

@@ -7,8 +7,12 @@
 #' @param n Number of random values used to generate estimates
 #' @export
 #' @examples
-#' geodist_benchmark (0, 1, 100)
-geodist_benchmark <- function (lat = 0, d = 1, n = 1e2) {
+#' geodist_benchmark (0.0, 1.0, 100L)
+geodist_benchmark <- function (lat = 0.0, d = 1.0, n = 100L) {
+
+    chk_is_num_len_1 (lat)
+    chk_is_num_len_1 (d)
+    chk_is_num_len_1 (n)
 
     if (n < 2) {
         stop ("Comparisons require at least n = 2 objects")
@@ -158,4 +162,12 @@ check_max_d <- function (d, measure) {
         message ("Maximum distance is > 100km. The 'cheap' measure is ",
                  "inaccurate over such\nlarge distances, you'd likely ",
                  "be better using a different 'measure'.")
+}
+
+chk_is_num_len_1 <- function (x, xname) {
+
+    if (!is.numeric (x))
+        stop (xname, " must be numeric")
+    if (length (x) > 1)
+        stop (xname, " must be a single value")
 }

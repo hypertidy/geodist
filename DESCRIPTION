@@ -1,18 +1,12 @@
 Package: geodist
 Title: Fast, Dependency-Free Geodesic Distance Calculations
-Version: 0.0.7.013
-Authors@R: 
-    c(person(given = "Mark",
-             family = "Padgham",
-             role = c("aut", "cre"),
-             email = "mark.padgham@email.com"),
-      person(given = "Michael D.",
-             family = "Sumner",
-             role = "aut"),
-      person(given = "Charles F.F",
-             family = "Karney",
-             role = "cph",
-             comment = "Original author of included code for geodesic distances"))
+Version: 0.0.7.014
+Authors@R: c(
+    person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre")),
+    person("Michael D.", "Sumner", role = "aut"),
+    person("Charles F.F", "Karney", role = "cph",
+           comment = "Original author of included code for geodesic distances")
+  )
 Description: Dependency-free, ultra fast calculation of geodesic
     distances.  Includes the reference nanometre-accuracy geodesic
     distances of Karney (2013) <doi:10.1007/s00190-012-0578-z>, as used by

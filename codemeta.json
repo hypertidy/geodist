@@ -1,22 +1,19 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "geodist",
-  "description": "Dependency-free, ultra fast calculation of geodesic\n    distances.  Includes the reference nanometre-accuracy geodesic\n    distances of Karney (2013) <doi:10.1007/s00190-012-0578-z>, as used by\n    the 'sf' package, as well as Haversine and Vincenty distances. Default\n    distance measure is the \"Mapbox cheap ruler\" which is generally more\n    accurate than Haversine or Vincenty for distances out to a few hundred\n    kilometres, and is considerably faster. The main function accepts one\n    or two inputs in almost any generic rectangular form, and returns\n    either matrices of pairwise distances, or vectors of sequential\n    distances.",
+  "description": "Dependency-free, ultra fast calculation of geodesic distances. Includes the reference nanometre-accuracy geodesic distances of Karney (2013) <doi:10.1007/s00190-012-0578-z>, as used by the 'sf' package, as well as Haversine and Vincenty distances. Default distance measure is the \"Mapbox cheap ruler\" which is generally more accurate than Haversine or Vincenty for distances out to a few hundred kilometres, and is considerably faster. The main function accepts one or two inputs in almost any generic rectangular form, and returns either matrices of pairwise distances, or vectors of sequential distances.",
   "name": "geodist: Fast, Dependency-Free Geodesic Distance Calculations",
   "codeRepository": "https://github.com/hypertidy/geodist",
   "issueTracker": "https://github.com/hypertidy/geodist/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.7.014",
+  "version": "0.0.7.15",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.5 (2021-03-31)",
+  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -36,7 +33,6 @@
       "familyName": "Sumner"
     }
   ],
-  "contributor": {},
   "copyrightHolder": [
     {
       "@type": "Person",
@@ -44,7 +40,6 @@
       "familyName": "Karney"
     }
   ],
-  "funder": {},
   "maintainer": [
     {
       "@type": "Person",
@@ -91,11 +86,13 @@
       "sameAs": "https://CRAN.R-project.org/package=testthat"
     }
   ],
-  "softwareRequirements": [],
+  "softwareRequirements": {
+    "SystemRequirements": null
+  },
+  "fileSize": "333.223KB",
   "releaseNotes": "https://github.com/hypertidy/geodist/blob/master/NEWS.md",
   "readme": "https://github.com/hypertidy/geodist/blob/main/README.md",
-  "fileSize": "564.037KB",
-  "contIntegration": "https://codecov.io/gh/hypertidy/geodist",
+  "contIntegration": ["https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check", "https://codecov.io/gh/hypertidy/geodist"],
   "developmentStatus": "http://www.repostatus.org/#active",
   "relatedLink": "https://CRAN.R-project.org/package=geodist"
 }

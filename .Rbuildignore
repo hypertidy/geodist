@@ -11,6 +11,7 @@
 docs/
 fig/
 data-raw/
+hooks/
 ^_pkgdown\.yml$
 ^appveyor\.yml$
 ^.*\.Rproj$
@@ -18,4 +19,3 @@ data-raw/
 ^codemeta\.json$
 ^\.pre-commit-config\.yaml$
 ^\.github$
-^\.hooks$

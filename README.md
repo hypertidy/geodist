@@ -2,11 +2,12 @@
 
 [![R build
 status](https://github.com/hypertidy/geodist/workflows/R-CMD-check/badge.svg)](https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check)
+[![pkgcheck](https://github.com/hypertidy/geodist/workflows/pkgcheck/badge.svg)](https://github.com/hypertidy/geodist/actions?query=workflow%3Apkgcheck)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![codecov](https://codecov.io/gh/hypertidy/geodist/branch/master/graph/badge.svg)](https://codecov.io/gh/hypertidy/geodist)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/geodist)](http://cran.r-project.org/web/packages/geodist)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/geodist)](http://cran.r-project.org/web/packages/geodist)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geodist)
 
 # geodist
@@ -52,7 +53,7 @@ Then load with
 ``` r
 library (geodist)
 packageVersion ("geodist")
-#> [1] '0.0.6.2'
+#> [1] '0.0.7.16'
 ```
 
 ## Detailed Usage
@@ -112,8 +113,8 @@ to the nanometre-accuracy standard of [Karney
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
 #>            haversine    vincenty       cheap
-#> absolute 0.790954905 0.790954905 0.579482464
-#> relative 0.002104721 0.002104721 0.001607779
+#> absolute 0.722400335 0.722400335 0.543951117
+#> relative 0.002056736 0.002056736 0.001597882
 ```
 
 All distances (`d)` are in metres, and all measures are accurate to
@@ -145,10 +146,10 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d3 <- geodist (x, measure = "vincenty"),
                        d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.081    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.168    2.074
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.226    2.790
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.308   40.840
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.089    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.183    2.056
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.245    2.753
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.439   38.640
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -177,10 +178,9 @@ geo_dist <- function (x) geodist (x, measure = "geodesic")
 rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
                       geo_dist (x)) [, 1:4]
-#> Linking to GEOS 3.8.1, GDAL 3.0.4, PROJ 6.3.2
 #>           test replications elapsed relative
-#> 2  geo_dist(x)           10   0.066    1.000
-#> 1 sf_dist(xsf)           10   0.218    3.303
+#> 2  geo_dist(x)           10   0.071     1.00
+#> 1 sf_dist(xsf)           10   0.137     1.93
 ```
 
 Confirm that the two give almost identical results:
@@ -189,7 +189,7 @@ Confirm that the two give almost identical results:
 ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
 dg <- geodist (x, measure = "geodesic")
 formatC (max (abs (ds - dg)), format = "e")
-#> [1] "9.3132e-09"
+#> [1] "3.7717e+04"
 ```
 
 All results are in metres, so the two differ by only around 10
@@ -206,8 +206,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
                        fgeosph ()) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.018    1.000
-#> 2  fgeosph()           10   0.042    2.333
+#> 1 fgeodist()           10   0.021     1.00
+#> 2  fgeosph()           10   0.038     1.81
 ```
 
 `geodist` is thus around 3 times faster than `sf` for highly accurate
@@ -223,35 +223,37 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Mon Jan 11 15:06:09 2021"
+#> [1] "Mon Jan 24 10:45:33 2022"
 devtools::test("tests/")
-#> Loading geodist
-#> Testing geodist
-#> ✔ |  OK F W S | Context
-#> ⠏ |   0       | geodist                                                                                                                                                                                                                       ⠏ |   0       | misc tests                                                                                                                                                                                                                    ⠇ |  29       | misc tests                                                                                                                                                                                                                    ✔ |  46       | misc tests [0.2 s]
-#> ⠏ |   0       | georange                                                                                                                                                                                                                      ⠏ |   0       | georange                                                                                                                                                                                                                      ⠼ |  15       | georange                                                                                                                                                                                                                      ✔ |  37       | georange [0.2 s]
-#> ⠏ |   0       | input-format                                                                                                                                                                                                                  ⠏ |   0       | geodist input formats                                                                                                                                                                                                         ✔ |  18       | geodist input formats
-#> ⠏ |   0       | measures                                                                                                                                                                                                                      ⠏ |   0       | geodist measures                                                                                                                                                                                                              ⠹ |  13       | geodist measures                                                                                                                                                                                                              ✔ |  18       | geodist measures [0.2 s]
+#> ℹ Loading geodist
+#> ℹ Testing geodist
+#> ✔ | F W S  OK | Context
+#> ⠏ |         0 | geodist                                                                                               ⠏ |         0 | misc tests                                                                                            ⠹ |        13 | misc tests                                                                                            ⠴ |        36 | misc tests                                                                                            ✔ |        52 | misc tests [0.3s]
+#> ⠏ |         0 | georange                                                                                              ⠏ |         0 | georange                                                                                              ✔ |        37 | georange
+#> ⠏ |         0 | input-format                                                                                          ⠏ |         0 | geodist input formats                                                                                 ✔ |        18 | geodist input formats
+#> ⠏ |         0 | measures                                                                                              ⠏ |         0 | geodist measures                                                                                      ✔ |        18 | geodist measures
 #> 
-#> ══ Results ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-#> Duration: 0.6 s
+#> ══ Results ═══════════════════════════════════════════════════════════════════════════════════════════════════════════
+#> Duration: 0.5 s
 #> 
-#> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 119 ]
+#> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 125 ]
 ```
 
 ## Contributors
-
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
-All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropenscilabs/allcontributors) following the [all-contributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
+All contributions to this project are gratefully acknowledged using the
+[`allcontributors`
+package](https://github.com/ropenscilabs/allcontributors) following the
+[all-contributors](https://allcontributors.org) specification.
+Contributions of any kind are welcome!
 
 ### Code
 
 <table>
-
 <tr>
 <td align="center">
 <a href="https://github.com/mpadge">
@@ -266,14 +268,11 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/hypertidy/geodist/commits?author=daniellemccool">daniellemccool</a>
 </td>
 </tr>
-
 </table>
-
 
 ### Issues
 
 <table>
-
 <tr>
 <td align="center">
 <a href="https://github.com/mdsumner">
@@ -318,8 +317,6 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amem48">mem48</a>
 </td>
 </tr>
-
-
 <tr>
 <td align="center">
 <a href="https://github.com/dcooley">
@@ -346,9 +343,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3AMaschette">Maschette</a>
 </td>
 </tr>
-
 </table>
-
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->

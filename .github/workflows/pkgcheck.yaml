@@ -5,16 +5,18 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
 
-on: 
+on:
   # Manually trigger the Action under Actions/pkgcheck
   workflow_dispatch:
   # Run on every push to main
   push:
-    branches: 
+    branches:
       - main
 
-jobs: 
+jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - uses: ropensci-review-tools/pkgcheck-action@main
+        with:
+          summary-only: false

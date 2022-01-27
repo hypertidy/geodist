@@ -1,0 +1,14 @@
+citHeader("To cite geodist in publications use:")
+
+citEntry(
+  entry    = "Manual",
+  title    = "geodist: Fast, Dependency-Free Geodesic Distance Calculations",
+  author   = as.person("Mark Padgham"),
+  year     = 2021,
+  note     = "R package version 0.0.7",
+  url      = "https://github.com/hypertidy/geodist",
+  textVersion = paste(
+"Padgham, Mark (2021).
+geodist: Fast, Dependency-Free Geodesic Distance Calculations.
+R package version 0.0.7, https://github.com/hypertidy/geodist")
+)

@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/hypertidy/geodist",
   "issueTracker": "https://github.com/hypertidy/geodist/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.7.019",
+  "version": "0.0.7.20",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -87,15 +87,28 @@
     }
   ],
   "softwareRequirements": {
-    "SystemRequirements": {}
+    "SystemRequirements": null
   },
-  "fileSize": "333.241KB",
+  "fileSize": "525.417KB",
+  "citation": [
+    {
+      "@type": "SoftwareSourceCode",
+      "datePublished": "2021",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Mark",
+          "familyName": "Padgham"
+        }
+      ],
+      "name": "geodist: Fast, Dependency-Free Geodesic Distance Calculations",
+      "url": "https://github.com/hypertidy/geodist",
+      "description": "R package version 0.0.7"
+    }
+  ],
   "releaseNotes": "https://github.com/hypertidy/geodist/blob/master/NEWS.md",
   "readme": "https://github.com/hypertidy/geodist/blob/main/README.md",
-  "contIntegration": [
-    "https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check",
-    "https://codecov.io/gh/hypertidy/geodist"
-  ],
+  "contIntegration": ["https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check", "https://github.com/hypertidy/geodist/actions?query=workflow%3Apkgcheck", "https://codecov.io/gh/hypertidy/geodist"],
   "developmentStatus": "http://www.repostatus.org/#active",
   "relatedLink": "https://CRAN.R-project.org/package=geodist"
 }

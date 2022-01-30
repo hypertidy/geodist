@@ -1,0 +1,114 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "identifier": "geodist",
+  "description": "Dependency-free, ultra fast calculation of geodesic distances. Includes the reference nanometre-accuracy geodesic distances of Karney (2013) <doi:10.1007/s00190-012-0578-z>, as used by the 'sf' package, as well as Haversine and Vincenty distances. Default distance measure is the \"Mapbox cheap ruler\" which is generally more accurate than Haversine or Vincenty for distances out to a few hundred kilometres, and is considerably faster. The main function accepts one or two inputs in almost any generic rectangular form, and returns either matrices of pairwise distances, or vectors of sequential distances.",
+  "name": "geodist: Fast, Dependency-Free Geodesic Distance Calculations",
+  "codeRepository": "https://github.com/hypertidy/geodist",
+  "issueTracker": "https://github.com/hypertidy/geodist/issues",
+  "license": "https://spdx.org/licenses/MIT",
+  "version": "0.0.7.22",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Mark",
+      "familyName": "Padgham",
+      "email": "mark.padgham@email.com"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Michael D.",
+      "familyName": "Sumner"
+    }
+  ],
+  "copyrightHolder": [
+    {
+      "@type": "Person",
+      "givenName": "Charles F.F",
+      "familyName": "Karney"
+    }
+  ],
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Mark",
+      "familyName": "Padgham",
+      "email": "mark.padgham@email.com"
+    }
+  ],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
+    }
+  ],
+  "softwareRequirements": {
+    "SystemRequirements": null
+  },
+  "fileSize": "333.795KB",
+  "citation": [
+    {
+      "@type": "SoftwareSourceCode",
+      "datePublished": "2021",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Mark",
+          "familyName": "Padgham"
+        }
+      ],
+      "name": "geodist: Fast, Dependency-Free Geodesic Distance Calculations",
+      "url": "https://github.com/hypertidy/geodist",
+      "description": "R package version 0.0.7"
+    }
+  ],
+  "releaseNotes": "https://github.com/hypertidy/geodist/blob/master/NEWS.md",
+  "readme": "https://github.com/hypertidy/geodist/blob/main/README.md",
+  "contIntegration": ["https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check", "https://github.com/hypertidy/geodist/actions?query=workflow%3Apkgcheck", "https://codecov.io/gh/hypertidy/geodist"],
+  "developmentStatus": "http://www.repostatus.org/#active",
+  "relatedLink": "https://CRAN.R-project.org/package=geodist"
+}

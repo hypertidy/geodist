@@ -59,7 +59,7 @@ test_that ("other columns", {
                expect_identical (d, d1)
 })
 
-test_that ("column names, ", {
+test_that ("column names", {
                n <- 50
                x <- cbind (-10 + 20 * runif (n), -10 + 20 * runif (n))
                y <- cbind (-10 + 20 * runif (n), -10 + 20 * runif (n))

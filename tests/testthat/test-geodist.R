@@ -1,4 +1,3 @@
-context("misc tests")
 
 test_all <- identical (Sys.getenv ("MPADGE_LOCAL"), "true")
 
@@ -93,7 +92,7 @@ test_that("geodesic extreme cases", {
 
 test_that ("geodist_benchmark", {
                d <- geodist_benchmark (lat = 1, d = 100, n = 100)
-               expect_is (d, "matrix")
+               expect_true (inherits (d, "matrix"))
                expect_equal (nrow (d), 2)
                expect_equal (ncol (d), 3)
                expect_equal (rownames (d), c ("absolute", "relative"))
@@ -121,7 +120,7 @@ test_that ("geodist paired", {
                               "Maximum distance is > 100km")
               else
                   d1 <- geodist (x, y, paired = TRUE)
-              expect_is (d1, "numeric")
+              expect_type (d1, "double")
               expect_equal (length (d1), n)
 
               expect_silent (d2 <- geodist (x, y, paired = TRUE,

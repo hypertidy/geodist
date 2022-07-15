@@ -1,4 +1,3 @@
-context("geodist measures")
 
 test_all <- identical (Sys.getenv ("MPADGE_LOCAL"), "true")
 

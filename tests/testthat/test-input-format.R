@@ -1,4 +1,3 @@
-context("geodist input formats")
 # tibble not tested to avoid pacakge suggests, but just needs these lines
 #x <- tibble::tibble (x = -180 + 360 * runif (n),
 #                     y = -90 + 180 * runif (n))

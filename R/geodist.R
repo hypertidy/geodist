@@ -45,6 +45,10 @@
 #' d2 <- geodist (x, sequential = TRUE) # Vector of length 49
 #' d2 <- geodist (x, sequential = TRUE, pad = TRUE) # Vector of length 50
 #' d0_2 <- geodist (x, measure = "geodesic") # nanometre-accurate version of d0
+#'
+#' # Input data can also be 'data.frame' objects:
+#' xy <- data.frame (x = runif (n, -0.1, 0.1), y = runif (n, -0.1, 0.1))
+#' d <- geodist (xy)
 geodist <- function (x, y, paired = FALSE,
                      sequential = FALSE, pad = FALSE,
                      measure = "cheap", quiet = FALSE) {

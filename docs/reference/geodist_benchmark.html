@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geodist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.7.030</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.7.031</span>
       </span>
     </div>
 
@@ -73,13 +73,21 @@
 <dd><p>Number of random values used to generate estimates</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
+
+<p>A 'data.frame' with three columns respectively comparing the accuracy
+of the [Haversine, Vincenty, cheap] metrics against geodesic measures in both
+absolute and relative terms (as two rows of the table).</p>
+    </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">geodist_benchmark</span> <span class="op">(</span><span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="fl">100L</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            haversine    vincenty       cheap</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> absolute 0.001330270 0.001330270 0.000935174</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> relative 0.003495704 0.003495704 0.002493892</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            haversine    vincenty        cheap</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> absolute 0.001231997 0.001231997 0.0008777425</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> relative 0.003382316 0.003382316 0.0024322130</span>
 </code></pre></div>
     </div>
   </div>

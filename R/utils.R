@@ -5,6 +5,9 @@
 #' @param lat Central latitude where errors should be measured
 #' @param d Distance in metres over which errors should be measured
 #' @param n Number of random values used to generate estimates
+#' @return A 'data.frame' with three columns respectively comparing the accuracy
+#' of the [Haversine, Vincenty, cheap] metrics against geodesic measures in both
+#' absolute and relative terms (as two rows of the table).
 #' @export
 #' @examples
 #' geodist_benchmark (0.0, 1.0, 100L)

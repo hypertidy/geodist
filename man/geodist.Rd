@@ -37,7 +37,7 @@ return \code{n - 1} values.}
 specifying desired method of geodesic distance calculation; see Notes.}
 
 \item{quiet}{If \code{FALSE}, check whether max of calculated distances
-is greater than accuracy threshhold and warn.}
+is greater than accuracy threshold and warn.}
 }
 \value{
 If only \code{x} passed and \code{sequential = FALSE}, a square
@@ -69,4 +69,8 @@ d1 <- geodist (x, y) # A 50-by-100 matrix
 d2 <- geodist (x, sequential = TRUE) # Vector of length 49
 d2 <- geodist (x, sequential = TRUE, pad = TRUE) # Vector of length 50
 d0_2 <- geodist (x, measure = "geodesic") # nanometre-accurate version of d0
+
+# Input data can also be 'data.frame' objects:
+xy <- data.frame (x = runif (n, -0.1, 0.1), y = runif (n, -0.1, 0.1))
+d <- geodist (xy)
 }

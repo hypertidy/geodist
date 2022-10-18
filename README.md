@@ -43,6 +43,7 @@ of the following options:
 ``` r
 # install.packages("remotes")
 remotes::install_git("https://git.sr.ht/~mpadge/geodist")
+remotes::install_git("https://codeberg.org/hypertidy/geodist")
 remotes::install_bitbucket("hypertidy/geodist")
 remotes::install_gitlab("hypertidy/geodist")
 remotes::install_github("hypertidy/geodist")
@@ -53,7 +54,7 @@ Then load with
 ``` r
 library (geodist)
 packageVersion ("geodist")
-#> [1] '0.0.7.16'
+#> [1] '0.0.7.30'
 ```
 
 ## Detailed Usage
@@ -113,8 +114,8 @@ to the nanometre-accuracy standard of [Karney
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
 #>            haversine    vincenty       cheap
-#> absolute 0.722400335 0.722400335 0.543951117
-#> relative 0.002056736 0.002056736 0.001597882
+#> absolute 0.779366777 0.779366777 0.569726368
+#> relative 0.002090465 0.002090465 0.001590435
 ```
 
 All distances (`d)` are in metres, and all measures are accurate to
@@ -146,10 +147,10 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d3 <- geodist (x, measure = "vincenty"),
                        d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.089    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.183    2.056
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.245    2.753
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.439   38.640
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.068    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.139    2.044
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.224    3.294
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.036   44.647
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -179,8 +180,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
                       geo_dist (x)) [, 1:4]
 #>           test replications elapsed relative
-#> 2  geo_dist(x)           10   0.071     1.00
-#> 1 sf_dist(xsf)           10   0.137     1.93
+#> 2  geo_dist(x)           10   0.062    1.000
+#> 1 sf_dist(xsf)           10   0.145    2.339
 ```
 
 Confirm that the two give almost identical results:
@@ -189,7 +190,7 @@ Confirm that the two give almost identical results:
 ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
 dg <- geodist (x, measure = "geodesic")
 formatC (max (abs (ds - dg)), format = "e")
-#> [1] "3.7717e+04"
+#> [1] "3.7805e+04"
 ```
 
 All results are in metres, so the two differ by only around 10
@@ -206,8 +207,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        fgeodist (),
                        fgeosph ()) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.021     1.00
-#> 2  fgeosph()           10   0.038     1.81
+#> 1 fgeodist()           10   0.016     1.00
+#> 2  fgeosph()           10   0.036     2.25
 ```
 
 `geodist` is thus around 3 times faster than `sf` for highly accurate
@@ -223,18 +224,11 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Mon Jan 24 10:45:33 2022"
+#> [1] "Tue Oct 18 12:34:21 2022"
 devtools::test("tests/")
-#> ℹ Loading geodist
 #> ℹ Testing geodist
-#> ✔ | F W S  OK | Context
-#> ⠏ |         0 | geodist                                                                                               ⠏ |         0 | misc tests                                                                                            ⠹ |        13 | misc tests                                                                                            ⠴ |        36 | misc tests                                                                                            ✔ |        52 | misc tests [0.3s]
-#> ⠏ |         0 | georange                                                                                              ⠏ |         0 | georange                                                                                              ✔ |        37 | georange
-#> ⠏ |         0 | input-format                                                                                          ⠏ |         0 | geodist input formats                                                                                 ✔ |        18 | geodist input formats
-#> ⠏ |         0 | measures                                                                                              ⠏ |         0 | geodist measures                                                                                      ✔ |        18 | geodist measures
-#> 
-#> ══ Results ═══════════════════════════════════════════════════════════════════════════════════════════════════════════
-#> Duration: 0.5 s
+#> ══ Results ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+#> Duration: 2.6 s
 #> 
 #> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 125 ]
 ```

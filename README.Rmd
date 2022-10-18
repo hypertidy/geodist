@@ -49,6 +49,7 @@ following options:
 ```{r gh-installation, eval = FALSE}
 # install.packages("remotes")
 remotes::install_git("https://git.sr.ht/~mpadge/geodist")
+remotes::install_git("https://codeberg.org/hypertidy/geodist")
 remotes::install_bitbucket("hypertidy/geodist")
 remotes::install_gitlab("hypertidy/geodist")
 remotes::install_github("hypertidy/geodist")

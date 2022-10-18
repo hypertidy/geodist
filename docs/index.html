@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">geodist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.7.032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.7.033</span>
       </span>
     </div>
 
@@ -102,6 +102,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_git</span><span class="op">(</span><span class="st">"https://git.sr.ht/~mpadge/geodist"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_git</span><span class="op">(</span><span class="st">"https://codeberg.org/hypertidy/geodist"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_bitbucket</span><span class="op">(</span><span class="st">"hypertidy/geodist"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_gitlab</span><span class="op">(</span><span class="st">"hypertidy/geodist"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"hypertidy/geodist"</span><span class="op">)</span></span></code></pre></div>
@@ -109,7 +110,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span> <span class="op">(</span><span class="va"><a href="https://github.com/hypertidy/geodist" class="external-link">geodist</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span> <span class="op">(</span><span class="st">"geodist"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] '0.0.7.16'</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] '0.0.7.30'</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="detailed-usage">Detailed Usage<a class="anchor" aria-label="anchor" href="#detailed-usage"></a>
@@ -145,8 +146,8 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/geodist_benchmark.html">geodist_benchmark</a></span> <span class="op">(</span>lat <span class="op">=</span> <span class="fl">30</span>, d <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="co">#&gt;            haversine    vincenty       cheap</span></span>
-<span><span class="co">#&gt; absolute 0.722400335 0.722400335 0.543951117</span></span>
-<span><span class="co">#&gt; relative 0.002056736 0.002056736 0.001597882</span></span></code></pre></div>
+<span><span class="co">#&gt; absolute 0.779366777 0.779366777 0.569726368</span></span>
+<span><span class="co">#&gt; relative 0.002090465 0.002090465 0.001590435</span></span></code></pre></div>
 <p>All distances (<code>d)</code> are in metres, and all measures are accurate to within 1m over distances out to several km (at the chosen latitude of 30 degrees). The following plots compare the absolute and relative accuracies of the different distance measures implemented here. The mapbox cheap ruler algorithm is the most accurate for distances out to around 100km, beyond which it becomes extremely inaccurate. Average relative errors of Vincenty distances remain generally constant at around 0.2%, while relative errors of cheap-ruler distances out to 100km are around 0.16%.</p>
 <p><img src="articles/fig1.png"></p>
 </div>
@@ -166,10 +167,10 @@
 <span>                       <span class="va">d3</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/geodist.html">geodist</a></span> <span class="op">(</span><span class="va">x</span>, measure <span class="op">=</span> <span class="st">"vincenty"</span><span class="op">)</span>,</span>
 <span>                       <span class="va">d4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/geodist.html">geodist</a></span> <span class="op">(</span><span class="va">x</span>, measure <span class="op">=</span> <span class="st">"geodesic"</span><span class="op">)</span><span class="op">)</span> <span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
 <span><span class="co">#&gt;                                      test replications elapsed relative</span></span>
-<span><span class="co">#&gt; 1     d1 &lt;- geodist(x, measure = "cheap")           10   0.089    1.000</span></span>
-<span><span class="co">#&gt; 2 d2 &lt;- geodist(x, measure = "haversine")           10   0.183    2.056</span></span>
-<span><span class="co">#&gt; 3  d3 &lt;- geodist(x, measure = "vincenty")           10   0.245    2.753</span></span>
-<span><span class="co">#&gt; 4  d4 &lt;- geodist(x, measure = "geodesic")           10   3.439   38.640</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     d1 &lt;- geodist(x, measure = "cheap")           10   0.068    1.000</span></span>
+<span><span class="co">#&gt; 2 d2 &lt;- geodist(x, measure = "haversine")           10   0.139    2.044</span></span>
+<span><span class="co">#&gt; 3  d3 &lt;- geodist(x, measure = "vincenty")           10   0.224    3.294</span></span>
+<span><span class="co">#&gt; 4  d4 &lt;- geodist(x, measure = "geodesic")           10   3.036   44.647</span></span></code></pre></div>
 <p>Geodesic distance calculation is available in the <a href="https://cran.r-project.org/package=sf" class="external-link"><code>sf</code> package</a>. Comparing computation speeds requires conversion of sets of numeric lon-lat points to <code>sf</code> form with the following code:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span> <span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
@@ -191,14 +192,14 @@
 <span>                      <span class="fu">sf_dist</span> <span class="op">(</span><span class="va">xsf</span><span class="op">)</span>,</span>
 <span>                      <span class="fu">geo_dist</span> <span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
 <span><span class="co">#&gt;           test replications elapsed relative</span></span>
-<span><span class="co">#&gt; 2  geo_dist(x)           10   0.071     1.00</span></span>
-<span><span class="co">#&gt; 1 sf_dist(xsf)           10   0.137     1.93</span></span></code></pre></div>
+<span><span class="co">#&gt; 2  geo_dist(x)           10   0.062    1.000</span></span>
+<span><span class="co">#&gt; 1 sf_dist(xsf)           10   0.145    2.339</span></span></code></pre></div>
 <p>Confirm that the two give almost identical results:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span> <span class="op">(</span><span class="fu">sf_dist</span> <span class="op">(</span><span class="va">xsf</span><span class="op">)</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span> <span class="op">(</span><span class="va">xsf</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">dg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/geodist.html">geodist</a></span> <span class="op">(</span><span class="va">x</span>, measure <span class="op">=</span> <span class="st">"geodesic"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span> <span class="op">(</span><span class="va">ds</span> <span class="op">-</span> <span class="va">dg</span><span class="op">)</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "3.7717e+04"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "3.7805e+04"</span></span></code></pre></div>
 <p>All results are in metres, so the two differ by only around 10 nanometres.</p>
 <p>The <a href="https://cran.r-project.org/package=geosphere" class="external-link"><code>geosphere</code> package</a> also offers sequential calculation which is benchmarked with the following code:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -208,8 +209,8 @@
 <span>                       <span class="fu">fgeodist</span> <span class="op">(</span><span class="op">)</span>,</span>
 <span>                       <span class="fu">fgeosph</span> <span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
 <span><span class="co">#&gt;         test replications elapsed relative</span></span>
-<span><span class="co">#&gt; 1 fgeodist()           10   0.021     1.00</span></span>
-<span><span class="co">#&gt; 2  fgeosph()           10   0.038     1.81</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 fgeodist()           10   0.016     1.00</span></span>
+<span><span class="co">#&gt; 2  fgeosph()           10   0.036     2.25</span></span></code></pre></div>
 <p><code>geodist</code> is thus around 3 times faster than <code>sf</code> for highly accurate geodesic distance calculations, and around twice as fast as <code>geosphere</code> for calculation of sequential distances.</p>
 </div>
 <div class="section level3">
@@ -220,18 +221,11 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span> <span class="op">(</span><span class="va"><a href="https://testthat.r-lib.org" class="external-link">testthat</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/date.html" class="external-link">date</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Mon Jan 24 10:45:33 2022"</span></span>
+<span><span class="co">#&gt; [1] "Tue Oct 18 12:34:21 2022"</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">test</span><span class="op">(</span><span class="st">"tests/"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Loading geodist</span></span>
 <span><span class="co">#&gt; ℹ Testing geodist</span></span>
-<span><span class="co">#&gt; ✔ | F W S  OK | Context</span></span>
-<span><span class="co">#&gt; ⠏ |         0 | geodist                                                                                               ⠏ |         0 | misc tests                                                                                            ⠹ |        13 | misc tests                                                                                            ⠴ |        36 | misc tests                                                                                            ✔ |        52 | misc tests [0.3s]</span></span>
-<span><span class="co">#&gt; ⠏ |         0 | georange                                                                                              ⠏ |         0 | georange                                                                                              ✔ |        37 | georange</span></span>
-<span><span class="co">#&gt; ⠏ |         0 | input-format                                                                                          ⠏ |         0 | geodist input formats                                                                                 ✔ |        18 | geodist input formats</span></span>
-<span><span class="co">#&gt; ⠏ |         0 | measures                                                                                              ⠏ |         0 | geodist measures                                                                                      ✔ |        18 | geodist measures</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ══ Results ═══════════════════════════════════════════════════════════════════════════════════════════════════════════</span></span>
-<span><span class="co">#&gt; Duration: 0.5 s</span></span>
+<span><span class="co">#&gt; ══ Results ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════</span></span>
+<span><span class="co">#&gt; Duration: 2.6 s</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [ FAIL 0 | WARN 0 | SKIP 0 | PASS 125 ]</span></span></code></pre></div>
 </div>

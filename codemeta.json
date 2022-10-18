@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/hypertidy/geodist",
   "issueTracker": "https://github.com/hypertidy/geodist/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.7.033",
+  "version": "0.0.7.036",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",

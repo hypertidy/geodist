@@ -6,6 +6,7 @@
 - Improve matching of column names to lon/lat
 - Fix error when submitting tibbles (#32)
 - Add codeberg.org/hypertidy/geodist remote
+- Fix all clang warnings, including new header files with prototypes for all fns
 
 
 # v0.0.6

@@ -79,8 +79,7 @@ SEXP R_vincenty (SEXP x_)
         {
             size_t indx1 = i * n + j;
             size_t indx2 = j * n + i;
-            rout [indx1] = rout [indx2] = one_vincenty (rx [i], rx [n + i],
-                    rx [j], rx [n + j],
+            rout [indx1] = rout [indx2] = one_vincenty (rx [i], rx [j],
                     siny1 [i], cosy1 [i], siny1 [j], cosy1 [j]);
         }
     }

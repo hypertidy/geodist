@@ -31,7 +31,7 @@ double one_haversine (double x1, double y1, double x2, double y2,
 //' Vincenty great circle distance
 //' @return single distance
 //' @noRd
-double one_vincenty (double x1, double y1, double x2, double y2,
+double one_vincenty (double x1, double x2,
         double siny1, double cosy1, double siny2, double cosy2)
 {
     double xd = (x2 - x1) * M_PI / 180.0;

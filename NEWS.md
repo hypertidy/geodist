@@ -2,6 +2,7 @@
 
 ### Minor changes:
 
+- Update geodesic source code
 - Improve matching of column names to lon/lat
 - Fix error when submitting tibbles (#32)
 

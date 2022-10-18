@@ -1,10 +1,4 @@
-#include <R.h>
-#include <Rinternals.h>
-
-#include <stdio.h> 
-
-#include "common.h"
-#include "WSG84-defs.h"
+#include "dists_xy_vec.h"
 
 //' R_haversine_xy_vec
 //' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
@@ -12,9 +6,12 @@
 //' @noRd
 SEXP R_haversine_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 {
-    size_t n1 = length (x1_);
-    size_t n2 = length (x2_);
+    size_t n1 = (size_t) length (x1_);
+    size_t n2 = (size_t) length (x2_);
     size_t nm = n1 * n2;
+
+    double *rx1, *ry1, *rx2, *ry2, *rout;
+    double cosy1, cosy2;
 
     SEXP out = PROTECT (allocVector (REALSXP, nm));
     x1_ = PROTECT (Rf_coerceVector (x1_, REALSXP));
@@ -22,7 +19,6 @@ SEXP R_haversine_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
     x2_ = PROTECT (Rf_coerceVector (x2_, REALSXP));
     y2_ = PROTECT (Rf_coerceVector (y2_, REALSXP));
 
-    double *rx1, *ry1, *rx2, *ry2, *rout;
     rx1 = REAL (x1_);
     ry1 = REAL (y1_);
     rx2 = REAL (x2_);
@@ -33,10 +29,10 @@ SEXP R_haversine_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
     {
         if (i % 1000 == 0)
             R_CheckUserInterrupt (); // # nocov
-        double cosy1 = cos (ry1 [i] * M_PI / 180.0); // y-value of x data
+        cosy1 = cos (ry1 [i] * M_PI / 180.0); // y-value of x data
         for (size_t j = 0; j < n2; j++)
         {
-            double cosy2 = cos (ry2 [j] * M_PI / 180.0);
+            cosy2 = cos (ry2 [j] * M_PI / 180.0);
             rout [i * n2 + j] = one_haversine (rx1 [i], ry1 [i],
                     rx2 [j], ry2 [j], cosy1, cosy2);
         }
@@ -53,9 +49,12 @@ SEXP R_haversine_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 //' @noRd
 SEXP R_vincenty_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 {
-    size_t n1 = length (x1_);
-    size_t n2 = length (x2_);
+    size_t n1 = (size_t) length (x1_);
+    size_t n2 = (size_t) length (x2_);
     size_t nm = n1 * n2;
+
+    double *rx1, *ry1, *rx2, *ry2, *rout;
+    double siny1, cosy1, siny2, cosy2;
 
     SEXP out = PROTECT (allocVector (REALSXP, nm));
     x1_ = PROTECT (Rf_coerceVector (x1_, REALSXP));
@@ -63,7 +62,6 @@ SEXP R_vincenty_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
     x2_ = PROTECT (Rf_coerceVector (x2_, REALSXP));
     y2_ = PROTECT (Rf_coerceVector (y2_, REALSXP));
 
-    double *rx1, *ry1, *rx2, *ry2, *rout;
     rx1 = REAL (x1_);
     ry1 = REAL (y1_);
     rx2 = REAL (x2_);
@@ -74,12 +72,12 @@ SEXP R_vincenty_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
     {
         if (i % 1000 == 0)
             R_CheckUserInterrupt (); // # nocov
-        double siny1 = sin (ry1 [i] * M_PI / 180.0); // y-value of x data
-        double cosy1 = cos (ry1 [i] * M_PI / 180.0); // y-value of x data
+        siny1 = sin (ry1 [i] * M_PI / 180.0); // y-value of x data
+        cosy1 = cos (ry1 [i] * M_PI / 180.0); // y-value of x data
         for (size_t j = 0; j < n2; j++)
         {
-            double siny2 = sin (ry2 [j] * M_PI / 180.0);
-            double cosy2 = cos (ry2 [j] * M_PI / 180.0);
+            siny2 = sin (ry2 [j] * M_PI / 180.0);
+            cosy2 = cos (ry2 [j] * M_PI / 180.0);
             rout [i * n2 + j] = one_vincenty (rx1 [i], rx2 [j],
                     siny1, cosy1, siny2, cosy2);
         }
@@ -95,9 +93,13 @@ SEXP R_vincenty_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 //' @noRd
 SEXP R_cheap_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 {
-    size_t n1 = length (x1_);
-    size_t n2 = length (x2_);
+    size_t n1 = (size_t) length (x1_);
+    size_t n2 = (size_t) length (x2_);
     size_t nm = n1 * n2;
+
+    double *rx1, *ry1, *rx2, *ry2, *rout;
+    double ymin = 9999.9, ymax = -9999.9;
+    double cosy;
 
     SEXP out = PROTECT (allocVector (REALSXP, nm));
     x1_ = PROTECT (Rf_coerceVector (x1_, REALSXP));
@@ -105,7 +107,6 @@ SEXP R_cheap_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
     x2_ = PROTECT (Rf_coerceVector (x2_, REALSXP));
     y2_ = PROTECT (Rf_coerceVector (y2_, REALSXP));
 
-    double *rx1, *ry1, *rx2, *ry2, *rout;
     rx1 = REAL (x1_);
     ry1 = REAL (y1_);
     rx2 = REAL (x2_);
@@ -113,7 +114,6 @@ SEXP R_cheap_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
     rout = REAL (out);
 
     // Get maximal latitude range
-    double ymin = 9999.9, ymax = -9999.9;
     for (size_t i = 0; i < n1; i++)
     {
         if (ry1 [i] < ymin)
@@ -131,7 +131,7 @@ SEXP R_cheap_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
     // and set constant cosine multiplier
     ymin = ymin * M_PI / 180;
     ymax = ymax * M_PI / 180;
-    double cosy = cos ((ymin + ymax) / 2.0);
+    cosy = cos ((ymin + ymax) / 2.0);
 
     for (size_t i = 0; i < n1; i++)
     {
@@ -156,9 +156,11 @@ SEXP R_cheap_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 //' @noRd
 SEXP R_geodesic_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
 {
-    size_t n1 = length (x1_);
-    size_t n2 = length (x2_);
+    size_t n1 = (size_t) length (x1_);
+    size_t n2 = (size_t) length (x2_);
     size_t nm = n1 * n2;
+
+    double *rx1, *ry1, *rx2, *ry2, *rout;
 
     SEXP out = PROTECT (allocVector (REALSXP, nm));
     x1_ = PROTECT (Rf_coerceVector (x1_, REALSXP));
@@ -166,7 +168,6 @@ SEXP R_geodesic_xy_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
     x2_ = PROTECT (Rf_coerceVector (x2_, REALSXP));
     y2_ = PROTECT (Rf_coerceVector (y2_, REALSXP));
 
-    double *rx1, *ry1, *rx2, *ry2, *rout;
     rx1 = REAL (x1_);
     ry1 = REAL (y1_);
     rx2 = REAL (x2_);

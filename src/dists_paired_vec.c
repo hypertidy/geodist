@@ -1,10 +1,4 @@
-#include <R.h>
-#include <Rinternals.h>
-
-#include <stdio.h> 
-
-#include "common.h"
-#include "WSG84-defs.h"
+#include "dists_paired_vec.h"
 
 //' R_haversine_paired_vec
 //' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]

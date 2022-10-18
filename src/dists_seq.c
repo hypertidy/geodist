@@ -1,27 +1,22 @@
-#include <R.h>
-#include <Rinternals.h>
-
-#include "common.h"
-#include "WSG84-defs.h"
+#include "dists_seq.h"
 
 //' R_haversine_seq
 //' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
 //' @noRd
 SEXP R_haversine_seq (SEXP x_)
 {
-    size_t n = floor (length (x_) / 2);
+    size_t n = (size_t) (floor (length (x_) / 2));
+    double *rx, *rout;
 
     SEXP out = PROTECT (allocVector (REALSXP, n));
     x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
 
-    double *rx, *rout;
     rx = REAL (x_);
     rout = REAL (out);
 
     rout [0] = NA_REAL;
     for (size_t i = 1; i < n; i++)
     {
-        double cosy1 = cos (rx [n + i] * M_PI / 180.0);
         rout [i] = one_haversine (rx [i - 1], rx [n + i - 1],
                 rx [i], rx [n + i],
                 cos (rx [n + i] * M_PI / 180.0),
@@ -38,12 +33,13 @@ SEXP R_haversine_seq (SEXP x_)
 //' @noRd
 SEXP R_vincenty_seq (SEXP x_)
 {
-    size_t n = floor (length (x_) / 2);
+    size_t n = (size_t) (floor (length (x_) / 2));
+    double *rx, *rout;
+    double siny1, cosy1, siny2, cosy2;
 
     SEXP out = PROTECT (allocVector (REALSXP, n));
     x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
 
-    double *rx, *rout;
     rx = REAL (x_);
     rout = REAL (out);
 
@@ -51,10 +47,10 @@ SEXP R_vincenty_seq (SEXP x_)
 
     for (size_t i = 1; i < n; i++)
     {
-        double siny1 = sin (rx [n + i - 1] * M_PI / 180.0);
-        double cosy1 = cos (rx [n + i - 1] * M_PI / 180.0);
-        double siny2 = sin (rx [n + i] * M_PI / 180.0);
-        double cosy2 = cos (rx [n + i] * M_PI / 180.0);
+        siny1 = sin (rx [n + i - 1] * M_PI / 180.0);
+        cosy1 = cos (rx [n + i - 1] * M_PI / 180.0);
+        siny2 = sin (rx [n + i] * M_PI / 180.0);
+        cosy2 = cos (rx [n + i] * M_PI / 180.0);
         rout [i] = one_vincenty (rx [i - 1], rx [i],
                 siny1, cosy1, siny2, cosy2);
     }
@@ -69,17 +65,18 @@ SEXP R_vincenty_seq (SEXP x_)
 //' @noRd
 SEXP R_cheap_seq (SEXP x_)
 {
-    size_t n = floor (length (x_) / 2);
+    size_t n = (size_t) (floor (length (x_) / 2));
+    double *rx, *rout;
+    double ymin = 9999.9, ymax = -9999.9;
+    double cosy;
 
     SEXP out = PROTECT (allocVector (REALSXP, n));
     x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
 
-    double *rx, *rout;
     rx = REAL (x_);
     rout = REAL (out);
 
     // Get maximal latitude range
-    double ymin = 9999.9, ymax = -9999.9;
     for (size_t i = 0; i < n; i++)
     {
         if (rx [n + i] < ymin)
@@ -90,7 +87,7 @@ SEXP R_cheap_seq (SEXP x_)
     // and set constant cosine multiplier
     ymin = ymin * M_PI / 180;
     ymax = ymax * M_PI / 180;
-    double cosy = cos ((ymin + ymax) / 2.0);
+    cosy = cos ((ymin + ymax) / 2.0);
 
     rout [0] = NA_REAL;
 
@@ -112,12 +109,12 @@ SEXP R_cheap_seq (SEXP x_)
 //' @noRd
 SEXP R_geodesic_seq (SEXP x_)
 {
-    size_t n = floor (length (x_) / 2);
+    size_t n = (size_t) (floor (length (x_) / 2));
+    double *rx, *rout;
 
     SEXP out = PROTECT (allocVector (REALSXP, n));
     x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
 
-    double *rx, *rout;
     rx = REAL (x_);
     rout = REAL (out);
 

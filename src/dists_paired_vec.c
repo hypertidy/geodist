@@ -71,8 +71,8 @@ SEXP R_vincenty_paired_vec (SEXP x1_, SEXP y1_, SEXP x2_, SEXP y2_)
         double cosy1 = cos (ry1 [i] * M_PI / 180.0); // y-value of x data
         double siny2 = sin (ry2 [i] * M_PI / 180.0);
         double cosy2 = cos (ry2 [i] * M_PI / 180.0);
-        rout [i] = one_vincenty (rx1 [i], ry1 [i],
-                rx2 [i], ry2 [i], siny1, cosy1, siny2, cosy2);
+        rout [i] = one_vincenty (rx1 [i], rx2 [i],
+                siny1, cosy1, siny2, cosy2);
     }
 
     UNPROTECT (5);

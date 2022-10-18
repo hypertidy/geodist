@@ -76,8 +76,7 @@ SEXP R_vincenty_range (SEXP x_)
             R_CheckUserInterrupt ();
         for (size_t j = (i + 1); j < n; j++)
         {
-            double d = one_vincenty (rx [i], rx [n + i],
-                    rx [j], rx [n + j],
+            double d = one_vincenty (rx [i], rx [j],
                     siny1 [i], cosy1 [i], siny1 [j], cosy1 [j]);
             if (d < min)
                 min = d;

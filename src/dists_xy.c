@@ -73,8 +73,8 @@ SEXP R_vincenty_xy (SEXP x_, SEXP y_)
         {
             double siny2 = sin (ry [ny + j] * M_PI / 180.0);
             double cosy2 = cos (ry [ny + j] * M_PI / 180.0);
-            rout [i * ny + j] = one_vincenty (rx [i], rx [nx + i],
-                    ry [j], ry [ny + j], siny1, cosy1, siny2, cosy2);
+            rout [i * ny + j] = one_vincenty (rx [i], ry [j],
+                    siny1, cosy1, siny2, cosy2);
         }
     }
 

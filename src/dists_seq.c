@@ -55,8 +55,8 @@ SEXP R_vincenty_seq (SEXP x_)
         double cosy1 = cos (rx [n + i - 1] * M_PI / 180.0);
         double siny2 = sin (rx [n + i] * M_PI / 180.0);
         double cosy2 = cos (rx [n + i] * M_PI / 180.0);
-        rout [i] = one_vincenty (rx [i - 1], rx [n + i - 1],
-                rx [i], rx [n + i], siny1, cosy1, siny2, cosy2);
+        rout [i] = one_vincenty (rx [i - 1], rx [i],
+                siny1, cosy1, siny2, cosy2);
     }
 
     UNPROTECT (2);

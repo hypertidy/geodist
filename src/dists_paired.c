@@ -1,10 +1,4 @@
-#include <R.h>
-#include <Rinternals.h>
-
-#include <stdio.h> 
-
-#include "common.h"
-#include "WSG84-defs.h"
+#include "dists_paired.h"
 
 //' R_haversine_paired
 //' @param x_ Single vector of x-values in [1:n], y-values in [n+(1:n)]
@@ -12,13 +6,14 @@
 //' @noRd
 SEXP R_haversine_paired (SEXP x_, SEXP y_)
 {
-    size_t n = floor (length (x_) / 2);
+    size_t n = (size_t) (floor (length (x_) / 2));
+    double *rx, *ry, *rout;
+    double cosy1, cosy2;
 
     SEXP out = PROTECT (allocVector (REALSXP, n));
     x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
     y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
 
-    double *rx, *ry, *rout;
     rx = REAL (x_);
     ry = REAL (y_);
     rout = REAL (out);
@@ -27,8 +22,8 @@ SEXP R_haversine_paired (SEXP x_, SEXP y_)
     {
         if (i % 1000 == 0)
             R_CheckUserInterrupt (); // # nocov
-        double cosy1 = cos (rx [n + i] * M_PI / 180.0); // y-value of x data
-        double cosy2 = cos (ry [n + i] * M_PI / 180.0);
+        cosy1 = cos (rx [n + i] * M_PI / 180.0); // y-value of x data
+        cosy2 = cos (ry [n + i] * M_PI / 180.0);
         rout [i] = one_haversine (rx [i], rx [n + i], ry [i], ry [n + i],
                 cosy1, cosy2);
     }
@@ -44,13 +39,14 @@ SEXP R_haversine_paired (SEXP x_, SEXP y_)
 //' @noRd
 SEXP R_vincenty_paired (SEXP x_, SEXP y_)
 {
-    size_t n = floor (length (x_) / 2);
+    size_t n = (size_t) (floor (length (x_) / 2));
+    double *rx, *ry, *rout;
+    double siny1, cosy1, siny2, cosy2;
 
     SEXP out = PROTECT (allocVector (REALSXP, n));
     x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
     y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
 
-    double *rx, *ry, *rout;
     rx = REAL (x_);
     ry = REAL (y_);
     rout = REAL (out);
@@ -59,10 +55,10 @@ SEXP R_vincenty_paired (SEXP x_, SEXP y_)
     {
         if (i % 1000 == 0)
             R_CheckUserInterrupt (); // # nocov
-        double siny1 = sin (rx [n + i] * M_PI / 180.0); // y-value of x data
-        double cosy1 = cos (rx [n + i] * M_PI / 180.0); // y-value of x data
-        double siny2 = sin (ry [n + i] * M_PI / 180.0);
-        double cosy2 = cos (ry [n + i] * M_PI / 180.0);
+        siny1 = sin (rx [n + i] * M_PI / 180.0); // y-value of x data
+        cosy1 = cos (rx [n + i] * M_PI / 180.0); // y-value of x data
+        siny2 = sin (ry [n + i] * M_PI / 180.0);
+        cosy2 = cos (ry [n + i] * M_PI / 180.0);
         rout [i] = one_vincenty (rx [i], ry [i],
                 siny1, cosy1, siny2, cosy2);
     }
@@ -77,19 +73,20 @@ SEXP R_vincenty_paired (SEXP x_, SEXP y_)
 //' @noRd
 SEXP R_cheap_paired (SEXP x_, SEXP y_)
 {
-    size_t n = floor (length (x_) / 2);
+    size_t n = (size_t) (floor (length (x_) / 2));
+    double *rx, *ry, *rout;
+    double ymin = 9999.9, ymax = -9999.9;
+    double cosy;
 
     SEXP out = PROTECT (allocVector (REALSXP, n));
     x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
     y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
 
-    double *rx, *ry, *rout;
     rx = REAL (x_);
     ry = REAL (y_);
     rout = REAL (out);
 
     // Get maximal latitude range
-    double ymin = 9999.9, ymax = -9999.9;
     for (size_t i = 0; i < n; i++)
     {
         if (rx [n + i] < ymin)
@@ -104,7 +101,7 @@ SEXP R_cheap_paired (SEXP x_, SEXP y_)
     // and set constant cosine multiplier
     ymin = ymin * M_PI / 180;
     ymax = ymax * M_PI / 180;
-    double cosy = cos ((ymin + ymax) / 2.0);
+    cosy = cos ((ymin + ymax) / 2.0);
 
     for (size_t i = 0; i < n; i++)
     {
@@ -125,13 +122,13 @@ SEXP R_cheap_paired (SEXP x_, SEXP y_)
 //' @noRd
 SEXP R_geodesic_paired (SEXP x_, SEXP y_)
 {
-    size_t n = floor (length (x_) / 2);
+    size_t n = (size_t) (floor (length (x_) / 2));
+    double *rx, *ry, *rout;
 
     SEXP out = PROTECT (allocVector (REALSXP, n));
     x_ = PROTECT (Rf_coerceVector (x_, REALSXP));
     y_ = PROTECT (Rf_coerceVector (y_, REALSXP));
 
-    double *rx, *ry, *rout;
     rx = REAL (x_);
     ry = REAL (y_);
     rout = REAL (out);

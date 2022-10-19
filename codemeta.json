@@ -7,13 +7,13 @@
   "codeRepository": "https://github.com/hypertidy/geodist",
   "issueTracker": "https://github.com/hypertidy/geodist/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.7.049",
+  "version": "0.0.8",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
+  "runtimePlatform": "R version 4.2.1 (2022-06-23)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -87,9 +87,9 @@
     }
   ],
   "softwareRequirements": {
-    "SystemRequirements": {}
+    "SystemRequirements": null
   },
-  "fileSize": "333.795KB",
+  "fileSize": "501.632KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -108,11 +108,7 @@
   ],
   "releaseNotes": "https://github.com/hypertidy/geodist/blob/master/NEWS.md",
   "readme": "https://github.com/hypertidy/geodist/blob/main/README.md",
-  "contIntegration": [
-    "https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check",
-    "https://github.com/hypertidy/geodist/actions?query=workflow%3Apkgcheck",
-    "https://codecov.io/gh/hypertidy/geodist"
-  ],
+  "contIntegration": ["https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check", "https://github.com/hypertidy/geodist/actions?query=workflow%3Apkgcheck", "https://codecov.io/gh/hypertidy/geodist"],
   "developmentStatus": "http://www.repostatus.org/#active",
   "relatedLink": "https://CRAN.R-project.org/package=geodist"
 }

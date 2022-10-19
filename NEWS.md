@@ -1,12 +1,17 @@
-# v0.0.6.00x
+# v0.0.8
 
 ### Minor changes:
 
 - Update geodesic source code
-- Improve matching of column names to lon/lat
-- Fix error when submitting tibbles (#32)
 - Add codeberg.org/hypertidy/geodist remote
 - Fix all clang warnings, including new header files with prototypes for all fns
+
+# v0.0.7
+
+### Minor changes:
+
+- Improve matching of column names to lon/lat
+- Fix error when submitting tibbles (#32)
 
 
 # v0.0.6

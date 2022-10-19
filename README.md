@@ -12,11 +12,11 @@ developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repo
 
 # geodist
 
-blah An ultra-lightweight, zero-dependency package for very fast
-calculation of geodesic distances. Main eponymous function, `geodist()`,
-accepts only one or two primary arguments, which must be rectangular
-objects with unambiguously labelled longitude and latitude columns (that
-is, some variant of `lon`/`lat`, or `x`/`y`).
+An ultra-lightweight, zero-dependency package for very fast calculation
+of geodesic distances. Main eponymous function, `geodist()`, accepts
+only one or two primary arguments, which must be rectangular objects
+with unambiguously labelled longitude and latitude columns (that is,
+some variant of `lon`/`lat`, or `x`/`y`).
 
 ``` r
 n <- 50
@@ -114,8 +114,8 @@ to the nanometre-accuracy standard of [Karney
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
 #>            haversine    vincenty       cheap
-#> absolute 0.779366777 0.779366777 0.569726368
-#> relative 0.002090465 0.002090465 0.001590435
+#> absolute 0.748852400 0.748852400 0.576849087
+#> relative 0.002042704 0.002042704 0.001598258
 ```
 
 All distances (`d)` are in metres, and all measures are accurate to
@@ -148,9 +148,9 @@ rbenchmark::benchmark (replications = 10, order = "test",
                        d4 <- geodist (x, measure = "geodesic")) [, 1:4]
 #>                                      test replications elapsed relative
 #> 1     d1 <- geodist(x, measure = "cheap")           10   0.068    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.139    2.044
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.224    3.294
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.036   44.647
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.137    2.015
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.223    3.279
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.038   44.676
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -180,8 +180,8 @@ rbenchmark::benchmark (replications = 10, order = "test",
                       sf_dist (xsf),
                       geo_dist (x)) [, 1:4]
 #>           test replications elapsed relative
-#> 2  geo_dist(x)           10   0.062    1.000
-#> 1 sf_dist(xsf)           10   0.145    2.339
+#> 2  geo_dist(x)           10   0.061    1.000
+#> 1 sf_dist(xsf)           10   0.146    2.393
 ```
 
 Confirm that the two give almost identical results:
@@ -190,7 +190,7 @@ Confirm that the two give almost identical results:
 ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
 dg <- geodist (x, measure = "geodesic")
 formatC (max (abs (ds - dg)), format = "e")
-#> [1] "3.7805e+04"
+#> [1] "3.7708e+04"
 ```
 
 All results are in metres, so the two differ by only around 10
@@ -224,11 +224,11 @@ require (testthat)
 
 ``` r
 date()
-#> [1] "Tue Oct 18 12:34:21 2022"
+#> [1] "Wed Oct 19 12:10:55 2022"
 devtools::test("tests/")
 #> ℹ Testing geodist
-#> ══ Results ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-#> Duration: 2.6 s
+#> ══ Results ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+#> Duration: 1.3 s
 #> 
 #> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 125 ]
 ```

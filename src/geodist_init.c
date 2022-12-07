@@ -17,6 +17,7 @@ extern SEXP R_cheap_seq_range(SEXP);
 extern SEXP R_cheap_seq_vec(SEXP, SEXP);
 extern SEXP R_cheap_vec(SEXP, SEXP);
 extern SEXP R_cheap_xy(SEXP, SEXP);
+extern SEXP R_cheap_xy_min(SEXP, SEXP);
 extern SEXP R_cheap_xy_range(SEXP, SEXP);
 extern SEXP R_cheap_xy_vec(SEXP, SEXP, SEXP, SEXP);
 extern SEXP R_geodesic(SEXP);
@@ -28,6 +29,7 @@ extern SEXP R_geodesic_seq_range(SEXP);
 extern SEXP R_geodesic_seq_vec(SEXP, SEXP);
 extern SEXP R_geodesic_vec(SEXP, SEXP);
 extern SEXP R_geodesic_xy(SEXP, SEXP);
+extern SEXP R_geodesic_xy_min(SEXP, SEXP);
 extern SEXP R_geodesic_xy_range(SEXP, SEXP);
 extern SEXP R_geodesic_xy_vec(SEXP, SEXP, SEXP, SEXP);
 extern SEXP R_haversine(SEXP);
@@ -39,6 +41,7 @@ extern SEXP R_haversine_seq_range(SEXP);
 extern SEXP R_haversine_seq_vec(SEXP, SEXP);
 extern SEXP R_haversine_vec(SEXP, SEXP);
 extern SEXP R_haversine_xy(SEXP, SEXP);
+extern SEXP R_haversine_xy_min(SEXP, SEXP);
 extern SEXP R_haversine_xy_range(SEXP, SEXP);
 extern SEXP R_haversine_xy_vec(SEXP, SEXP, SEXP, SEXP);
 extern SEXP R_vincenty(SEXP);
@@ -50,6 +53,7 @@ extern SEXP R_vincenty_seq_range(SEXP);
 extern SEXP R_vincenty_seq_vec(SEXP, SEXP);
 extern SEXP R_vincenty_vec(SEXP, SEXP);
 extern SEXP R_vincenty_xy(SEXP, SEXP);
+extern SEXP R_vincenty_xy_min(SEXP, SEXP);
 extern SEXP R_vincenty_xy_range(SEXP, SEXP);
 extern SEXP R_vincenty_xy_vec(SEXP, SEXP, SEXP, SEXP);
 
@@ -63,6 +67,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"R_cheap_seq_vec",        (DL_FUNC) &R_cheap_seq_vec,        2},
     {"R_cheap_vec",            (DL_FUNC) &R_cheap_vec,            2},
     {"R_cheap_xy",             (DL_FUNC) &R_cheap_xy,             2},
+    {"R_cheap_xy_min",         (DL_FUNC) &R_cheap_xy_min,         2},
     {"R_cheap_xy_range",       (DL_FUNC) &R_cheap_xy_range,       2},
     {"R_cheap_xy_vec",         (DL_FUNC) &R_cheap_xy_vec,         4},
     {"R_geodesic",             (DL_FUNC) &R_geodesic,             1},
@@ -74,6 +79,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"R_geodesic_seq_vec",     (DL_FUNC) &R_geodesic_seq_vec,     2},
     {"R_geodesic_vec",         (DL_FUNC) &R_geodesic_vec,         2},
     {"R_geodesic_xy",          (DL_FUNC) &R_geodesic_xy,          2},
+    {"R_geodesic_xy_min",      (DL_FUNC) &R_geodesic_xy_min,      2},
     {"R_geodesic_xy_range",    (DL_FUNC) &R_geodesic_xy_range,    2},
     {"R_geodesic_xy_vec",      (DL_FUNC) &R_geodesic_xy_vec,      4},
     {"R_haversine",            (DL_FUNC) &R_haversine,            1},
@@ -85,6 +91,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"R_haversine_seq_vec",    (DL_FUNC) &R_haversine_seq_vec,    2},
     {"R_haversine_vec",        (DL_FUNC) &R_haversine_vec,        2},
     {"R_haversine_xy",         (DL_FUNC) &R_haversine_xy,         2},
+    {"R_haversine_xy_min",     (DL_FUNC) &R_haversine_xy_min,     2},
     {"R_haversine_xy_range",   (DL_FUNC) &R_haversine_xy_range,   2},
     {"R_haversine_xy_vec",     (DL_FUNC) &R_haversine_xy_vec,     4},
     {"R_vincenty",             (DL_FUNC) &R_vincenty,             1},
@@ -96,6 +103,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"R_vincenty_seq_vec",     (DL_FUNC) &R_vincenty_seq_vec,     2},
     {"R_vincenty_vec",         (DL_FUNC) &R_vincenty_vec,         2},
     {"R_vincenty_xy",          (DL_FUNC) &R_vincenty_xy,          2},
+    {"R_vincenty_xy_min",      (DL_FUNC) &R_vincenty_xy_min,      2},
     {"R_vincenty_xy_range",    (DL_FUNC) &R_vincenty_xy_range,    2},
     {"R_vincenty_xy_vec",      (DL_FUNC) &R_vincenty_xy_vec,      4},
     {NULL, NULL, 0}

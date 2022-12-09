@@ -2,6 +2,7 @@
 
 export(geodist)
 export(geodist_benchmark)
+export(geodist_min)
 export(geodist_vec)
 export(georange)
 importFrom(stats,optim)

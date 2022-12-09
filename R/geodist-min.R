@@ -27,9 +27,13 @@
 #' x <- cbind (runif (n, -0.1, 0.1), runif (n, -0.1, 0.1))
 #' y <- cbind (runif (2 * n, -0.1, 0.1), runif (2 * n, -0.1, 0.1))
 #' colnames (x) <- colnames (y) <- c ("x", "y")
-#' d <- geodist_min (x, y)
-#' # 'd' is a vector of 50 values indexing elements of `y` corresponding to 
-#' # minimal distances to each element of `x`.
+#' index <- geodist_min (x, y, measure = "Haversine")
+#' # 'index' is a vector of 50 values indexing elements of `y` corresponding to
+#' # minimal distances to each element of `x`. It is exactly the same as the
+#' # value returned by these lines:
+#' d0 <- geodist (x, y, measure = "Haversine")
+#' index0 <- apply (d0, 1, which.min)
+#' identical (index, index0)
 geodist_min <- function (x, y, measure = "cheap", quiet = FALSE) {
 
     measures <- c ("haversine", "vincenty", "cheap", "geodesic")

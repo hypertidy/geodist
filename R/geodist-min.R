@@ -12,6 +12,9 @@
 #' specifying desired method of geodesic distance calculation; see Notes.
 #' @param quiet If \code{FALSE}, check whether max of calculated distances
 #' is greater than accuracy threshold and warn.
+#' @return A integer index vector indexing elements of 'y' corresponding to
+#' minimal distances to each element of 'x'. The length of this vector is equal
+#' to the number of rows in 'x'.
 #'
 #' @note \code{measure = "cheap"} denotes the mapbox cheap ruler
 #' \url{https://github.com/mapbox/cheap-ruler-cpp}; \code{measure = "geodesic"}

@@ -19,6 +19,11 @@ specifying desired method of geodesic distance calculation; see Notes.}
 \item{quiet}{If \code{FALSE}, check whether max of calculated distances
 is greater than accuracy threshold and warn.}
 }
+\value{
+A integer index vector indexing elements of 'y' corresponding to
+minimal distances to each element of 'x'. The length of this vector is equal
+to the number of rows in 'x'.
+}
 \description{
 Convert two rectangular objects containing lon-lat coordinates into an index
 vector of the elements in the second matrix corresponding to the minimal

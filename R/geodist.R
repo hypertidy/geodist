@@ -62,9 +62,12 @@ geodist <- function (x, y, paired = FALSE,
 
         if (paired) {
 
-            if (nrow (x) != nrow (y))
-                stop ("x and y must have the same number of ",
-                      "rows for paired distances")
+            if (nrow (x) != nrow (y)) {
+                stop (
+                    "x and y must have the same number of ",
+                    "rows for paired distances"
+                )
+            }
             y <- convert_to_matrix (y)
             res <- geodist_paired (x, y, measure)
         } else if (sequential) {
@@ -80,71 +83,79 @@ geodist <- function (x, y, paired = FALSE,
         }
     } else {
 
-        if (sequential)
+        if (sequential) {
             res <- geodist_seq (x, measure, pad)
-        else
+        } else {
             res <- geodist_x (x, measure)
+        }
     }
 
-    if (measure == "cheap" & ! quiet)
+    if (measure == "cheap" & !quiet) {
         check_max_d (res, measure)
+    }
 
     return (res)
 }
 
 geodist_paired <- function (x, y, measure) {
 
-    if (measure == "haversine")
+    if (measure == "haversine") {
         .Call ("R_haversine_paired", as.vector (x), as.vector (y))
-    else if (measure == "vincenty")
+    } else if (measure == "vincenty") {
         .Call ("R_vincenty_paired", as.vector (x), as.vector (y))
-    else if (measure == "geodesic")
+    } else if (measure == "geodesic") {
         .Call ("R_geodesic_paired", as.vector (x), as.vector (y))
-    else
+    } else {
         .Call ("R_cheap_paired", as.vector (x), as.vector (y))
+    }
 }
 
 geodist_seq <- function (x, measure, pad) {
 
-    if (measure == "haversine")
+    if (measure == "haversine") {
         res <- matrix (.Call ("R_haversine_seq", as.vector (x)),
-                       nrow = nrow (x))
-    else if (measure == "vincenty")
+            nrow = nrow (x)
+        )
+    } else if (measure == "vincenty") {
         res <- matrix (.Call ("R_vincenty_seq", as.vector (x)), nrow = nrow (x))
-    else if (measure == "geodesic")
+    } else if (measure == "geodesic") {
         res <- matrix (.Call ("R_geodesic_seq", as.vector (x)), nrow = nrow (x))
-    else
+    } else {
         res <- matrix (.Call ("R_cheap_seq", as.vector (x)), nrow = nrow (x))
+    }
 
     index <- seq_along (res)
-    if (!pad)
+    if (!pad) {
         index <- index [-1]
+    }
 
     return (res [index]) # implicitly converts to vector
 }
 
 geodist_x <- function (x, measure) {
 
-    if (measure == "haversine")
+    if (measure == "haversine") {
         matrix (.Call ("R_haversine", as.vector (x)), nrow = nrow (x))
-    else if (measure == "vincenty")
+    } else if (measure == "vincenty") {
         matrix (.Call ("R_vincenty", as.vector (x)), nrow = nrow (x))
-    else if (measure == "geodesic")
+    } else if (measure == "geodesic") {
         matrix (.Call ("R_geodesic", as.vector (x)), nrow = nrow (x))
-    else
+    } else {
         matrix (.Call ("R_cheap", as.vector (x)), nrow = nrow (x))
+    }
 }
 
 geodist_xy <- function (x, y, measure) {
 
-    if (measure == "haversine")
+    if (measure == "haversine") {
         res <- .Call ("R_haversine_xy", as.vector (x), as.vector (y))
-    else if (measure == "vincenty")
+    } else if (measure == "vincenty") {
         res <- .Call ("R_vincenty_xy", as.vector (x), as.vector (y))
-    else if (measure == "geodesic")
+    } else if (measure == "geodesic") {
         res <- .Call ("R_geodesic_xy", as.vector (x), as.vector (y))
-    else if (measure == "cheap")
+    } else if (measure == "cheap") {
         res <- .Call ("R_cheap_xy", as.vector (x), as.vector (y))
+    }
 
     t (matrix (res, nrow = nrow (y)))
 }

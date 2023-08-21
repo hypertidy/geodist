@@ -45,14 +45,15 @@ geodist_min <- function (x, y, measure = "cheap", quiet = FALSE) {
     x <- convert_to_matrix (x)
     y <- convert_to_matrix (y)
 
-    if (measure == "haversine")
+    if (measure == "haversine") {
         res <- .Call ("R_haversine_xy_min", as.vector (x), as.vector (y))
-    else if (measure == "vincenty")
+    } else if (measure == "vincenty") {
         res <- .Call ("R_vincenty_xy_min", as.vector (x), as.vector (y))
-    else if (measure == "geodesic")
+    } else if (measure == "geodesic") {
         res <- .Call ("R_geodesic_xy_min", as.vector (x), as.vector (y))
-    else
+    } else {
         res <- .Call ("R_cheap_xy_min", as.vector (x), as.vector (y))
+    }
 
     return (res)
 }

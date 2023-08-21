@@ -21,27 +21,32 @@ geodist_benchmark <- function (lat = 0.0, d = 1.0, n = 100L) {
         stop ("Comparisons require at least n = 2 objects")
     }
     if (n > 1e3) {
-        stop ("benchmarking compares n ^ 2 estimates, and there's ",
-              "nothing to be gained by extending beyond a million comparisons")
+        stop (
+            "benchmarking compares n ^ 2 estimates, and there's ",
+            "nothing to be gained by extending beyond a million comparisons"
+        )
     }
 
     lon <- 0
     dist_methods <- c ("geodesic", "haversine", "vincenty", "cheap")
     delta <- get_delta (lon, lat, d)
 
-    x <- cbind ((lon - delta / 2) + delta * runif (n),
-                (lat - delta / 2) + delta * runif (n))
+    x <- cbind (
+        (lon - delta / 2) + delta * runif (n),
+        (lat - delta / 2) + delta * runif (n)
+    )
     colnames (x) <- c ("x", "y")
 
     d <- lapply (dist_methods, function (i) {
-                     res <- geodist (x, measure = i)
-                     res [upper.tri (res)]
-                })
+        res <- geodist (x, measure = i)
+        res [upper.tri (res)]
+    })
 
     indx <- which (!grepl ("geodesic", dist_methods))
     dabs <- unlist (lapply (d [indx], function (i) mean (abs (i - d [[1]]))))
-    drel <- unlist (lapply (d [indx], function (i)
-                            mean (abs (i - d [[1]]) / d [[1]])))
+    drel <- unlist (lapply (d [indx], function (i) {
+        mean (abs (i - d [[1]]) / d [[1]])
+    }))
 
     res <- rbind (dabs, drel)
     rownames (res) <- c ("absolute", "relative")
@@ -65,8 +70,10 @@ get_delta <- function (lon = 0, lat = 0, d = 1) {
         abs ((as.numeric (geodist (x, y, measure = "haversine")) - d))
     }
 
-    optim (d / 1e5, f, lon = lon, lat = lat, d = d, method = "Brent",
-           lower = 0, upper = d / 1e5)$par
+    optim (d / 1e5, f,
+        lon = lon, lat = lat, d = d, method = "Brent",
+        lower = 0, upper = d / 1e5
+    )$par
 }
 
 #' find_xy_cols
@@ -78,16 +85,20 @@ get_delta <- function (lon = 0, lat = 0, d = 1) {
 find_xy_cols <- function (obj) {
 
     nms <- names (obj)
-    if (is.null (nms))
+    if (is.null (nms)) {
         nms <- colnames (obj)
+    }
 
     if (!is.null (nms)) {
 
         ix <- match_xy_pattern (nms, value = "x")
         iy <- match_xy_pattern (nms, value = "y")
-        if (length (ix) != 1 | length (iy) != 1)
-            stop ("Unable to determine longitude and latitude columns; ",
-                  "perhaps try re-naming columns.")
+        if (length (ix) != 1 | length (iy) != 1) {
+            stop (
+                "Unable to determine longitude and latitude columns; ",
+                "perhaps try re-naming columns."
+            )
+        }
     } else {
 
         message ("object has no named columns; assuming order is lon then lat")
@@ -107,10 +118,12 @@ match_xy_pattern <- function (nms, value = "x") {
 
     if (length (i) > 1) {
         # exclude any with :alpha: before or after x/lon:
-        ptn <- paste0 ("^", value, "[[:alpha:]]|",
-                       "[[:alpha:]]", value, "$|",
-                       "^", lonlat, "[[:alpha:]]|",
-                       "[[:alpha:]]", lonlat, "$")
+        ptn <- paste0 (
+            "^", value, "[[:alpha:]]|",
+            "[[:alpha:]]", value, "$|",
+            "^", lonlat, "[[:alpha:]]|",
+            "[[:alpha:]]", lonlat, "$"
+        )
         i <- i [which (!seq_along (i) %in% grep (ptn, nms [i]))]
     }
 
@@ -122,8 +135,10 @@ match_xy_pattern <- function (nms, value = "x") {
 
     if (length (i) != 1) {
         # try initial or terminal punct characters before/after x/y/lon/lat:
-        ptn <- paste0 ("^[[:punct:]]+", value, "|", value, "[[:punct:]]+$|",
-                       "^[[:punct:]]+", lonlat, "|", lonlat, "[[:punct:]]+$")
+        ptn <- paste0 (
+            "^[[:punct:]]+", value, "|", value, "[[:punct:]]+$|",
+            "^[[:punct:]]+", lonlat, "|", lonlat, "[[:punct:]]+$"
+        )
         i <- grep (ptn, nms, ignore.case = TRUE)
     }
 
@@ -140,37 +155,45 @@ match_xy_pattern <- function (nms, value = "x") {
 convert_to_matrix <- function (obj) {
 
     xy_cols <- find_xy_cols (obj)
-    if (is.vector (obj))
+    if (is.vector (obj)) {
         obj <- matrix (obj, nrow = 1)
+    }
     if (is.numeric (obj)) {
 
         cbind (obj [, xy_cols [1]], obj [, xy_cols [2]])
     } else {
 
         if (!(is.numeric (obj [, xy_cols [1], drop = TRUE]) &
-              is.numeric (obj [, xy_cols [2], drop = TRUE]))) {
+            is.numeric (obj [, xy_cols [2], drop = TRUE]))) {
 
-            cbind (as.numeric (obj [, xy_cols [1], drop = TRUE]),
-                   as.numeric (obj [, xy_cols [2], drop = TRUE]))
+            cbind (
+                as.numeric (obj [, xy_cols [1], drop = TRUE]),
+                as.numeric (obj [, xy_cols [2], drop = TRUE])
+            )
         } else {
 
-            cbind (obj [[xy_cols [1] ]], obj [[xy_cols [2] ]]) # nolint
+            cbind (obj [[xy_cols [1]]], obj [[xy_cols [2]]]) # nolint
         }
     }
 }
 
 check_max_d <- function (d, measure) {
 
-    if (max (d, na.rm = TRUE) > 100000)
-        message ("Maximum distance is > 100km. The 'cheap' measure is ",
-                 "inaccurate over such\nlarge distances, you'd likely ",
-                 "be better using a different 'measure'.")
+    if (max (d, na.rm = TRUE) > 100000) {
+        message (
+            "Maximum distance is > 100km. The 'cheap' measure is ",
+            "inaccurate over such\nlarge distances, you'd likely ",
+            "be better using a different 'measure'."
+        )
+    }
 }
 
 chk_is_num_len_1 <- function (x, xname) {
 
-    if (!is.numeric (x))
+    if (!is.numeric (x)) {
         stop (xname, " must be numeric")
-    if (length (x) > 1)
+    }
+    if (length (x) > 1) {
         stop (xname, " must be a single value")
+    }
 }

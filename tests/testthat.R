@@ -1,4 +1,4 @@
-library(testthat)
-library(geodist)
+library (testthat)
+library (geodist)
 
-test_check("geodist")
+test_check ("geodist")

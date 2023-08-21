@@ -34,7 +34,7 @@ d2 <- geodist (x, sequential = TRUE, pad = TRUE) # Vector of length 50
 You can install latest stable version of `geodist` from CRAN with:
 
 ``` r
-install.packages("geodist") # current CRAN version
+install.packages ("geodist") # current CRAN version
 ```
 
 Alternatively, current development versions can be installed using any
@@ -42,11 +42,11 @@ of the following options:
 
 ``` r
 # install.packages("remotes")
-remotes::install_git("https://git.sr.ht/~mpadge/geodist")
-remotes::install_git("https://codeberg.org/hypertidy/geodist")
-remotes::install_bitbucket("hypertidy/geodist")
-remotes::install_gitlab("hypertidy/geodist")
-remotes::install_github("hypertidy/geodist")
+remotes::install_git ("https://git.sr.ht/~mpadge/geodist")
+remotes::install_git ("https://codeberg.org/hypertidy/geodist")
+remotes::install_bitbucket ("hypertidy/geodist")
+remotes::install_gitlab ("hypertidy/geodist")
+remotes::install_github ("hypertidy/geodist")
 ```
 
 Then load with
@@ -54,7 +54,7 @@ Then load with
 ``` r
 library (geodist)
 packageVersion ("geodist")
-#> [1] '0.0.7.30'
+#> [1] '0.0.8.6'
 ```
 
 ## Detailed Usage
@@ -64,21 +64,27 @@ format.
 
 ``` r
 n <- 1e1
-x <- tibble::tibble (x = -180 + 360 * runif (n),
-                     y = -90 + 180 * runif (n))
+x <- tibble::tibble (
+    x = -180 + 360 * runif (n),
+    y = -90 + 180 * runif (n)
+)
 dim (geodist (x))
 #> Maximum distance is > 100km. The 'cheap' measure is inaccurate over such
 #> large distances, you'd likely be better using a different 'measure'.
 #> [1] 10 10
-y <- tibble::tibble (x = -180 + 360 * runif (2 * n),
-                     y = -90 + 180 * runif (2 * n))
+y <- tibble::tibble (
+    x = -180 + 360 * runif (2 * n),
+    y = -90 + 180 * runif (2 * n)
+)
 dim (geodist (x, y))
 #> Maximum distance is > 100km. The 'cheap' measure is inaccurate over such
 #> large distances, you'd likely be better using a different 'measure'.
 #> [1] 10 20
-x <- cbind (-180 + 360 * runif (n),
-             -90 + 100 * runif (n),
-             seq (n), runif (n))
+x <- cbind (
+    -180 + 360 * runif (n),
+    -90 + 100 * runif (n),
+    seq (n), runif (n)
+)
 colnames (x) <- c ("lon", "lat", "a", "b")
 dim (geodist (x))
 #> Maximum distance is > 100km. The 'cheap' measure is inaccurate over such
@@ -114,8 +120,8 @@ to the nanometre-accuracy standard of [Karney
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
 #>            haversine    vincenty       cheap
-#> absolute 0.748852400 0.748852400 0.576849087
-#> relative 0.002042704 0.002042704 0.001598258
+#> absolute 0.733504364 0.733504364 0.546134467
+#> relative 0.002072017 0.002072017 0.001601954
 ```
 
 All distances (`d)` are in metres, and all measures are accurate to
@@ -141,16 +147,18 @@ dx <- dy <- 0.01
 x <- cbind (-100 + dx * runif (n), 20 + dy * runif (n))
 y <- cbind (-100 + dx * runif (2 * n), 20 + dy * runif (2 * n))
 colnames (x) <- colnames (y) <- c ("x", "y")
-rbenchmark::benchmark (replications = 10, order = "test",
-                       d1 <- geodist (x, measure = "cheap"),
-                       d2 <- geodist (x, measure = "haversine"),
-                       d3 <- geodist (x, measure = "vincenty"),
-                       d4 <- geodist (x, measure = "geodesic")) [, 1:4]
+rbenchmark::benchmark (
+    replications = 10, order = "test",
+    d1 <- geodist (x, measure = "cheap"),
+    d2 <- geodist (x, measure = "haversine"),
+    d3 <- geodist (x, measure = "vincenty"),
+    d4 <- geodist (x, measure = "geodesic")
+) [, 1:4]
 #>                                      test replications elapsed relative
 #> 1     d1 <- geodist(x, measure = "cheap")           10   0.068    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.137    2.015
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.223    3.279
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.038   44.676
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.139    2.044
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.229    3.368
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   3.315   48.750
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -160,12 +168,12 @@ form with the following code:
 
 ``` r
 require (magrittr)
-x_to_sf <- function (x)
-{
-    sapply (seq (nrow (x)), function (i)
-            sf::st_point (x [i, ]) %>%
-                sf::st_sfc ()) %>%
-    sf::st_sfc (crs = 4326)
+x_to_sf <- function (x) {
+    sapply (seq (nrow (x)), function (i) {
+        sf::st_point (x [i, ]) %>%
+            sf::st_sfc ()
+    }) %>%
+        sf::st_sfc (crs = 4326)
 }
 ```
 
@@ -174,14 +182,27 @@ n <- 1e2
 x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
 colnames (x) <- c ("x", "y")
 xsf <- x_to_sf (x)
+#> Warning in CPL_gdal_init(): GDAL Error 1: libpodofo.so.0.9.8: cannot open
+#> shared object file: No such file or directory
+
+#> Warning in CPL_gdal_init(): GDAL Error 1: libpodofo.so.0.9.8: cannot open
+#> shared object file: No such file or directory
+
+#> Warning in CPL_gdal_init(): GDAL Error 1: libpodofo.so.0.9.8: cannot open
+#> shared object file: No such file or directory
+
+#> Warning in CPL_gdal_init(): GDAL Error 1: libpodofo.so.0.9.8: cannot open
+#> shared object file: No such file or directory
 sf_dist <- function (xsf) sf::st_distance (xsf, xsf)
 geo_dist <- function (x) geodist (x, measure = "geodesic")
-rbenchmark::benchmark (replications = 10, order = "test",
-                      sf_dist (xsf),
-                      geo_dist (x)) [, 1:4]
+rbenchmark::benchmark (
+    replications = 10, order = "test",
+    sf_dist (xsf),
+    geo_dist (x)
+) [, 1:4]
 #>           test replications elapsed relative
-#> 2  geo_dist(x)           10   0.061    1.000
-#> 1 sf_dist(xsf)           10   0.146    2.393
+#> 2  geo_dist(x)           10   0.070    1.000
+#> 1 sf_dist(xsf)           10   0.144    2.057
 ```
 
 Confirm that the two give almost identical results:
@@ -190,7 +211,7 @@ Confirm that the two give almost identical results:
 ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
 dg <- geodist (x, measure = "geodesic")
 formatC (max (abs (ds - dg)), format = "e")
-#> [1] "3.7708e+04"
+#> [1] "3.7676e+04"
 ```
 
 All results are in metres, so the two differ by only around 10
@@ -203,12 +224,22 @@ following code:
 ``` r
 fgeodist <- function () geodist (x, measure = "vincenty", sequential = TRUE)
 fgeosph <- function () geosphere::distVincentySphere (x)
-rbenchmark::benchmark (replications = 10, order = "test",
-                       fgeodist (),
-                       fgeosph ()) [, 1:4]
+rbenchmark::benchmark (
+    replications = 10, order = "test",
+    fgeodist (),
+    fgeosph ()
+) [, 1:4]
+#> The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,
+#> which was just loaded, will retire in October 2023.
+#> Please refer to R-spatial evolution reports for details, especially
+#> https://r-spatial.org/r/2023/05/15/evolution4.html.
+#> It may be desirable to make the sf package available;
+#> package maintainers should consider adding sf to Suggests:.
+#> The sp package is now running under evolution status 2
+#>      (status 2 uses the sf package in place of rgdal)
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.016     1.00
-#> 2  fgeosph()           10   0.036     2.25
+#> 1 fgeodist()           10   0.017    1.000
+#> 2  fgeosph()           10   0.032    1.882
 ```
 
 `geodist` is thus around 3 times faster than `sf` for highly accurate
@@ -223,14 +254,22 @@ require (testthat)
 ```
 
 ``` r
-date()
-#> [1] "Wed Oct 19 12:10:55 2022"
-devtools::test("tests/")
+date ()
+#> [1] "Mon Aug 21 11:34:48 2023"
+devtools::test ("tests/")
 #> ℹ Testing geodist
-#> ══ Results ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-#> Duration: 1.3 s
+#> Starting 2 test processes
+#> ✔ | F W S  OK | Context
+#> ⠋ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ⠙ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ⠹ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ⠸ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ⠼ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ⠴ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ⠦ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ✔ |         4 | geodist-min                                                                                                                                                                                                                                                    
+#> ⠧ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 16 ] @ geodist                                                                                                                                                                                                                             ⠇ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 16 ] @ geodist                                                                                                                                                                                                                             ✔ |        52 | geodist                                                                                                                                                                                                                                                        
+#> ⠏ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 87 ] @ georange                                                                                                                                                                                                                            ⠋ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 87 ] @ georange                                                                                                                                                                                                                            ✔ |        37 | georange                                                                                                                                                                                                                                                       
+#> ⠙ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 97 ] @ input-format                                                                                                                                                                                                                        ⠹ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 98 ] @ input-format                                                                                                                                                                                                                        ✔ |        18 | input-format                                                                                                                                                                                                                                                   
+#> ⠸ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 111 ] @ measures                                                                                                                                                                                                                           ⠼ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 111 ] @ measures                                                                                                                                                                                                                           ✔ |        18 | measures                                                                                                                                                                                                                                                       
+#> ⠴ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 129 ] Starting up...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+#> ══ Results ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+#> Duration: 1.5 s
 #> 
-#> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 125 ]
+#> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 129 ]
 ```
 
 ## Contributors

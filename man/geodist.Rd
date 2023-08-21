@@ -3,6 +3,7 @@
 \docType{package}
 \name{geodist}
 \alias{geodist}
+\alias{geodist-package}
 \title{geodist.}
 \usage{
 geodist(
@@ -48,6 +49,8 @@ of \code{nrow(x)} rows and \code{nrow(y)} columns. All return values are
 distances in metres.
 }
 \description{
+Dependency-free, ultra fast calculation of geodesic distances. Includes the reference nanometre-accuracy geodesic distances of Karney (2013) \doi{10.1007/s00190-012-0578-z}, as used by the 'sf' package, as well as Haversine and Vincenty distances. Default distance measure is the "Mapbox cheap ruler" which is generally more accurate than Haversine or Vincenty for distances out to a few hundred kilometres, and is considerably faster. The main function accepts one or two inputs in almost any generic rectangular form, and returns either matrices of pairwise distances, or vectors of sequential distances.
+
 Convert one or two rectangular objects containing lon-lat coordinates into
 vector or matrix of geodesic distances in metres.
 }
@@ -73,4 +76,26 @@ d0_2 <- geodist (x, measure = "geodesic") # nanometre-accurate version of d0
 # Input data can also be 'data.frame' objects:
 xy <- data.frame (x = runif (n, -0.1, 0.1), y = runif (n, -0.1, 0.1))
 d <- geodist (xy)
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/hypertidy/geodist}
+  \item Report bugs at \url{https://github.com/hypertidy/geodist/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Mark Padgham \email{mark.padgham@email.com}
+
+Authors:
+\itemize{
+  \item Michael D. Sumner
+}
+
+Other contributors:
+\itemize{
+  \item Charles F.F Karney (Original author of included code for geodesic distances) [copyright holder]
+}
+
 }

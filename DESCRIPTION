@@ -18,7 +18,7 @@ Description: Dependency-free, ultra fast calculation of geodesic
     either matrices of pairwise distances, or vectors of sequential
     distances.
 License: MIT + file LICENSE
-URL: https://github.com/hypertidy/geodist
+URL: https://github.com/hypertidy/geodist, https://hypertidy.github.io/geodist/
 BugReports: https://github.com/hypertidy/geodist/issues
 Suggests:
     knitr,

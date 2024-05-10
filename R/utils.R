@@ -183,7 +183,8 @@ check_max_d <- function (d, measure) {
         message (
             "Maximum distance is > 100km. The 'cheap' measure is ",
             "inaccurate over such\nlarge distances, you'd likely ",
-            "be better using a different 'measure'."
+            "be better using a different 'measure', \n", 
+            "one of 'haversine', 'vincenty', or 'geodesic'. "
         )
     }
 }

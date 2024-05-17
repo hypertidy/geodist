@@ -1,3 +1,9 @@
+# v0.0.8.00X (dev)
+
+### Major changes:
+
+- Added new `geodist_min()` function to return index into second object of items with minimal distance.
+
 # v0.0.8
 
 ### Minor changes:

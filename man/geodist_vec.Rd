@@ -40,7 +40,7 @@ return \code{n - 1} values.}
 specifying desired method of geodesic distance calculation; see Notes.}
 
 \item{quiet}{If \code{FALSE}, check whether max of calculated distances
-is greater than accuracy threshhold and warn.}
+is greater than accuracy threshold and warn.}
 }
 \value{
 If only \code{(x1, y1)} are passed and \code{sequential = FALSE}, a
@@ -62,7 +62,7 @@ faster results than the main function.
 \url{https://github.com/mapbox/cheap-ruler-cpp}; \code{measure = "geodesic"}
 denotes the very accurate geodesic methods given in Karney (2013)
 "Algorithms for geodesics" J Geod 87:43-55, and as provided by the
-code{sf::st_dist()} function.
+`st_dist()` function from the \pkg{sf} package.
 }
 \examples{
 n <- 50

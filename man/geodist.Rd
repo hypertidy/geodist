@@ -2,8 +2,8 @@
 % Please edit documentation in R/geodist-package.r, R/geodist.R
 \docType{package}
 \name{geodist}
-\alias{geodist}
 \alias{geodist-package}
+\alias{geodist}
 \title{geodist.}
 \usage{
 geodist(
@@ -59,7 +59,7 @@ vector or matrix of geodesic distances in metres.
 \url{https://github.com/mapbox/cheap-ruler-cpp}; \code{measure = "geodesic"}
 denotes the very accurate geodesic methods given in Karney (2013)
 "Algorithms for geodesics" J Geod 87:43-55, and as provided by the
-code{sf::st_dist()} function.
+`st_dist()` function from the \pkg{sf} package.
 }
 \examples{
 n <- 50
@@ -81,6 +81,7 @@ d <- geodist (xy)
 Useful links:
 \itemize{
   \item \url{https://github.com/hypertidy/geodist}
+  \item \url{https://hypertidy.github.io/geodist/}
   \item Report bugs at \url{https://github.com/hypertidy/geodist/issues}
 }
 

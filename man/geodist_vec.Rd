@@ -40,7 +40,7 @@ return \code{n - 1} values.}
 specifying desired method of geodesic distance calculation; see Notes.}
 
 \item{quiet}{If \code{FALSE}, check whether max of calculated distances
-is greater than accuracy threshhold and warn.}
+is greater than accuracy threshold and warn.}
 }
 \value{
 If only \code{(x1, y1)} are passed and \code{sequential = FALSE}, a

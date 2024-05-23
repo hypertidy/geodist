@@ -21,7 +21,7 @@
 #' @param measure One of "haversine" "vincenty", "geodesic", or "cheap"
 #' specifying desired method of geodesic distance calculation; see Notes.
 #' @param quiet If \code{FALSE}, check whether max of calculated distances
-#' is greater than accuracy threshhold and warn.
+#' is greater than accuracy threshold and warn.
 #' @return If only \code{(x1, y1)} are passed and \code{sequential = FALSE}, a
 #' square symmetric matrix containing distances between all items in \code{(x1,
 #' y1)}; If only \code{(x1, y1)} are passed and \code{sequential = TRUE}, a

@@ -1,4 +1,4 @@
-# v0.0.8.00X (dev)
+# v0.1.0
 
 ### Major changes:
 

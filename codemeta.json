@@ -4,16 +4,20 @@
   "identifier": "geodist",
   "description": "Dependency-free, ultra fast calculation of geodesic distances. Includes the reference nanometre-accuracy geodesic distances of Karney (2013) <doi:10.1007/s00190-012-0578-z>, as used by the 'sf' package, as well as Haversine and Vincenty distances. Default distance measure is the \"Mapbox cheap ruler\" which is generally more accurate than Haversine or Vincenty for distances out to a few hundred kilometres, and is considerably faster. The main function accepts one or two inputs in almost any generic rectangular form, and returns either matrices of pairwise distances, or vectors of sequential distances.",
   "name": "geodist: Fast, Dependency-Free Geodesic Distance Calculations",
+  "relatedLink": [
+    "https://hypertidy.github.io/geodist/",
+    "https://CRAN.R-project.org/package=geodist"
+  ],
   "codeRepository": "https://github.com/hypertidy/geodist",
   "issueTracker": "https://github.com/hypertidy/geodist/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.8.022",
+  "version": "0.0.8.023",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.3.0 (2023-04-21)",
+  "runtimePlatform": "R version 4.4.0 (2024-04-24)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -89,23 +93,7 @@
   "softwareRequirements": {
     "SystemRequirements": {}
   },
-  "fileSize": "934.284KB",
-  "citation": [
-    {
-      "@type": "SoftwareSourceCode",
-      "datePublished": "2021",
-      "author": [
-        {
-          "@type": "Person",
-          "givenName": "Mark",
-          "familyName": "Padgham"
-        }
-      ],
-      "name": "geodist: Fast, Dependency-Free Geodesic Distance Calculations",
-      "url": "https://github.com/hypertidy/geodist",
-      "description": "R package version 0.0.7"
-    }
-  ],
+  "fileSize": "1258.223KB",
   "releaseNotes": "https://github.com/hypertidy/geodist/blob/master/NEWS.md",
   "readme": "https://github.com/hypertidy/geodist/blob/main/README.md",
   "contIntegration": [
@@ -113,6 +101,5 @@
     "https://github.com/hypertidy/geodist/actions?query=workflow%3Apkgcheck",
     "https://codecov.io/gh/hypertidy/geodist"
   ],
-  "developmentStatus": "http://www.repostatus.org/#active",
-  "relatedLink": "https://CRAN.R-project.org/package=geodist"
+  "developmentStatus": "http://www.repostatus.org/#active"
 }

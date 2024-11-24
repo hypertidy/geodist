@@ -6,7 +6,7 @@ vector or matrix of geodesic distances in metres."><!-- mathjax --><script src="
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -20,7 +20,7 @@ vector or matrix of geodesic distances in metres."><!-- mathjax --><script src="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">geodist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0.002</span>
       </span>
     </div>
 
@@ -37,20 +37,20 @@ vector or matrix of geodesic distances in metres."><!-- mathjax --><script src="
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/hypertidy/geodist/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>geodist.</h1>
-    <small class="dont-index">Source: <a href="https://github.com/hypertidy/geodist/blob/HEAD/R/geodist-package.r" class="external-link"><code>R/geodist-package.r</code></a>, <a href="https://github.com/hypertidy/geodist/blob/HEAD/R/geodist.R" class="external-link"><code>R/geodist.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/hypertidy/geodist/blob/main/R/geodist-package.r" class="external-link"><code>R/geodist-package.r</code></a>, <a href="https://github.com/hypertidy/geodist/blob/main/R/geodist.R" class="external-link"><code>R/geodist.R</code></a></small>
     <div class="hidden name"><code>geodist.Rd</code></div>
     </div>
 
@@ -75,48 +75,48 @@ vector or matrix of geodesic distances in metres.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+
+
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>Rectangular object (matrix, <code>data.frame</code>, <span class="pkg">tibble</span>,
 whatever) containing longitude and latitude coordinates.</p></dd>
 
 
-<dt>y</dt>
+<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
 <dd><p>Optional second object which, if passed, results in distances
 calculated between each object in <code>x</code> and each in <code>y</code>.</p></dd>
 
 
-<dt>paired</dt>
+<dt id="arg-paired">paired<a class="anchor" aria-label="anchor" href="#arg-paired"></a></dt>
 <dd><p>If <code>TRUE</code>, calculate paired distances between each entry
 in <code>x</code> and <code>y</code>, returning a single vector.</p></dd>
 
 
-<dt>sequential</dt>
+<dt id="arg-sequential">sequential<a class="anchor" aria-label="anchor" href="#arg-sequential"></a></dt>
 <dd><p>If <code>TRUE</code>, calculate (vector of) distances
 sequentially along <code>x</code> (when no <code>y</code> is passed), otherwise calculate
 matrix of pairwise distances between all points.</p></dd>
 
 
-<dt>pad</dt>
+<dt id="arg-pad">pad<a class="anchor" aria-label="anchor" href="#arg-pad"></a></dt>
 <dd><p>If <code>sequential = TRUE</code> values are padded with initial
 <code>NA</code> to return <code>n</code> values for input with <code>n</code> rows, otherwise
 return <code>n - 1</code> values.</p></dd>
 
 
-<dt>measure</dt>
+<dt id="arg-measure">measure<a class="anchor" aria-label="anchor" href="#arg-measure"></a></dt>
 <dd><p>One of "haversine" "vincenty", "geodesic", or "cheap"
 specifying desired method of geodesic distance calculation; see Notes.</p></dd>
 
 
-<dt>quiet</dt>
+<dt id="arg-quiet">quiet<a class="anchor" aria-label="anchor" href="#arg-quiet"></a></dt>
 <dd><p>If <code>FALSE</code>, check whether max of calculated distances
 is greater than accuracy threshold and warn.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>If only <code>x</code> passed and <code>sequential = FALSE</code>, a square
+    <p>If only <code>x</code> passed and <code>sequential = FALSE</code>, a square
 symmetric matrix containing distances between all items in <code>x</code>; If only
 <code>x</code> passed and <code>sequential = TRUE</code>, a vector of sequential
 distances between rows of <code>x</code>; otherwise if <code>y</code> is passed, a matrix
@@ -175,15 +175,15 @@ denotes the very accurate geodesic methods given in Karney (2013)
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

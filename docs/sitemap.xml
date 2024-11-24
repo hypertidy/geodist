@@ -1,48 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/articles/geodist.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geodist.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geodist_benchmark.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geodist_min.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geodist_vec.html</loc>
-  </url>
-  <url>
-    <loc>/reference/georange.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/CONDUCT.html</loc></url>
+<url><loc>/CONTRIBUTING.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/articles/geodist.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/geodist.html</loc></url>
+<url><loc>/reference/geodist_benchmark.html</loc></url>
+<url><loc>/reference/geodist_min.html</loc></url>
+<url><loc>/reference/geodist_vec.html</loc></url>
+<url><loc>/reference/georange.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
 </urlset>
+

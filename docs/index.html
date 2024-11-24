@@ -19,7 +19,7 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">geodist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0.002</span>
       </span>
     </div>
 
@@ -53,7 +53,7 @@
 <li>
   <a href="https://github.com/hypertidy/geodist/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -64,7 +64,7 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="contents col-md-9">
@@ -101,7 +101,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span> <span class="op">(</span><span class="va"><a href="https://github.com/hypertidy/geodist" class="external-link">geodist</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span> <span class="op">(</span><span class="st">"geodist"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] '0.0.8.6'</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] '0.1.0'</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="detailed-usage">Detailed Usage<a class="anchor" aria-label="anchor" href="#detailed-usage"></a>
@@ -115,7 +115,8 @@
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span> <span class="op">(</span><span class="fu"><a href="reference/geodist.html">geodist</a></span> <span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Maximum distance is &gt; 100km. The 'cheap' measure is inaccurate over such</span></span>
-<span><span class="co">#&gt; large distances, you'd likely be better using a different 'measure'.</span></span>
+<span><span class="co">#&gt; large distances, you'd likely be better using a different 'measure', </span></span>
+<span><span class="co">#&gt; one of 'haversine', 'vincenty', or 'geodesic'.</span></span>
 <span><span class="co">#&gt; [1] 10 10</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span> <span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="op">-</span><span class="fl">180</span> <span class="op">+</span> <span class="fl">360</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">n</span><span class="op">)</span>,</span>
@@ -123,7 +124,8 @@
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span> <span class="op">(</span><span class="fu"><a href="reference/geodist.html">geodist</a></span> <span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Maximum distance is &gt; 100km. The 'cheap' measure is inaccurate over such</span></span>
-<span><span class="co">#&gt; large distances, you'd likely be better using a different 'measure'.</span></span>
+<span><span class="co">#&gt; large distances, you'd likely be better using a different 'measure', </span></span>
+<span><span class="co">#&gt; one of 'haversine', 'vincenty', or 'geodesic'.</span></span>
 <span><span class="co">#&gt; [1] 10 20</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span> <span class="op">(</span></span>
 <span>    <span class="op">-</span><span class="fl">180</span> <span class="op">+</span> <span class="fl">360</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span> <span class="op">(</span><span class="va">n</span><span class="op">)</span>,</span>
@@ -133,7 +135,8 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span> <span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span> <span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span>, <span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span> <span class="op">(</span><span class="fu"><a href="reference/geodist.html">geodist</a></span> <span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Maximum distance is &gt; 100km. The 'cheap' measure is inaccurate over such</span></span>
-<span><span class="co">#&gt; large distances, you'd likely be better using a different 'measure'.</span></span>
+<span><span class="co">#&gt; large distances, you'd likely be better using a different 'measure', </span></span>
+<span><span class="co">#&gt; one of 'haversine', 'vincenty', or 'geodesic'.</span></span>
 <span><span class="co">#&gt; [1] 10 10</span></span></code></pre></div>
 <p>All outputs are distances in metres, calculated with a variety of spherical and elliptical distance measures. Distance measures currently implemented are Haversine, Vincenty (spherical and elliptical)), the very fast <a href="https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp" class="external-link">mapbox cheap ruler</a> (see their <a href="https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016" class="external-link">blog post</a>), and the “reference” implementation of <a href="https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf" class="external-link">Karney (2013)</a>, as implemented in the package <a href="https://cran.r-project.org/package=sf" class="external-link"><code>sf</code></a>. (Note that <code>geodist</code> does not accept <a href="https://cran.r-project.org/package=sf" class="external-link"><code>sf</code></a>-format objects; the <a href="https://cran.r-project.org/package=sf" class="external-link"><code>sf</code></a> package itself should be used for that.) The <a href="https://github.com/mapbox/cheap-ruler-cpp" class="external-link">mapbox cheap ruler algorithm</a> is intended to provide approximate yet very fast distance calculations within small areas (tens to a few hundred kilometres across).</p>
 <div class="section level3">
@@ -143,8 +146,8 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/geodist_benchmark.html">geodist_benchmark</a></span> <span class="op">(</span>lat <span class="op">=</span> <span class="fl">30</span>, d <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="co">#&gt;            haversine    vincenty       cheap</span></span>
-<span><span class="co">#&gt; absolute 0.733504364 0.733504364 0.546134467</span></span>
-<span><span class="co">#&gt; relative 0.002072017 0.002072017 0.001601954</span></span></code></pre></div>
+<span><span class="co">#&gt; absolute 0.769795934 0.769795934 0.561054079</span></span>
+<span><span class="co">#&gt; relative 0.002068186 0.002068186 0.001562982</span></span></code></pre></div>
 <p>All distances (<code>d)</code> are in metres, and all measures are accurate to within 1m over distances out to several km (at the chosen latitude of 30 degrees). The following plots compare the absolute and relative accuracies of the different distance measures implemented here. The mapbox cheap ruler algorithm is the most accurate for distances out to around 100km, beyond which it becomes extremely inaccurate. Average relative errors of Vincenty distances remain generally constant at around 0.2%, while relative errors of cheap-ruler distances out to 100km are around 0.16%.</p>
 <p><img src="articles/fig1.png"></p>
 </div>
@@ -166,10 +169,10 @@
 <span>    <span class="va">d4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/geodist.html">geodist</a></span> <span class="op">(</span><span class="va">x</span>, measure <span class="op">=</span> <span class="st">"geodesic"</span><span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
 <span><span class="co">#&gt;                                      test replications elapsed relative</span></span>
-<span><span class="co">#&gt; 1     d1 &lt;- geodist(x, measure = "cheap")           10   0.068    1.000</span></span>
-<span><span class="co">#&gt; 2 d2 &lt;- geodist(x, measure = "haversine")           10   0.139    2.044</span></span>
-<span><span class="co">#&gt; 3  d3 &lt;- geodist(x, measure = "vincenty")           10   0.229    3.368</span></span>
-<span><span class="co">#&gt; 4  d4 &lt;- geodist(x, measure = "geodesic")           10   3.315   48.750</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     d1 &lt;- geodist(x, measure = "cheap")           10   0.069    1.000</span></span>
+<span><span class="co">#&gt; 2 d2 &lt;- geodist(x, measure = "haversine")           10   0.140    2.029</span></span>
+<span><span class="co">#&gt; 3  d3 &lt;- geodist(x, measure = "vincenty")           10   0.227    3.290</span></span>
+<span><span class="co">#&gt; 4  d4 &lt;- geodist(x, measure = "geodesic")           10   2.894   41.942</span></span></code></pre></div>
 <p>Geodesic distance calculation is available in the <a href="https://cran.r-project.org/package=sf" class="external-link"><code>sf</code> package</a>. Comparing computation speeds requires conversion of sets of numeric lon-lat points to <code>sf</code> form with the following code:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span> <span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
@@ -185,17 +188,6 @@
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span> <span class="op">(</span><span class="op">-</span><span class="fl">180</span> <span class="op">+</span> <span class="fl">360</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span> <span class="op">(</span><span class="va">n</span><span class="op">)</span>, <span class="op">-</span><span class="fl">90</span> <span class="op">+</span> <span class="fl">180</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span> <span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span> <span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span> <span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span></span>
 <span><span class="va">xsf</span> <span class="op">&lt;-</span> <span class="fu">x_to_sf</span> <span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in CPL_gdal_init(): GDAL Error 1: libpodofo.so.0.9.8: cannot open</span></span>
-<span><span class="co">#&gt; shared object file: No such file or directory</span></span>
-<span></span>
-<span><span class="co">#&gt; Warning in CPL_gdal_init(): GDAL Error 1: libpodofo.so.0.9.8: cannot open</span></span>
-<span><span class="co">#&gt; shared object file: No such file or directory</span></span>
-<span></span>
-<span><span class="co">#&gt; Warning in CPL_gdal_init(): GDAL Error 1: libpodofo.so.0.9.8: cannot open</span></span>
-<span><span class="co">#&gt; shared object file: No such file or directory</span></span>
-<span></span>
-<span><span class="co">#&gt; Warning in CPL_gdal_init(): GDAL Error 1: libpodofo.so.0.9.8: cannot open</span></span>
-<span><span class="co">#&gt; shared object file: No such file or directory</span></span>
 <span><span class="va">sf_dist</span> <span class="op">&lt;-</span> <span class="kw">function</span> <span class="op">(</span><span class="va">xsf</span><span class="op">)</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu">st_distance</span> <span class="op">(</span><span class="va">xsf</span>, <span class="va">xsf</span><span class="op">)</span></span>
 <span><span class="va">geo_dist</span> <span class="op">&lt;-</span> <span class="kw">function</span> <span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="reference/geodist.html">geodist</a></span> <span class="op">(</span><span class="va">x</span>, measure <span class="op">=</span> <span class="st">"geodesic"</span><span class="op">)</span></span>
 <span><span class="fu">rbenchmark</span><span class="fu">::</span><span class="fu">benchmark</span> <span class="op">(</span></span>
@@ -204,14 +196,14 @@
 <span>    <span class="fu">geo_dist</span> <span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
 <span><span class="co">#&gt;           test replications elapsed relative</span></span>
-<span><span class="co">#&gt; 2  geo_dist(x)           10   0.070    1.000</span></span>
-<span><span class="co">#&gt; 1 sf_dist(xsf)           10   0.144    2.057</span></span></code></pre></div>
+<span><span class="co">#&gt; 2  geo_dist(x)           10   0.061    1.000</span></span>
+<span><span class="co">#&gt; 1 sf_dist(xsf)           10   0.149    2.443</span></span></code></pre></div>
 <p>Confirm that the two give almost identical results:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span> <span class="op">(</span><span class="fu">sf_dist</span> <span class="op">(</span><span class="va">xsf</span><span class="op">)</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span> <span class="op">(</span><span class="va">xsf</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">dg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/geodist.html">geodist</a></span> <span class="op">(</span><span class="va">x</span>, measure <span class="op">=</span> <span class="st">"geodesic"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span> <span class="op">(</span><span class="va">ds</span> <span class="op">-</span> <span class="va">dg</span><span class="op">)</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "3.7676e+04"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "3.7697e+04"</span></span></code></pre></div>
 <p>All results are in metres, so the two differ by only around 10 nanometres.</p>
 <p>The <a href="https://cran.r-project.org/package=geosphere" class="external-link"><code>geosphere</code> package</a> also offers sequential calculation which is benchmarked with the following code:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -222,42 +214,10 @@
 <span>    <span class="fu">fgeodist</span> <span class="op">(</span><span class="op">)</span>,</span>
 <span>    <span class="fu">fgeosph</span> <span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
-<span><span class="co">#&gt; The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,</span></span>
-<span><span class="co">#&gt; which was just loaded, will retire in October 2023.</span></span>
-<span><span class="co">#&gt; Please refer to R-spatial evolution reports for details, especially</span></span>
-<span><span class="co">#&gt; https://r-spatial.org/r/2023/05/15/evolution4.html.</span></span>
-<span><span class="co">#&gt; It may be desirable to make the sf package available;</span></span>
-<span><span class="co">#&gt; package maintainers should consider adding sf to Suggests:.</span></span>
-<span><span class="co">#&gt; The sp package is now running under evolution status 2</span></span>
-<span><span class="co">#&gt;      (status 2 uses the sf package in place of rgdal)</span></span>
 <span><span class="co">#&gt;         test replications elapsed relative</span></span>
 <span><span class="co">#&gt; 1 fgeodist()           10   0.017    1.000</span></span>
-<span><span class="co">#&gt; 2  fgeosph()           10   0.032    1.882</span></span></code></pre></div>
+<span><span class="co">#&gt; 2  fgeosph()           10   0.037    2.176</span></span></code></pre></div>
 <p><code>geodist</code> is thus around 3 times faster than <code>sf</code> for highly accurate geodesic distance calculations, and around twice as fast as <code>geosphere</code> for calculation of sequential distances.</p>
-</div>
-<div class="section level3">
-<h3 id="test-results">Test Results<a class="anchor" aria-label="anchor" href="#test-results"></a>
-</h3>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span> <span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span> <span class="op">(</span><span class="va"><a href="https://testthat.r-lib.org" class="external-link">testthat</a></span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/date.html" class="external-link">date</a></span> <span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Mon Aug 21 11:34:48 2023"</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">test</span> <span class="op">(</span><span class="st">"tests/"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Testing geodist</span></span>
-<span><span class="co">#&gt; Starting 2 test processes</span></span>
-<span><span class="co">#&gt; ✔ | F W S  OK | Context</span></span>
-<span><span class="co">#&gt; ⠋ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ⠙ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ⠹ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ⠸ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ⠼ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ⠴ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ⠦ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ] Starting up...                                                                                                                                                                                                                         ✔ |         4 | geodist-min                                                                                                                                                                                                                                                    </span></span>
-<span><span class="co">#&gt; ⠧ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 16 ] @ geodist                                                                                                                                                                                                                             ⠇ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 16 ] @ geodist                                                                                                                                                                                                                             ✔ |        52 | geodist                                                                                                                                                                                                                                                        </span></span>
-<span><span class="co">#&gt; ⠏ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 87 ] @ georange                                                                                                                                                                                                                            ⠋ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 87 ] @ georange                                                                                                                                                                                                                            ✔ |        37 | georange                                                                                                                                                                                                                                                       </span></span>
-<span><span class="co">#&gt; ⠙ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 97 ] @ input-format                                                                                                                                                                                                                        ⠹ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 98 ] @ input-format                                                                                                                                                                                                                        ✔ |        18 | input-format                                                                                                                                                                                                                                                   </span></span>
-<span><span class="co">#&gt; ⠸ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 111 ] @ measures                                                                                                                                                                                                                           ⠼ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 111 ] @ measures                                                                                                                                                                                                                           ✔ |        18 | measures                                                                                                                                                                                                                                                       </span></span>
-<span><span class="co">#&gt; ⠴ [ FAIL 0 | WARN 0 | SKIP 0 | PASS 129 ] Starting up...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </span></span>
-<span><span class="co">#&gt; ══ Results ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════</span></span>
-<span><span class="co">#&gt; Duration: 1.5 s</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [ FAIL 0 | WARN 0 | SKIP 0 | PASS 129 ]</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -266,7 +226,7 @@
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-<p>All contributions to this project are gratefully acknowledged using the <a href="https://github.com/ropenscilabs/allcontributors" class="external-link"><code>allcontributors</code> package</a> following the <a href="https://allcontributors.org" class="external-link">all-contributors</a> specification. Contributions of any kind are welcome!</p>
+<p>All contributions to this project are gratefully acknowledged using the <a href="https://github.com/ropensci/allcontributors" class="external-link"><code>allcontributors</code> package</a> following the <a href="https://allcontributors.org" class="external-link">allcontributors</a> specification. Contributions of any kind are welcome!</p>
 <div class="section level3">
 <h3 id="code">Code<a class="anchor" aria-label="anchor" href="#code"></a>
 </h3>
@@ -275,29 +235,22 @@
 <a href="https://github.com/mpadge" class="external-link"> <img src="https://avatars.githubusercontent.com/u/6697851?v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/commits?author=mpadge" class="external-link">mpadge</a>
 </td>
 <td align="center">
+<a href="https://github.com/mdsumner" class="external-link"> <img src="https://avatars.githubusercontent.com/u/4107631?v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/commits?author=mdsumner" class="external-link">mdsumner</a>
+</td>
+<td align="center">
 <a href="https://github.com/daniellemccool" class="external-link"> <img src="https://avatars.githubusercontent.com/u/5112209?v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/commits?author=daniellemccool" class="external-link">daniellemccool</a>
+</td>
+<td align="center">
+<a href="https://github.com/olivroy" class="external-link"> <img src="https://avatars.githubusercontent.com/u/52606734?v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/commits?author=olivroy" class="external-link">olivroy</a>
 </td>
 </tr></table>
 </div>
 <div class="section level3">
-<h3 id="issues">Issues<a class="anchor" aria-label="anchor" href="#issues"></a>
+<h3 id="issue-authors">Issue Authors<a class="anchor" aria-label="anchor" href="#issue-authors"></a>
 </h3>
-<table class="table">
-<tr>
-<td align="center">
-<a href="https://github.com/mdsumner" class="external-link"> <img src="https://avatars.githubusercontent.com/u/4107631?u=c7a3627c592123651d51d002f421c2bd00be172f&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amdsumner" class="external-link">mdsumner</a>
-</td>
+<table class="table"><tr>
 <td align="center">
 <a href="https://github.com/edzer" class="external-link"> <img src="https://avatars.githubusercontent.com/u/520851?u=9bc892c3523be428dc211f2ccbcf04e8e0e564ff&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Aedzer" class="external-link">edzer</a>
-</td>
-<td align="center">
-<a href="https://github.com/njtierney" class="external-link"> <img src="https://avatars.githubusercontent.com/u/6488485?u=3eacd57f61342d1c3cecd5c8ac741b1c4897e1de&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Anjtierney" class="external-link">njtierney</a>
-</td>
-<td align="center">
-<a href="https://github.com/mkuehn10" class="external-link"> <img src="https://avatars.githubusercontent.com/u/4229651?u=b46361a6063e22f9d902672cb7e776918a1c6951&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amkuehn10" class="external-link">mkuehn10</a>
-</td>
-<td align="center">
-<a href="https://github.com/asardaes" class="external-link"> <img src="https://avatars.githubusercontent.com/u/7768461?u=fb573498b515f9bfcaeba8e256852060f6304d0b&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Aasardaes" class="external-link">asardaes</a>
 </td>
 <td align="center">
 <a href="https://github.com/marcosci" class="external-link"> <img src="https://avatars.githubusercontent.com/u/10864574?u=e5b7e55e122646f47174a9e621ebc91fff177d9b&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amarcosci" class="external-link">marcosci</a>
@@ -305,13 +258,11 @@
 <td align="center">
 <a href="https://github.com/mem48" class="external-link"> <img src="https://avatars.githubusercontent.com/u/15819577?u=0c128db4e7567656c23e83e4314111fcea424526&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amem48" class="external-link">mem48</a>
 </td>
-</tr>
-<tr>
 <td align="center">
 <a href="https://github.com/dcooley" class="external-link"> <img src="https://avatars.githubusercontent.com/u/8093396?u=2c8d9162f246d90d433034d212b29a19e0f245c1&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Adcooley" class="external-link">dcooley</a>
 </td>
 <td align="center">
-<a href="https://github.com/Robinlovelace" class="external-link"> <img src="https://avatars.githubusercontent.com/u/1825120?u=461318c239e721dc40668e4b0ce6cc47731328ac&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3ARobinlovelace" class="external-link">Robinlovelace</a>
+<a href="https://github.com/Robinlovelace" class="external-link"> <img src="https://avatars.githubusercontent.com/u/1825120?u=4b78d134ed1814b0677455f45d932b3b4a6ba3a5&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3ARobinlovelace" class="external-link">Robinlovelace</a>
 </td>
 <td align="center">
 <a href="https://github.com/espinielli" class="external-link"> <img src="https://avatars.githubusercontent.com/u/891692?v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Aespinielli" class="external-link">espinielli</a>
@@ -319,8 +270,22 @@
 <td align="center">
 <a href="https://github.com/Maschette" class="external-link"> <img src="https://avatars.githubusercontent.com/u/14663215?u=93694159d02e924e6413bd067d7746f1d16d64c1&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3AMaschette" class="external-link">Maschette</a>
 </td>
-</tr>
-</table>
+</tr></table>
+</div>
+<div class="section level3">
+<h3 id="issue-contributors">Issue Contributors<a class="anchor" aria-label="anchor" href="#issue-contributors"></a>
+</h3>
+<table class="table"><tr>
+<td align="center">
+<a href="https://github.com/njtierney" class="external-link"> <img src="https://avatars.githubusercontent.com/u/6488485?u=3eacd57f61342d1c3cecd5c8ac741b1c4897e1de&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+commenter%3Anjtierney" class="external-link">njtierney</a>
+</td>
+<td align="center">
+<a href="https://github.com/mkuehn10" class="external-link"> <img src="https://avatars.githubusercontent.com/u/4229651?u=ea8118ccba75b3ff7a8fb9859aadde9cd524c484&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+commenter%3Amkuehn10" class="external-link">mkuehn10</a>
+</td>
+<td align="center">
+<a href="https://github.com/asardaes" class="external-link"> <img src="https://avatars.githubusercontent.com/u/7768461?u=fb573498b515f9bfcaeba8e256852060f6304d0b&amp;v=4" width="100px;" alt=""></a><br><a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+commenter%3Aasardaes" class="external-link">asardaes</a>
+</td>
+</tr></table>
 <!-- markdownlint-enable --><!-- prettier-ignore-end --><!-- ALL-CONTRIBUTORS-LIST:END -->
 </div>
 </div>
@@ -392,16 +357,16 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>

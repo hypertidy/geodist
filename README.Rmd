@@ -261,19 +261,6 @@ distance calculations, and around twice as fast as `geosphere` for calculation
 of sequential distances.
 
 
-### Test Results
-
-```{r load-testthat, message = FALSE}
-require (devtools)
-require (testthat)
-```
-
-```{r tests, eval = TRUE}
-date ()
-devtools::test ("tests/")
-```
-
-
 ## Contributors
 
 

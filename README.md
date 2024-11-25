@@ -54,7 +54,7 @@ Then load with
 ``` r
 library (geodist)
 packageVersion ("geodist")
-#> [1] '0.1.0'
+#> [1] '0.1.0.6'
 ```
 
 ## Detailed Usage
@@ -68,19 +68,13 @@ x <- tibble::tibble (
     x = -180 + 360 * runif (n),
     y = -90 + 180 * runif (n)
 )
-dim (geodist (x))
-#> Maximum distance is > 100km. The 'cheap' measure is inaccurate over such
-#> large distances, you'd likely be better using a different 'measure', 
-#> one of 'haversine', 'vincenty', or 'geodesic'.
+dim (geodist (x, measure = "haversine"))
 #> [1] 10 10
 y <- tibble::tibble (
     x = -180 + 360 * runif (2 * n),
     y = -90 + 180 * runif (2 * n)
 )
-dim (geodist (x, y))
-#> Maximum distance is > 100km. The 'cheap' measure is inaccurate over such
-#> large distances, you'd likely be better using a different 'measure', 
-#> one of 'haversine', 'vincenty', or 'geodesic'.
+dim (geodist (x, y, measure = "haversine"))
 #> [1] 10 20
 x <- cbind (
     -180 + 360 * runif (n),
@@ -88,10 +82,7 @@ x <- cbind (
     seq (n), runif (n)
 )
 colnames (x) <- c ("lon", "lat", "a", "b")
-dim (geodist (x))
-#> Maximum distance is > 100km. The 'cheap' measure is inaccurate over such
-#> large distances, you'd likely be better using a different 'measure', 
-#> one of 'haversine', 'vincenty', or 'geodesic'.
+dim (geodist (x, measure = "haversine"))
 #> [1] 10 10
 ```
 
@@ -123,8 +114,8 @@ to the nanometre-accuracy standard of [Karney
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
 #>            haversine    vincenty       cheap
-#> absolute 0.769795934 0.769795934 0.561054079
-#> relative 0.002068186 0.002068186 0.001562982
+#> absolute 0.793746804 0.793746804 0.572894881
+#> relative 0.002099031 0.002099031 0.001601655
 ```
 
 All distances (`d)` are in metres, and all measures are accurate to
@@ -158,10 +149,10 @@ rbenchmark::benchmark (
     d4 <- geodist (x, measure = "geodesic")
 ) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.069    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.140    2.029
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.227    3.290
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   2.894   41.942
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.071    1.000
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.134    1.887
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.223    3.141
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   2.820   39.718
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -170,17 +161,17 @@ speeds requires conversion of sets of numeric lon-lat points to `sf`
 form with the following code:
 
 ``` r
-require (magrittr)
 x_to_sf <- function (x) {
     sapply (seq (nrow (x)), function (i) {
-        sf::st_point (x [i, ]) %>%
+        sf::st_point (x [i, ]) |>
             sf::st_sfc ()
-    }) %>%
+    }) |>
         sf::st_sfc (crs = 4326)
 }
 ```
 
 ``` r
+# comment
 n <- 1e2
 x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
 colnames (x) <- c ("x", "y")
@@ -194,20 +185,8 @@ rbenchmark::benchmark (
 ) [, 1:4]
 #>           test replications elapsed relative
 #> 2  geo_dist(x)           10   0.061    1.000
-#> 1 sf_dist(xsf)           10   0.149    2.443
+#> 1 sf_dist(xsf)           10   0.146    2.393
 ```
-
-Confirm that the two give almost identical results:
-
-``` r
-ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
-dg <- geodist (x, measure = "geodesic")
-formatC (max (abs (ds - dg)), format = "e")
-#> [1] "3.7697e+04"
-```
-
-All results are in metres, so the two differ by only around 10
-nanometres.
 
 The [`geosphere` package](https://cran.r-project.org/package=geosphere)
 also offers sequential calculation which is benchmarked with the
@@ -222,27 +201,28 @@ rbenchmark::benchmark (
     fgeosph ()
 ) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.017    1.000
-#> 2  fgeosph()           10   0.037    2.176
+#> 1 fgeodist()           10   0.018    1.000
+#> 2  fgeosph()           10   0.037    2.056
 ```
 
-`geodist` is thus around 3 times faster than `sf` for highly accurate
-geodesic distance calculations, and around twice as fast as `geosphere`
-for calculation of sequential distances.
+`geodist` is thus twice as fast as both `sf` for highly accurate
+geodesic distance calculations, and `geosphere` for calculation of
+sequential distances.
 
 ## Contributors
-
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
-All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropensci/allcontributors) following the [allcontributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
+All contributions to this project are gratefully acknowledged using the
+[`allcontributors` package](https://github.com/ropensci/allcontributors)
+following the [allcontributors](https://allcontributors.org)
+specification. Contributions of any kind are welcome!
 
 ### Code
 
 <table>
-
 <tr>
 <td align="center">
 <a href="https://github.com/mpadge">
@@ -269,14 +249,11 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/hypertidy/geodist/commits?author=olivroy">olivroy</a>
 </td>
 </tr>
-
 </table>
-
 
 ### Issue Authors
 
 <table>
-
 <tr>
 <td align="center">
 <a href="https://github.com/edzer">
@@ -321,14 +298,11 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3AMaschette">Maschette</a>
 </td>
 </tr>
-
 </table>
-
 
 ### Issue Contributors
 
 <table>
-
 <tr>
 <td align="center">
 <a href="https://github.com/njtierney">
@@ -349,9 +323,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+commenter%3Aasardaes">asardaes</a>
 </td>
 </tr>
-
 </table>
-
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->

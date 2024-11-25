@@ -70,19 +70,19 @@ x <- tibble::tibble (
     x = -180 + 360 * runif (n),
     y = -90 + 180 * runif (n)
 )
-dim (geodist (x))
+dim (geodist (x, measure = "haversine"))
 y <- tibble::tibble (
     x = -180 + 360 * runif (2 * n),
     y = -90 + 180 * runif (2 * n)
 )
-dim (geodist (x, y))
+dim (geodist (x, y, measure = "haversine"))
 x <- cbind (
     -180 + 360 * runif (n),
     -90 + 100 * runif (n),
     seq (n), runif (n)
 )
 colnames (x) <- c ("lon", "lat", "a", "b")
-dim (geodist (x))
+dim (geodist (x, measure = "haversine"))
 ```
 All outputs are distances in metres, calculated with a variety of spherical and
 elliptical distance measures. Distance measures currently implemented are
@@ -208,17 +208,17 @@ package](https://cran.r-project.org/package=sf). Comparing computation speeds
 requires conversion of sets of numeric lon-lat points to `sf` form with the
 following code:
 ```{r x_to_sf, message = FALSE}
-require (magrittr)
 x_to_sf <- function (x) {
     sapply (seq (nrow (x)), function (i) {
-        sf::st_point (x [i, ]) %>%
+        sf::st_point (x [i, ]) |>
             sf::st_sfc ()
-    }) %>%
+    }) |>
         sf::st_sfc (crs = 4326)
 }
 ```
 
 ```{r benchmark}
+# comment
 n <- 1e2
 x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
 colnames (x) <- c ("x", "y")
@@ -231,14 +231,6 @@ rbenchmark::benchmark (
     geo_dist (x)
 ) [, 1:4]
 ```
-Confirm that the two give almost identical results:
-```{r}
-ds <- matrix (as.numeric (sf_dist (xsf)), nrow = length (xsf))
-dg <- geodist (x, measure = "geodesic")
-formatC (max (abs (ds - dg)), format = "e")
-```
-All results are in metres, so the two differ by only around 10 nanometres.
-
 The [`geosphere` package](https://cran.r-project.org/package=geosphere) also
 offers sequential calculation which is benchmarked with the following code:
 ```{r, echo = FALSE}
@@ -256,9 +248,8 @@ rbenchmark::benchmark (
 ) [, 1:4]
 ```
 
-`geodist` is thus around 3 times faster than `sf` for highly accurate geodesic
-distance calculations, and around twice as fast as `geosphere` for calculation
-of sequential distances.
+`geodist` is thus twice as fast as both `sf` for highly accurate geodesic
+distance calculations, and `geosphere` for calculation of sequential distances.
 
 
 ## Contributors

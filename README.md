@@ -227,18 +227,17 @@ of sequential distances.
 
 ## Contributors
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
-All contributions to this project are gratefully acknowledged using the
-[`allcontributors` package](https://github.com/ropensci/allcontributors)
-following the [allcontributors](https://allcontributors.org)
-specification. Contributions of any kind are welcome!
+All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropensci/allcontributors) following the [allcontributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
 
 ### Code
 
 <table>
+
 <tr>
 <td align="center">
 <a href="https://github.com/mpadge">
@@ -265,11 +264,14 @@ specification. Contributions of any kind are welcome!
 <a href="https://github.com/hypertidy/geodist/commits?author=olivroy">olivroy</a>
 </td>
 </tr>
+
 </table>
+
 
 ### Issue Authors
 
 <table>
+
 <tr>
 <td align="center">
 <a href="https://github.com/edzer">
@@ -314,12 +316,21 @@ specification. Contributions of any kind are welcome!
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3AMaschette">Maschette</a>
 </td>
 </tr>
+
 </table>
+
 
 ### Issue Contributors
 
 <table>
+
 <tr>
+<td align="center">
+<a href="https://github.com/kadyb">
+<img src="https://avatars.githubusercontent.com/u/35004826?u=dcf17deb757e4972f25196a557f5f1be816080d9&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+commenter%3Akadyb">kadyb</a>
+</td>
 <td align="center">
 <a href="https://github.com/njtierney">
 <img src="https://avatars.githubusercontent.com/u/6488485?u=3eacd57f61342d1c3cecd5c8ac741b1c4897e1de&v=4" width="100px;" alt=""/>
@@ -339,7 +350,9 @@ specification. Contributions of any kind are welcome!
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+commenter%3Aasardaes">asardaes</a>
 </td>
 </tr>
+
 </table>
+
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->

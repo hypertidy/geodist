@@ -209,7 +209,7 @@ requires conversion of sets of numeric lon-lat points to `sf` form with the
 following code:
 ```{r x_to_sf, message = FALSE}
 x_to_sf <- function (x) {
-    sapply (seq (nrow (x)), function (i) {
+    sapply (seq_len (nrow (x)), function (i) {
         sf::st_point (x [i, ]) |>
             sf::st_sfc ()
     }) |>
@@ -217,17 +217,28 @@ x_to_sf <- function (x) {
 }
 ```
 
+Distances in `sf` are by default calculated via
+[`s2::s2_distance()`](https://r-spatial.github.io/s2/reference/s2_is_collection.html),
+with alternative calculations using the same geodesic algorithm as here.
+
 ```{r benchmark}
-# comment
 n <- 1e2
 x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
 colnames (x) <- c ("x", "y")
 xsf <- x_to_sf (x)
-sf_dist <- function (xsf) sf::st_distance (xsf, xsf)
+sf_dist <- function (xsf, s2 = TRUE) {
+    if (s2) {
+        sf::sf_use_s2 (TRUE) # s2::s2_distance()
+    } else {
+        sf::sf_use_s2 (FALSE) # Karney's geodesic algorithm
+    }
+    sf::st_distance (xsf, xsf)
+}
 geo_dist <- function (x) geodist (x, measure = "geodesic")
 rbenchmark::benchmark (
     replications = 10, order = "test",
-    sf_dist (xsf),
+    sf_dist (xsf, s2 = TRUE),
+    sf_dist (xsf, s2 = FALSE),
     geo_dist (x)
 ) [, 1:4]
 ```
@@ -248,8 +259,9 @@ rbenchmark::benchmark (
 ) [, 1:4]
 ```
 
-`geodist` is thus twice as fast as both `sf` for highly accurate geodesic
-distance calculations, and `geosphere` for calculation of sequential distances.
+`geodist` is thus at least twice as fast as both `sf` for highly accurate
+geodesic distance calculations, and `geosphere` for calculation of sequential
+distances.
 
 
 ## Contributors

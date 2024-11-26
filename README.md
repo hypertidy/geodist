@@ -113,9 +113,9 @@ to the nanometre-accuracy standard of [Karney
 
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
-#>            haversine    vincenty       cheap
-#> absolute 0.793746804 0.793746804 0.572894881
-#> relative 0.002099031 0.002099031 0.001601655
+#>            haversine    vincenty      cheap
+#> absolute 0.818681120 0.818681120 0.57910408
+#> relative 0.002173428 0.002173428 0.00160801
 ```
 
 All distances (`d)` are in metres, and all measures are accurate to
@@ -149,10 +149,10 @@ rbenchmark::benchmark (
     d4 <- geodist (x, measure = "geodesic")
 ) [, 1:4]
 #>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.071    1.000
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.134    1.887
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.223    3.141
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   2.820   39.718
+#> 1     d1 <- geodist(x, measure = "cheap")           10   0.070      1.0
+#> 2 d2 <- geodist(x, measure = "haversine")           10   0.133      1.9
+#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.224      3.2
+#> 4  d4 <- geodist(x, measure = "geodesic")           10   2.856     40.8
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -162,7 +162,7 @@ form with the following code:
 
 ``` r
 x_to_sf <- function (x) {
-    sapply (seq (nrow (x)), function (i) {
+    sapply (seq_len (nrow (x)), function (i) {
         sf::st_point (x [i, ]) |>
             sf::st_sfc ()
     }) |>
@@ -170,22 +170,38 @@ x_to_sf <- function (x) {
 }
 ```
 
+Distances in `sf` are by default calculated via
+[`s2::s2_distance()`](https://r-spatial.github.io/s2/reference/s2_is_collection.html),
+with alternative calculations using the same geodesic algorithm as here.
+
 ``` r
-# comment
 n <- 1e2
 x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
 colnames (x) <- c ("x", "y")
 xsf <- x_to_sf (x)
-sf_dist <- function (xsf) sf::st_distance (xsf, xsf)
+sf_dist <- function (xsf, s2 = TRUE) {
+    if (s2) {
+        sf::sf_use_s2 (TRUE) # s2::s2_distance()
+    } else {
+        sf::sf_use_s2 (FALSE) # Karney's geodesic algorithm
+    }
+    sf::st_distance (xsf, xsf)
+}
 geo_dist <- function (x) geodist (x, measure = "geodesic")
 rbenchmark::benchmark (
     replications = 10, order = "test",
-    sf_dist (xsf),
+    sf_dist (xsf, s2 = TRUE),
+    sf_dist (xsf, s2 = FALSE),
     geo_dist (x)
 ) [, 1:4]
-#>           test replications elapsed relative
-#> 2  geo_dist(x)           10   0.061    1.000
-#> 1 sf_dist(xsf)           10   0.146    2.393
+#> Spherical geometry (s2) switched off
+#> Linking to GEOS 3.13.0, GDAL 3.10.0, PROJ 9.5.0; sf_use_s2() is FALSE
+#> Spherical geometry (s2) switched on
+#> Spherical geometry (s2) switched off
+#>                       test replications elapsed relative
+#> 3              geo_dist(x)           10   0.062    1.000
+#> 2 sf_dist(xsf, s2 = FALSE)           10   0.207    3.339
+#> 1  sf_dist(xsf, s2 = TRUE)           10   0.146    2.355
 ```
 
 The [`geosphere` package](https://cran.r-project.org/package=geosphere)
@@ -201,13 +217,13 @@ rbenchmark::benchmark (
     fgeosph ()
 ) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.018    1.000
-#> 2  fgeosph()           10   0.037    2.056
+#> 1 fgeodist()           10   0.017    1.000
+#> 2  fgeosph()           10   0.037    2.176
 ```
 
-`geodist` is thus twice as fast as both `sf` for highly accurate
-geodesic distance calculations, and `geosphere` for calculation of
-sequential distances.
+`geodist` is thus at least twice as fast as both `sf` for highly
+accurate geodesic distance calculations, and `geosphere` for calculation
+of sequential distances.
 
 ## Contributors
 

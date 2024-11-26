@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">geodist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0.010</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0.011</span>
       </span>
     </div>
 
@@ -136,9 +136,9 @@
 <p>The <code><a href="reference/geodist_benchmark.html">geodist_benchmark()</a></code> function - the only other function provided by the <code>geodist</code> package - compares the accuracy of the different metrics to the nanometre-accuracy standard of <a href="https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf" class="external-link">Karney (2013)</a>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/geodist_benchmark.html">geodist_benchmark</a></span> <span class="op">(</span>lat <span class="op">=</span> <span class="fl">30</span>, d <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            haversine    vincenty       cheap</span></span>
-<span><span class="co">#&gt; absolute 0.793746804 0.793746804 0.572894881</span></span>
-<span><span class="co">#&gt; relative 0.002099031 0.002099031 0.001601655</span></span></code></pre></div>
+<span><span class="co">#&gt;            haversine    vincenty      cheap</span></span>
+<span><span class="co">#&gt; absolute 0.818681120 0.818681120 0.57910408</span></span>
+<span><span class="co">#&gt; relative 0.002173428 0.002173428 0.00160801</span></span></code></pre></div>
 <p>All distances (<code>d)</code> are in metres, and all measures are accurate to within 1m over distances out to several km (at the chosen latitude of 30 degrees). The following plots compare the absolute and relative accuracies of the different distance measures implemented here. The mapbox cheap ruler algorithm is the most accurate for distances out to around 100km, beyond which it becomes extremely inaccurate. Average relative errors of Vincenty distances remain generally constant at around 0.2%, while relative errors of cheap-ruler distances out to 100km are around 0.16%.</p>
 <p><img src="articles/fig1.png"></p>
 </div>
@@ -160,35 +160,48 @@
 <span>    <span class="va">d4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/geodist.html">geodist</a></span> <span class="op">(</span><span class="va">x</span>, measure <span class="op">=</span> <span class="st">"geodesic"</span><span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
 <span><span class="co">#&gt;                                      test replications elapsed relative</span></span>
-<span><span class="co">#&gt; 1     d1 &lt;- geodist(x, measure = "cheap")           10   0.071    1.000</span></span>
-<span><span class="co">#&gt; 2 d2 &lt;- geodist(x, measure = "haversine")           10   0.134    1.887</span></span>
-<span><span class="co">#&gt; 3  d3 &lt;- geodist(x, measure = "vincenty")           10   0.223    3.141</span></span>
-<span><span class="co">#&gt; 4  d4 &lt;- geodist(x, measure = "geodesic")           10   2.820   39.718</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     d1 &lt;- geodist(x, measure = "cheap")           10   0.070      1.0</span></span>
+<span><span class="co">#&gt; 2 d2 &lt;- geodist(x, measure = "haversine")           10   0.133      1.9</span></span>
+<span><span class="co">#&gt; 3  d3 &lt;- geodist(x, measure = "vincenty")           10   0.224      3.2</span></span>
+<span><span class="co">#&gt; 4  d4 &lt;- geodist(x, measure = "geodesic")           10   2.856     40.8</span></span></code></pre></div>
 <p>Geodesic distance calculation is available in the <a href="https://cran.r-project.org/package=sf" class="external-link"><code>sf</code> package</a>. Comparing computation speeds requires conversion of sets of numeric lon-lat points to <code>sf</code> form with the following code:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x_to_sf</span> <span class="op">&lt;-</span> <span class="kw">function</span> <span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span> <span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="kw">function</span> <span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span> <span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="kw">function</span> <span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
 <span>        <span class="fu">sf</span><span class="fu">::</span><span class="fu">st_point</span> <span class="op">(</span><span class="va">x</span> <span class="op">[</span><span class="va">i</span>, <span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>            <span class="fu">sf</span><span class="fu">::</span><span class="fu">st_sfc</span> <span class="op">(</span><span class="op">)</span></span>
 <span>    <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>        <span class="fu">sf</span><span class="fu">::</span><span class="fu">st_sfc</span> <span class="op">(</span>crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
+<p>Distances in <code>sf</code> are by default calculated via <a href="https://r-spatial.github.io/s2/reference/s2_is_collection.html" class="external-link"><code>s2::s2_distance()</code></a>, with alternative calculations using the same geodesic algorithm as here.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># comment</span></span>
-<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">1e2</span></span>
+<code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">1e2</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span> <span class="op">(</span><span class="op">-</span><span class="fl">180</span> <span class="op">+</span> <span class="fl">360</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span> <span class="op">(</span><span class="va">n</span><span class="op">)</span>, <span class="op">-</span><span class="fl">90</span> <span class="op">+</span> <span class="fl">180</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span> <span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span> <span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span> <span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span></span>
 <span><span class="va">xsf</span> <span class="op">&lt;-</span> <span class="fu">x_to_sf</span> <span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="va">sf_dist</span> <span class="op">&lt;-</span> <span class="kw">function</span> <span class="op">(</span><span class="va">xsf</span><span class="op">)</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu">st_distance</span> <span class="op">(</span><span class="va">xsf</span>, <span class="va">xsf</span><span class="op">)</span></span>
+<span><span class="va">sf_dist</span> <span class="op">&lt;-</span> <span class="kw">function</span> <span class="op">(</span><span class="va">xsf</span>, <span class="va">s2</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">s2</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu">sf</span><span class="fu">::</span><span class="fu">sf_use_s2</span> <span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span> <span class="co"># s2::s2_distance()</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>        <span class="fu">sf</span><span class="fu">::</span><span class="fu">sf_use_s2</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Karney's geodesic algorithm</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="fu">sf</span><span class="fu">::</span><span class="fu">st_distance</span> <span class="op">(</span><span class="va">xsf</span>, <span class="va">xsf</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
 <span><span class="va">geo_dist</span> <span class="op">&lt;-</span> <span class="kw">function</span> <span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="reference/geodist.html">geodist</a></span> <span class="op">(</span><span class="va">x</span>, measure <span class="op">=</span> <span class="st">"geodesic"</span><span class="op">)</span></span>
 <span><span class="fu">rbenchmark</span><span class="fu">::</span><span class="fu">benchmark</span> <span class="op">(</span></span>
 <span>    replications <span class="op">=</span> <span class="fl">10</span>, order <span class="op">=</span> <span class="st">"test"</span>,</span>
-<span>    <span class="fu">sf_dist</span> <span class="op">(</span><span class="va">xsf</span><span class="op">)</span>,</span>
+<span>    <span class="fu">sf_dist</span> <span class="op">(</span><span class="va">xsf</span>, s2 <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    <span class="fu">sf_dist</span> <span class="op">(</span><span class="va">xsf</span>, s2 <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>    <span class="fu">geo_dist</span> <span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
-<span><span class="co">#&gt;           test replications elapsed relative</span></span>
-<span><span class="co">#&gt; 2  geo_dist(x)           10   0.061    1.000</span></span>
-<span><span class="co">#&gt; 1 sf_dist(xsf)           10   0.146    2.393</span></span></code></pre></div>
+<span><span class="co">#&gt; Spherical geometry (s2) switched off</span></span>
+<span><span class="co">#&gt; Linking to GEOS 3.13.0, GDAL 3.10.0, PROJ 9.5.0; sf_use_s2() is FALSE</span></span>
+<span><span class="co">#&gt; Spherical geometry (s2) switched on</span></span>
+<span><span class="co">#&gt; Spherical geometry (s2) switched off</span></span>
+<span><span class="co">#&gt;                       test replications elapsed relative</span></span>
+<span><span class="co">#&gt; 3              geo_dist(x)           10   0.062    1.000</span></span>
+<span><span class="co">#&gt; 2 sf_dist(xsf, s2 = FALSE)           10   0.207    3.339</span></span>
+<span><span class="co">#&gt; 1  sf_dist(xsf, s2 = TRUE)           10   0.146    2.355</span></span></code></pre></div>
 <p>The <a href="https://cran.r-project.org/package=geosphere" class="external-link"><code>geosphere</code> package</a> also offers sequential calculation which is benchmarked with the following code:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fgeodist</span> <span class="op">&lt;-</span> <span class="kw">function</span> <span class="op">(</span><span class="op">)</span> <span class="fu"><a href="reference/geodist.html">geodist</a></span> <span class="op">(</span><span class="va">x</span>, measure <span class="op">=</span> <span class="st">"vincenty"</span>, sequential <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -199,9 +212,9 @@
 <span>    <span class="fu">fgeosph</span> <span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
 <span><span class="co">#&gt;         test replications elapsed relative</span></span>
-<span><span class="co">#&gt; 1 fgeodist()           10   0.018    1.000</span></span>
-<span><span class="co">#&gt; 2  fgeosph()           10   0.037    2.056</span></span></code></pre></div>
-<p><code>geodist</code> is thus twice as fast as both <code>sf</code> for highly accurate geodesic distance calculations, and <code>geosphere</code> for calculation of sequential distances.</p>
+<span><span class="co">#&gt; 1 fgeodist()           10   0.017    1.000</span></span>
+<span><span class="co">#&gt; 2  fgeosph()           10   0.037    2.176</span></span></code></pre></div>
+<p><code>geodist</code> is thus at least twice as fast as both <code>sf</code> for highly accurate geodesic distance calculations, and <code>geosphere</code> for calculation of sequential distances.</p>
 </div>
 </div>
 <div class="section level2">

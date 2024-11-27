@@ -7,8 +7,8 @@ status](https://github.com/hypertidy/geodist/workflows/R-CMD-check/badge.svg)](h
 state and is being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![codecov](https://codecov.io/gh/hypertidy/geodist/branch/master/graph/badge.svg)](https://codecov.io/gh/hypertidy/geodist)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/geodist)](http://cran.r-project.org/web/packages/geodist)
-![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geodist)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/geodist)](http://cran.r-project.org/web/packages/geodist)
+![downloads](https://cranlogs.r-pkg.org/badges/grand-total/geodist)
 
 # geodist
 

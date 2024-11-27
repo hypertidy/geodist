@@ -34,7 +34,7 @@ distance to each element of the first matrix.
 \url{https://github.com/mapbox/cheap-ruler-cpp}; \code{measure = "geodesic"}
 denotes the very accurate geodesic methods given in Karney (2013)
 "Algorithms for geodesics" J Geod 87:43-55, and as provided by the
-`st_dist()` function from the \pkg{sf} package.
+`st_distance()` function from the \pkg{sf} package.
 }
 \examples{
 n <- 50

@@ -229,6 +229,7 @@ of sequential distances.
 
 
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -245,6 +246,12 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <img src="https://avatars.githubusercontent.com/u/6697851?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/commits?author=mpadge">mpadge</a>
+</td>
+<td align="center">
+<a href="https://github.com/jlacko">
+<img src="https://avatars.githubusercontent.com/u/29260421?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/hypertidy/geodist/commits?author=jlacko">jlacko</a>
 </td>
 <td align="center">
 <a href="https://github.com/mdsumner">

@@ -2,22 +2,16 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches:
-      - main
+    branches: [main, master]
   pull_request:
-    branches:
-      - main
 
 name: test-coverage.yaml
 
 permissions: read-all
 
 jobs:
-
   test-coverage:
-
     runs-on: ubuntu-latest
-
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
@@ -41,6 +35,7 @@ jobs:
             install_path = file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "package"),
             line_exclusions = list('src/geodesic.c')
           )
+          print(cov)
           covr::to_cobertura(cov)
         shell: Rscript {0}
 

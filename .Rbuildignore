@@ -1,3 +1,4 @@
+.ccls-cache/
 ^aaa\.Rmd$
 ^README\.*
 ^README-.*\.png$

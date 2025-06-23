@@ -1,3 +1,9 @@
+# v0.1.1
+
+### Minor changes:
+
+- Updated 'geodesic.c' source code to fix clang compiler warning
+
 # v0.1.0
 
 ### Major changes:

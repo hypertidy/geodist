@@ -4,11 +4,14 @@
   "identifier": "geodist",
   "description": "Dependency-free, ultra fast calculation of geodesic distances. Includes the reference nanometre-accuracy geodesic distances of Karney (2013) <doi:10.1007/s00190-012-0578-z>, as used by the 'sf' package, as well as Haversine and Vincenty distances. Default distance measure is the \"Mapbox cheap ruler\" which is generally more accurate than Haversine or Vincenty for distances out to a few hundred kilometres, and is considerably faster. The main function accepts one or two inputs in almost any generic rectangular form, and returns either matrices of pairwise distances, or vectors of sequential distances.",
   "name": "geodist: Fast, Dependency-Free Geodesic Distance Calculations",
-  "relatedLink": ["https://hypertidy.github.io/geodist/", "https://CRAN.R-project.org/package=geodist"],
+  "relatedLink": [
+    "https://hypertidy.github.io/geodist/",
+    "https://CRAN.R-project.org/package=geodist"
+  ],
   "codeRepository": "https://github.com/hypertidy/geodist",
   "issueTracker": "https://github.com/hypertidy/geodist/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.1.1",
+  "version": "0.1.1.001",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -88,11 +91,15 @@
     }
   ],
   "softwareRequirements": {
-    "SystemRequirements": null
+    "SystemRequirements": {}
   },
   "fileSize": "2217.814KB",
   "releaseNotes": "https://github.com/hypertidy/geodist/blob/master/NEWS.md",
   "readme": "https://github.com/hypertidy/geodist/blob/main/README.md",
-  "contIntegration": ["https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check", "https://github.com/hypertidy/geodist/actions?query=workflow%3Apkgcheck", "https://app.codecov.io/gh/hypertidy/geodist"],
+  "contIntegration": [
+    "https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check",
+    "https://github.com/hypertidy/geodist/actions?query=workflow%3Apkgcheck",
+    "https://app.codecov.io/gh/hypertidy/geodist"
+  ],
   "developmentStatus": "https://www.repostatus.org/"
 }

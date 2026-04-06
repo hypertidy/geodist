@@ -14,8 +14,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r pkg-load, echo = FALSE, message = FALSE, eval = FALSE}
-devtools::load_all (".", export_all = FALSE)
+```{r pkg-load, echo = TRUE, message = FALSE, eval = TRUE}
+library (geodist)
 ```
 
 # geodist
@@ -116,8 +116,7 @@ cols <- c ("skyblue", "lawngreen", "tomato")
 par (mfrow = c (1, 2))
 ylabs <- c ("Absolute error (m)", "Relative error (%)")
 ylims <- list (range (yvals [[1]]), c (min (yvals [[2]]), 1))
-for (i in 1:2)
-{
+for (i in 1:2) {
     plot (NULL, NULL,
         xlim = range (d / 1000), ylim = ylims [[i]],
         bty = "l", log = "xy", xaxt = "n", yaxt = "n",
@@ -140,14 +139,14 @@ for (i in 1:2)
             labels = c ("0.1", "0.2", "0.3", "0.4", "0.5", "1", "2")
         )
     }
-    junk <- sapply (yl, function (j) {
+    junk <- lapply (yl, function (j) {
         lines (range (d / 1000), rep (j, 2),
             col = "grey", lty = 2
         )
     })
 
     xl <- 10^(-3:6)
-    junk <- sapply (xl, function (j) {
+    junk <- lapply (xl, function (j) {
         lines (rep (j, 2), range (yvals [[i]]),
             col = "grey", lty = 2
         )
@@ -194,13 +193,12 @@ package](https://cran.r-project.org/package=sf). Comparing computation speeds
 requires conversion of sets of numeric lon-lat points to `sf` form with the
 following code:
 ```{r x_to_sf, eval = FALSE}
-require (magrittr)
 x_to_sf <- function (x) {
-    sapply (seq (nrow (x)), function (i) {
-        sf::st_point (x [i, ]) %>%
+    out <- lapply (seq_len (nrow (x)), function (i) {
+        sf::st_point (x [i, ]) |>
             sf::st_sfc ()
-    }) %>%
-        sf::st_sfc (crs = 4326)
+    })
+    sf::st_sfc (do.call (rbind, out), crs = 4326)
 }
 ```
 

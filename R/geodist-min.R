@@ -4,14 +4,9 @@
 #' vector of the elements in the second matrix corresponding to the minimal
 #' distance to each element of the first matrix.
 #'
-#' @param x Rectangular object (matrix, \code{data.frame}, \pkg{tibble},
-#' whatever) containing longitude and latitude coordinates.
+#' @inheritParams geodist
 #' @param y Second rectangular object to be search for minimal distance to each
 #' row in the first object.
-#' @param measure One of "haversine" "vincenty", "geodesic", or "cheap"
-#' specifying desired method of geodesic distance calculation; see Notes.
-#' @param quiet If \code{FALSE}, check whether max of calculated distances
-#' is greater than accuracy threshold and warn.
 #' @return A integer index vector indexing elements of 'y' corresponding to
 #' minimal distances to each element of 'x'. The length of this vector is equal
 #' to the number of rows in 'x'.

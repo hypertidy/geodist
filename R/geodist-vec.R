@@ -142,7 +142,7 @@ geodist_xy_vec <- function (x1, y1, x2, y2, measure) {
         haversine = .Call ("R_haversine_xy_vec", x1, y1, x2, y2),
         vincenty = .Call ("R_vincenty_xy_vec", x1, y1, x2, y2),
         geodesic = .Call ("R_geodesic_xy_vec", x1, y1, x2, y2),
-        cheap = res <- .Call ("R_cheap_xy_vec", x1, y1, x2, y2)
+        cheap = .Call ("R_cheap_xy_vec", x1, y1, x2, y2)
     )
 
     t (matrix (res, nrow = length (x2)))

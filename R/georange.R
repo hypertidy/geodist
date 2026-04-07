@@ -55,15 +55,12 @@ georange <- function (x, y, sequential = FALSE, measure = "cheap") {
 
 georange_seq <- function (x, measure) {
 
-    if (measure == "haversine") {
-        res <- .Call ("R_haversine_seq_range", as.vector (x))
-    } else if (measure == "vincenty") {
-        res <- .Call ("R_vincenty_seq_range", as.vector (x))
-    } else if (measure == "geodesic") {
-        res <- .Call ("R_geodesic_seq_range", as.vector (x))
-    } else {
-        res <- .Call ("R_cheap_seq_range", as.vector (x))
-    }
+    res <- switch (measure,
+        haversine = .Call ("R_haversine_seq_range", as.vector (x)),
+        vincenty = .Call ("R_vincenty_seq_range", as.vector (x)),
+        geodesic = .Call ("R_geodesic_seq_range", as.vector (x)),
+        .Call ("R_cheap_seq_range", as.vector (x))
+    )
 
     names (res) <- c ("minimum", "maximum")
 
@@ -72,15 +69,12 @@ georange_seq <- function (x, measure) {
 
 georange_x <- function (x, measure) {
 
-    if (measure == "haversine") {
-        res <- .Call ("R_haversine_range", as.vector (x))
-    } else if (measure == "vincenty") {
-        res <- .Call ("R_vincenty_range", as.vector (x))
-    } else if (measure == "geodesic") {
-        res <- .Call ("R_geodesic_range", as.vector (x))
-    } else {
-        res <- .Call ("R_cheap_range", as.vector (x))
-    }
+    res <- switch (measure,
+        haversine = .Call ("R_haversine_range", as.vector (x)),
+        vincenty = .Call ("R_vincenty_range", as.vector (x)),
+        geodesic = .Call ("R_geodesic_range", as.vector (x)),
+        .Call ("R_cheap_range", as.vector (x))
+    )
 
     names (res) <- c ("minimum", "maximum")
 
@@ -89,15 +83,14 @@ georange_x <- function (x, measure) {
 
 georange_xy <- function (x, y, measure) {
 
-    if (measure == "haversine") {
-        res <- .Call ("R_haversine_xy_range", as.vector (x), as.vector (y))
-    } else if (measure == "vincenty") {
-        res <- .Call ("R_vincenty_xy_range", as.vector (x), as.vector (y))
-    } else if (measure == "geodesic") {
-        res <- .Call ("R_geodesic_xy_range", as.vector (x), as.vector (y))
-    } else if (measure == "cheap") {
-        res <- .Call ("R_cheap_xy_range", as.vector (x), as.vector (y))
-    }
+    res <- switch (measure,
+        haversine = .Call (
+            "R_haversine_xy_range", as.vector (x), as.vector (y)
+        ),
+        vincenty = .Call ("R_vincenty_xy_range", as.vector (x), as.vector (y)),
+        geodesic = .Call ("R_geodesic_xy_range", as.vector (x), as.vector (y)),
+        cheap = .Call ("R_cheap_xy_range", as.vector (x), as.vector (y))
+    )
 
     names (res) <- c ("minimum", "maximum")
 

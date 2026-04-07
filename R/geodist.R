@@ -113,8 +113,12 @@ geodist_seq <- function (x, measure, pad) {
         haversine = matrix (.Call ("R_haversine_seq", as.vector (x)),
             nrow = nrow (x)
         ),
-        vincenty = matrix (.Call ("R_vincenty_seq", as.vector (x)), nrow = nrow (x)),
-        geodesic = matrix (.Call ("R_geodesic_seq", as.vector (x)), nrow = nrow (x)),
+        vincenty = matrix (.Call (
+            "R_vincenty_seq", as.vector (x)
+        ), nrow = nrow (x)),
+        geodesic = matrix (.Call (
+            "R_geodesic_seq", as.vector (x)
+        ), nrow = nrow (x)),
         matrix (.Call ("R_cheap_seq", as.vector (x)), nrow = nrow (x))
     )
 
@@ -129,9 +133,15 @@ geodist_seq <- function (x, measure, pad) {
 geodist_x <- function (x, measure) {
 
     switch (measure,
-        haversine = matrix (.Call ("R_haversine", as.vector (x)), nrow = nrow (x)),
-        vincenty = matrix (.Call ("R_vincenty", as.vector (x)), nrow = nrow (x)),
-        geodesic = matrix (.Call ("R_geodesic", as.vector (x)), nrow = nrow (x)),
+        haversine = matrix (.Call (
+            "R_haversine", as.vector (x)
+        ), nrow = nrow (x)),
+        vincenty = matrix (.Call (
+            "R_vincenty", as.vector (x)
+        ), nrow = nrow (x)),
+        geodesic = matrix (.Call (
+            "R_geodesic", as.vector (x)
+        ), nrow = nrow (x)),
         matrix (.Call ("R_cheap", as.vector (x)), nrow = nrow (x))
     )
 }

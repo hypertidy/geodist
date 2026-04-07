@@ -89,13 +89,13 @@ geodist_vec <- function (x1, y1, x2, y2, paired = FALSE,
 check_vec_inputs <- function (x, y, n = 1) {
 
     if (missing (x) | missing (y)) {
-        stop (paste0 ("x", n, " and y", n, " must be provided"))
+        stop ("x", n, " and y", n, " must be provided")
     }
     if (!(is.vector (x) && is.vector (y))) {
         stop ("geodist_vec only accepts vector inputs")
     }
     if (length (x) != length (y)) {
-        stop (paste0 ("x", n, " and y", n, " must have the same length"))
+        stop ("x", n, " and y", n, " must have the same length")
     }
 }
 

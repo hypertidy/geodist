@@ -22,24 +22,24 @@ test_that ("measures", {
         d1_xy <- geodist (x, y, measure = m)
         d1_seq <- geodist (x, measure = m, sequential = TRUE)
 
-        expect_true (max (abs (d1_x - d0_x)) > 0)
-        expect_true (max (abs (d1_xy - d0_xy)) > 0)
-        expect_true (max (abs (d1_seq - d0_seq)) > 0)
+        expect_gt (max (abs (d1_x - d0_x)), 0)
+        expect_gt (max (abs (d1_xy - d0_xy)), 0)
+        expect_gt (max (abs (d1_seq - d0_seq)), 0)
 
         if (test_all) {
 
-            expect_true (cor (
+            expect_gt (cor (
                 as.vector (d0_x),
                 as.vector (d1_x)
-            ) > cor_lim)
-            expect_true (cor (
+            ), cor_lim)
+            expect_gt (cor (
                 as.vector (d0_xy),
                 as.vector (d1_xy)
-            ) > cor_lim)
-            expect_true (cor (
+            ), cor_lim)
+            expect_gt (cor (
                 as.vector (d0_seq),
                 as.vector (d1_seq)
-            ) > cor_lim)
+            ), cor_lim)
         }
     }
 })

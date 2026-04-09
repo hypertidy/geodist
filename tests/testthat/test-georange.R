@@ -6,31 +6,35 @@ test_that ("sequential structure", {
     x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
     y <- cbind (-180 + 360 * runif (2 * n), -90 + 180 * runif (2 * n))
     expect_message (
-        d1 <- georange (x,
+        georange (x,
             sequential = TRUE,
             measure = "haversine"
         ),
         "object has no named columns"
     )
     colnames (x) <- colnames (y) <- c ("x", "y")
-    expect_silent (d1 <- georange (x,
+    d1 <- expect_silent (georange (x,
         sequential = TRUE,
         measure = "haversine"
     ))
     expect_message (
-        d2 <- georange (x, y,
+        georange (x, y,
             sequential = TRUE,
             measure = "haversine"
         ),
         "Sequential distances calculated along values of"
     )
+    d2 <- suppressMessages (georange (x, y,
+        sequential = TRUE,
+        measure = "haversine"
+    ))
     expect_identical (d1, d2)
 
-    expect_equal (length (d1), 2)
-    expect_equal (names (d1), c ("minimum", "maximum"))
-    expect_true (d1 [2] > d1 [1])
+    expect_length (d1, 2)
+    expect_named (d1, c ("minimum", "maximum"))
+    expect_gt (d1 [2], d1 [1])
     d3 <- georange (x, sequential = TRUE, measure = "haversine")
-    expect_equal (length (d3), 2)
+    expect_length (d3, 2)
 })
 
 test_that ("different measures", {
@@ -41,20 +45,20 @@ test_that ("different measures", {
     d2 <- georange (x, sequential = TRUE, measure = "haversine")
     d3 <- georange (x, sequential = TRUE, measure = "vincenty")
     d4 <- georange (x, sequential = TRUE, measure = "geodesic")
-    expect_true (!identical (d1, d2))
+    expect_false (identical (d1, d2))
 
     if (test_all) { # haversine and vincenty are sometimes identical
 
-        expect_true (!identical (d1, d3))
-        expect_true (!identical (d1, d4))
-        # expect_true (!identical (d2, d3))
-        expect_true (!identical (d2, d4))
-        expect_true (!identical (d3, d4))
+        expect_false (identical (d1, d3))
+        expect_false (identical (d1, d4))
+        # expect_false (identical (d2, d3))
+        expect_false (identical (d2, d4))
+        expect_false (identical (d3, d4))
     }
     d5 <- georange (x, sequential = TRUE)
     expect_identical (d1, d5)
     expect_error (
-        d6 <- georange (x,
+        georange (x,
             sequential = TRUE,
             measure = "junk"
         ),
@@ -117,7 +121,7 @@ test_that ("geodesic extreme cases", {
     )
     colnames (x) <- c ("x", "y")
     d <- georange (x, measure = "geodesic")
-    expect_equal (length (d), 2)
+    expect_length (d, 2)
 
     x <- rbind (
         c (0, 0),
@@ -125,7 +129,7 @@ test_that ("geodesic extreme cases", {
     )
     colnames (x) <- c ("x", "y")
     d <- georange (x, measure = "geodesic")
-    expect_equal (length (d), 2)
+    expect_length (d, 2)
 
     x <- rbind (
         c (0, 0),
@@ -133,7 +137,7 @@ test_that ("geodesic extreme cases", {
     )
     colnames (x) <- c ("x", "y")
     d <- georange (x, measure = "geodesic")
-    expect_equal (length (d), 2)
+    expect_length (d, 2)
 
     x <- rbind (
         c (0, 0),
@@ -141,7 +145,7 @@ test_that ("geodesic extreme cases", {
     )
     colnames (x) <- c ("x", "y")
     d <- georange (x, measure = "geodesic")
-    expect_equal (length (d), 2)
+    expect_length (d, 2)
 })
 
 test_that ("range measures for x", {
@@ -153,16 +157,16 @@ test_that ("range measures for x", {
     d3 <- georange (x, measure = "vincenty")
     d4 <- georange (x, measure = "cheap")
     d5 <- georange (x, measure = "geodesic")
-    expect_true (!identical (d1, d2))
-    expect_true (!identical (d1, d3))
-    expect_true (!identical (d1, d4))
-    expect_true (!identical (d1, d5))
-    expect_true (!identical (d2, d3))
-    expect_true (!identical (d2, d4))
-    expect_true (!identical (d2, d5))
-    expect_true (!identical (d3, d4))
-    expect_true (!identical (d3, d5))
-    expect_true (!identical (d4, d5))
+    expect_false (identical (d1, d2))
+    expect_false (identical (d1, d3))
+    expect_false (identical (d1, d4))
+    expect_false (identical (d1, d5))
+    expect_false (identical (d2, d3))
+    expect_false (identical (d2, d4))
+    expect_false (identical (d2, d5))
+    expect_false (identical (d3, d4))
+    expect_false (identical (d3, d5))
+    expect_false (identical (d4, d5))
 })
 
 test_that ("range measures for xy", {
@@ -174,10 +178,10 @@ test_that ("range measures for xy", {
     d2 <- georange (x, y, measure = "vincenty")
     d3 <- georange (x, y, measure = "cheap")
     d4 <- georange (x, y, measure = "geodesic")
-    expect_true (!identical (d1, d2))
-    expect_true (!identical (d1, d3))
-    expect_true (!identical (d1, d4))
-    expect_true (!identical (d2, d3))
-    expect_true (!identical (d2, d4))
-    expect_true (!identical (d3, d4))
+    expect_false (identical (d1, d2))
+    expect_false (identical (d1, d3))
+    expect_false (identical (d1, d4))
+    expect_false (identical (d2, d3))
+    expect_false (identical (d2, d4))
+    expect_false (identical (d3, d4))
 })

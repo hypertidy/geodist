@@ -6,12 +6,12 @@ test_that ("sequential structure", {
     y <- cbind (-180 + 360 * runif (2 * n), -90 + 180 * runif (2 * n))
     colnames (x) <- colnames (y) <- c ("x", "y")
     d1 <- geodist (x, sequential = TRUE, measure = "haversine")
-    expect_equal (length (d1), nrow (x) - 1)
+    expect_length (d1, nrow (x) - 1)
     d2 <- geodist (x,
         sequential = TRUE, pad = TRUE,
         measure = "haversine"
     )
-    expect_equal (length (d2), nrow (x))
+    expect_length (d2, nrow (x))
     # Sequential should equal off-diagonal of full matrix (but note
     # that this test  will fail for "cheap" distances)
     dmat <- geodist (x, measure = "haversine")
@@ -19,7 +19,7 @@ test_that ("sequential structure", {
     dmat1 <- split (dmat, indx) ["1"] [[1]] # first off-diagonal
     expect_identical (d1, dmat1)
     expect_message (
-        d3 <- geodist (x, y, sequential = TRUE),
+        geodist (x, y, sequential = TRUE),
         "Sequential distances calculated along values"
     )
 })
@@ -74,7 +74,7 @@ test_that ("geodesic extreme cases", {
     )
     colnames (x) <- c ("x", "y")
     d <- geodist (x, measure = "geodesic")
-    expect_true (sum (diag (d)) == 0)
+    expect_identical (sum (diag (d)), 0)
 
     x <- rbind (
         c (0, 0),
@@ -82,7 +82,7 @@ test_that ("geodesic extreme cases", {
     )
     colnames (x) <- c ("x", "y")
     d <- geodist (x, measure = "geodesic")
-    expect_true (sum (diag (d)) == 0)
+    expect_identical (sum (diag (d)), 0)
 
     x <- rbind (
         c (0, 0),
@@ -90,7 +90,7 @@ test_that ("geodesic extreme cases", {
     )
     colnames (x) <- c ("x", "y")
     d <- geodist (x, measure = "geodesic")
-    expect_true (sum (diag (d)) == 0)
+    expect_identical (sum (diag (d)), 0)
 
     x <- rbind (
         c (0, 0),
@@ -98,19 +98,19 @@ test_that ("geodesic extreme cases", {
     )
     colnames (x) <- c ("x", "y")
     d <- geodist (x, measure = "geodesic")
-    expect_true (sum (diag (d)) == 0)
+    expect_identical (sum (diag (d)), 0)
     m <- 20003930
-    expect_true (abs (d [1, 2] - m) < 2) # it doesn't equal zero
-    expect_true (abs (d [2, 1] - m) < 2) # it doesn't equal zero
+    expect_lt (abs (d [1, 2] - m), 2) # it doesn't equal zero
+    expect_lt (abs (d [2, 1] - m), 2) # it doesn't equal zero
 })
 
 test_that ("geodist_benchmark", {
     d <- geodist_benchmark (lat = 1, d = 100, n = 100)
-    expect_true (inherits (d, "matrix"))
-    expect_equal (nrow (d), 2)
-    expect_equal (ncol (d), 3)
-    expect_equal (rownames (d), c ("absolute", "relative"))
-    expect_equal (
+    expect_true (is.matrix (d))
+    expect_identical (nrow (d), 2L)
+    expect_identical (ncol (d), 3L)
+    expect_identical (rownames (d), c ("absolute", "relative"))
+    expect_identical (
         colnames (d),
         c ("haversine", "vincenty", "cheap")
     )
@@ -132,36 +132,37 @@ test_that ("geodist paired", {
     y <- cbind (-180 + 360 * runif (2 * n), -90 + 180 * runif (2 * n))
     colnames (x) <- colnames (y) <- c ("x", "y")
     expect_error (
-        d1 <- geodist (x, y, paired = TRUE),
+        geodist (x, y, paired = TRUE),
         "x and y must have the same number of rows"
     )
     y <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
     colnames (y) <- c ("x", "y")
     if (test_all) {
         expect_message (
-            d1 <- geodist (x, y, paired = TRUE),
+            geodist (x, y, paired = TRUE),
             "Maximum distance is > 100km"
         )
+        d1 <- suppressMessages (geodist (x, y, paired = TRUE))
     } else {
         d1 <- geodist (x, y, paired = TRUE)
     }
     expect_type (d1, "double")
-    expect_equal (length (d1), n)
+    expect_length (d1, n)
 
-    expect_silent (d2 <- geodist (x, y,
+    d2 <- expect_silent (geodist (x, y,
         paired = TRUE,
         measure = "haversine"
     ))
-    expect_silent (d3 <- geodist (x, y,
+    d3 <- expect_silent (geodist (x, y,
         paired = TRUE,
         measure = "vincenty"
     ))
-    expect_silent (d4 <- geodist (x, y,
+    d4 <- expect_silent (geodist (x, y,
         paired = TRUE,
         measure = "geodesic"
     ))
-    expect_true (cor (d2, d3) > 0.99)
-    expect_true (cor (d2, d4) > 0.99)
+    expect_gt (cor (d2, d3), 0.99)
+    expect_gt (cor (d2, d4), 0.99)
 })
 
 test_that ("geodist_vec", {
@@ -175,7 +176,7 @@ test_that ("geodist_vec", {
 
     # errors:
     expect_message (
-        d <- geodist_vec (x1, y1, x2, y2,
+        geodist_vec (x1, y1, x2, y2,
             sequential = TRUE
         ),
         paste0 (
@@ -184,15 +185,15 @@ test_that ("geodist_vec", {
         )
     )
     expect_error (
-        d <- geodist_vec (),
+        geodist_vec (),
         "x1 and y1 must be provided"
     )
     expect_error (
-        d <- geodist_vec (x1 = x, y1 = y),
+        geodist_vec (x1 = x, y1 = y),
         "geodist_vec only accepts vector inputs"
     )
     expect_error (
-        d <- geodist_vec (x1, y1 [1:10]),
+        geodist_vec (x1, y1 [1:10]),
         "x1 and y1 must have the same length"
     )
 
@@ -228,16 +229,16 @@ test_that ("argument quiet for measure cheap works", {
     y <- cbind ("x" = x2, "y" = y2)
 
     expect_message (
-        d1 <- geodist (x, y, paired = TRUE),
+        geodist (x, y, paired = TRUE),
         "Maximum distance is > 100km"
     )
-    expect_silent (d1 <- geodist (x, y, paired = TRUE, quiet = TRUE))
+    expect_silent (geodist (x, y, paired = TRUE, quiet = TRUE))
 
     expect_message (
-        d1 <- geodist_vec (x1, y1, x2, y2, paired = TRUE),
+        geodist_vec (x1, y1, x2, y2, paired = TRUE),
         "Maximum distance is > 100km"
     )
-    expect_silent (d1 <- geodist_vec (x1, y1, x2, y2,
+    expect_silent (geodist_vec (x1, y1, x2, y2,
         paired = TRUE, quiet = TRUE
     ))
 

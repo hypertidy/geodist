@@ -163,16 +163,16 @@ convert_to_matrix <- function (obj) {
         cbind (obj [, xy_cols [1]], obj [, xy_cols [2]])
     } else {
 
-        if (!(is.numeric (obj [, xy_cols [1], drop = TRUE]) &
-            is.numeric (obj [, xy_cols [2], drop = TRUE]))) {
+        if (is.numeric (obj [, xy_cols [1], drop = TRUE]) &
+            is.numeric (obj [, xy_cols [2], drop = TRUE])) {
+
+            cbind (obj [[xy_cols [1]]], obj [[xy_cols [2]]]) # nolint
+        } else {
 
             cbind (
                 as.numeric (obj [, xy_cols [1], drop = TRUE]),
                 as.numeric (obj [, xy_cols [2], drop = TRUE])
             )
-        } else {
-
-            cbind (obj [[xy_cols [1]]], obj [[xy_cols [2]]]) # nolint
         }
     }
 }

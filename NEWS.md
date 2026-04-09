@@ -1,5 +1,10 @@
 # v0.1.1.00x (current dev version)
 
+### Minor changes:
+
+- Cosmetic changes from newly-revised `goodpractice`
+- Some code in vignette made active, including removal of formerly pre-generated figure.
+
 ---
 
 # v0.1.1

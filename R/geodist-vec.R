@@ -18,10 +18,7 @@
 #' @param pad If \code{sequential = TRUE} values are padded with initial
 #' \code{NA} to return \code{n} values for inputs of length \code{n}, otherwise
 #' return \code{n - 1} values.
-#' @param measure One of "haversine" "vincenty", "geodesic", or "cheap"
-#' specifying desired method of geodesic distance calculation; see Notes.
-#' @param quiet If \code{FALSE}, check whether max of calculated distances
-#' is greater than accuracy threshold and warn.
+#' @inheritParams geodist
 #' @return If only \code{(x1, y1)} are passed and \code{sequential = FALSE}, a
 #' square symmetric matrix containing distances between all items in \code{(x1,
 #' y1)}; If only \code{(x1, y1)} are passed and \code{sequential = TRUE}, a
@@ -92,40 +89,34 @@ geodist_vec <- function (x1, y1, x2, y2, paired = FALSE,
 check_vec_inputs <- function (x, y, n = 1) {
 
     if (missing (x) | missing (y)) {
-        stop (paste0 ("x", n, " and y", n, " must be provided"))
+        stop ("x", n, " and y", n, " must be provided")
     }
     if (!(is.vector (x) && is.vector (y))) {
         stop ("geodist_vec only accepts vector inputs")
     }
     if (length (x) != length (y)) {
-        stop (paste0 ("x", n, " and y", n, " must have the same length"))
+        stop ("x", n, " and y", n, " must have the same length")
     }
 }
 
 geodist_paired_vec <- function (x1, y1, x2, y2, measure) {
 
-    if (measure == "haversine") {
-        .Call ("R_haversine_paired_vec", x1, y1, x2, y2)
-    } else if (measure == "vincenty") {
-        .Call ("R_vincenty_paired_vec", x1, y1, x2, y2)
-    } else if (measure == "geodesic") {
-        .Call ("R_geodesic_paired_vec", x1, y1, x2, y2)
-    } else {
+    switch (measure,
+        haversine = .Call ("R_haversine_paired_vec", x1, y1, x2, y2),
+        vincenty = .Call ("R_vincenty_paired_vec", x1, y1, x2, y2),
+        geodesic = .Call ("R_geodesic_paired_vec", x1, y1, x2, y2),
         .Call ("R_cheap_paired_vec", x1, y1, x2, y2)
-    }
+    )
 }
 
 geodist_seq_vec <- function (x, y, measure, pad) {
 
-    if (measure == "haversine") {
-        res <- matrix (.Call ("R_haversine_seq_vec", x, y))
-    } else if (measure == "vincenty") {
-        res <- matrix (.Call ("R_vincenty_seq_vec", x, y))
-    } else if (measure == "geodesic") {
-        res <- matrix (.Call ("R_geodesic_seq_vec", x, y))
-    } else {
-        res <- matrix (.Call ("R_cheap_seq_vec", x, y))
-    }
+    res <- switch (measure,
+        haversine = matrix (.Call ("R_haversine_seq_vec", x, y)),
+        vincenty = matrix (.Call ("R_vincenty_seq_vec", x, y)),
+        geodesic = matrix (.Call ("R_geodesic_seq_vec", x, y)),
+        matrix (.Call ("R_cheap_seq_vec", x, y))
+    )
 
     index <- seq_along (res)
     if (!pad) {
@@ -137,28 +128,22 @@ geodist_seq_vec <- function (x, y, measure, pad) {
 
 geodist_x_vec <- function (x, y, measure) {
 
-    if (measure == "haversine") {
-        matrix (.Call ("R_haversine_vec", x, y), nrow = length (x))
-    } else if (measure == "vincenty") {
-        matrix (.Call ("R_vincenty_vec", x, y), nrow = length (x))
-    } else if (measure == "geodesic") {
-        matrix (.Call ("R_geodesic_vec", x, y), nrow = length (x))
-    } else {
+    switch (measure,
+        haversine = matrix (.Call ("R_haversine_vec", x, y), nrow = length (x)),
+        vincenty = matrix (.Call ("R_vincenty_vec", x, y), nrow = length (x)),
+        geodesic = matrix (.Call ("R_geodesic_vec", x, y), nrow = length (x)),
         matrix (.Call ("R_cheap_vec", x, y), nrow = length (x))
-    }
+    )
 }
 
 geodist_xy_vec <- function (x1, y1, x2, y2, measure) {
 
-    if (measure == "haversine") {
-        res <- .Call ("R_haversine_xy_vec", x1, y1, x2, y2)
-    } else if (measure == "vincenty") {
-        res <- .Call ("R_vincenty_xy_vec", x1, y1, x2, y2)
-    } else if (measure == "geodesic") {
-        res <- .Call ("R_geodesic_xy_vec", x1, y1, x2, y2)
-    } else if (measure == "cheap") {
-        res <- .Call ("R_cheap_xy_vec", x1, y1, x2, y2)
-    }
+    res <- switch (measure,
+        haversine = .Call ("R_haversine_xy_vec", x1, y1, x2, y2),
+        vincenty = .Call ("R_vincenty_xy_vec", x1, y1, x2, y2),
+        geodesic = .Call ("R_geodesic_xy_vec", x1, y1, x2, y2),
+        cheap = .Call ("R_cheap_xy_vec", x1, y1, x2, y2)
+    )
 
     t (matrix (res, nrow = length (x2)))
 }

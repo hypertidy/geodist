@@ -1,3 +1,4 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![R build
@@ -7,8 +8,8 @@ status](https://github.com/hypertidy/geodist/workflows/R-CMD-check/badge.svg)](h
 state and is being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/)
 [![codecov](https://codecov.io/gh/hypertidy/geodist/branch/master/graph/badge.svg)](https://app.codecov.io/gh/hypertidy/geodist)
-[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/geodist)](http://cran.r-project.org/web/packages/geodist/)
-![downloads](https://cranlogs.r-pkg.org/badges/grand-total/geodist)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/geodist)](https://cran.r-project.org/package=geodist/)
+![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geodist)
 
 # geodist
 
@@ -54,7 +55,7 @@ Then load with
 ``` r
 library (geodist)
 packageVersion ("geodist")
-#> [1] '0.1.0.6'
+#> [1] '0.1.1'
 ```
 
 ## Detailed Usage
@@ -113,9 +114,9 @@ to the nanometre-accuracy standard of [Karney
 
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
-#>            haversine    vincenty      cheap
-#> absolute 0.818681120 0.818681120 0.57910408
-#> relative 0.002173428 0.002173428 0.00160801
+#>            haversine    vincenty       cheap
+#> absolute 0.826237406 0.826237406 0.582295536
+#> relative 0.002138821 0.002138821 0.001599847
 ```
 
 All distances (`d)` are in metres, and all measures are accurate to
@@ -128,7 +129,7 @@ relative errors of Vincenty distances remain generally constant at
 around 0.2%, while relative errors of cheap-ruler distances out to 100km
 are around 0.16%.
 
-![](vignettes/fig1.png)
+![](README-plot-1.png)<!-- -->
 
 ### Performance comparison
 
@@ -143,16 +144,16 @@ y <- cbind (-100 + dx * runif (2 * n), 20 + dy * runif (2 * n))
 colnames (x) <- colnames (y) <- c ("x", "y")
 rbenchmark::benchmark (
     replications = 10, order = "test",
-    d1 <- geodist (x, measure = "cheap"),
-    d2 <- geodist (x, measure = "haversine"),
-    d3 <- geodist (x, measure = "vincenty"),
-    d4 <- geodist (x, measure = "geodesic")
+    cheap <- geodist (x, measure = "cheap"),
+    haversine <- geodist (x, measure = "haversine"),
+    vincenty <- geodist (x, measure = "vincenty"),
+    geodesic <- geodist (x, measure = "geodesic")
 ) [, 1:4]
-#>                                      test replications elapsed relative
-#> 1     d1 <- geodist(x, measure = "cheap")           10   0.070      1.0
-#> 2 d2 <- geodist(x, measure = "haversine")           10   0.133      1.9
-#> 3  d3 <- geodist(x, measure = "vincenty")           10   0.224      3.2
-#> 4  d4 <- geodist(x, measure = "geodesic")           10   2.856     40.8
+#>                                             test replications elapsed relative
+#> 1         cheap <- geodist(x, measure = "cheap")           10   0.096    1.000
+#> 4   geodesic <- geodist(x, measure = "geodesic")           10   2.943   30.656
+#> 2 haversine <- geodist(x, measure = "haversine")           10   0.136    1.417
+#> 3   vincenty <- geodist(x, measure = "vincenty")           10   0.194    2.021
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -195,13 +196,13 @@ rbenchmark::benchmark (
     geo_dist (x)
 ) [, 1:4]
 #> Spherical geometry (s2) switched off
-#> Linking to GEOS 3.13.0, GDAL 3.10.0, PROJ 9.5.0; sf_use_s2() is FALSE
+#> Linking to GEOS 3.14.1, GDAL 3.12.2, PROJ 9.7.0; sf_use_s2() is FALSE
 #> Spherical geometry (s2) switched on
 #> Spherical geometry (s2) switched off
 #>                       test replications elapsed relative
-#> 3              geo_dist(x)           10   0.062    1.000
-#> 2 sf_dist(xsf, s2 = FALSE)           10   0.207    3.339
-#> 1  sf_dist(xsf, s2 = TRUE)           10   0.146    2.355
+#> 3              geo_dist(x)           10   0.064     1.00
+#> 2 sf_dist(xsf, s2 = FALSE)           10   0.208     3.25
+#> 1  sf_dist(xsf, s2 = TRUE)           10   0.160     2.50
 ```
 
 The [`geosphere` package](https://cran.r-project.org/package=geosphere)
@@ -217,8 +218,8 @@ rbenchmark::benchmark (
     fgeosph ()
 ) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.017    1.000
-#> 2  fgeosph()           10   0.037    2.176
+#> 1 fgeodist()           10   0.018      1.0
+#> 2  fgeosph()           10   0.045      2.5
 ```
 
 `geodist` is thus at least twice as fast as both `sf` for highly
@@ -227,140 +228,177 @@ of sequential distances.
 
 ## Contributors
 
-
-
-
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore-start -->
+
 <!-- markdownlint-disable -->
 
-All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropensci/allcontributors) following the [allcontributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
+All contributions to this project are gratefully acknowledged using the
+[`allcontributors` package](https://github.com/ropensci/allcontributors)
+following the [allcontributors](https://allcontributors.org)
+specification. Contributions of any kind are welcome!
 
 ### Code
 
 <table>
 
 <tr>
+
 <td align="center">
+
 <a href="https://github.com/mpadge">
 <img src="https://avatars.githubusercontent.com/u/6697851?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/commits?author=mpadge">mpadge</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/jlacko">
 <img src="https://avatars.githubusercontent.com/u/29260421?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/commits?author=jlacko">jlacko</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/mdsumner">
 <img src="https://avatars.githubusercontent.com/u/4107631?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/commits?author=mdsumner">mdsumner</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/daniellemccool">
 <img src="https://avatars.githubusercontent.com/u/5112209?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/commits?author=daniellemccool">daniellemccool</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/kadyb">
 <img src="https://avatars.githubusercontent.com/u/35004826?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/commits?author=kadyb">kadyb</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/olivroy">
 <img src="https://avatars.githubusercontent.com/u/52606734?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/commits?author=olivroy">olivroy</a>
 </td>
+
 </tr>
 
 </table>
-
 
 ### Issue Authors
 
 <table>
 
 <tr>
+
 <td align="center">
+
 <a href="https://github.com/edzer">
 <img src="https://avatars.githubusercontent.com/u/520851?u=9bc892c3523be428dc211f2ccbcf04e8e0e564ff&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Aedzer">edzer</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/marcosci">
 <img src="https://avatars.githubusercontent.com/u/10864574?u=e5b7e55e122646f47174a9e621ebc91fff177d9b&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amarcosci">marcosci</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/mem48">
 <img src="https://avatars.githubusercontent.com/u/15819577?u=0c128db4e7567656c23e83e4314111fcea424526&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Amem48">mem48</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/dcooley">
 <img src="https://avatars.githubusercontent.com/u/8093396?u=2c8d9162f246d90d433034d212b29a19e0f245c1&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Adcooley">dcooley</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/Robinlovelace">
 <img src="https://avatars.githubusercontent.com/u/1825120?u=4b78d134ed1814b0677455f45d932b3b4a6ba3a5&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3ARobinlovelace">Robinlovelace</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/espinielli">
 <img src="https://avatars.githubusercontent.com/u/891692?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3Aespinielli">espinielli</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/Maschette">
 <img src="https://avatars.githubusercontent.com/u/14663215?u=93694159d02e924e6413bd067d7746f1d16d64c1&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+author%3AMaschette">Maschette</a>
 </td>
+
 </tr>
 
 </table>
-
 
 ### Issue Contributors
 
 <table>
 
 <tr>
+
 <td align="center">
+
 <a href="https://github.com/njtierney">
 <img src="https://avatars.githubusercontent.com/u/6488485?u=3eacd57f61342d1c3cecd5c8ac741b1c4897e1de&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+commenter%3Anjtierney">njtierney</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/mkuehn10">
 <img src="https://avatars.githubusercontent.com/u/4229651?u=ea8118ccba75b3ff7a8fb9859aadde9cd524c484&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+commenter%3Amkuehn10">mkuehn10</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/asardaes">
 <img src="https://avatars.githubusercontent.com/u/7768461?u=fb573498b515f9bfcaeba8e256852060f6304d0b&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/hypertidy/geodist/issues?q=is%3Aissue+commenter%3Aasardaes">asardaes</a>
 </td>
+
 </tr>
 
 </table>
 
 <!-- markdownlint-enable -->
+
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->

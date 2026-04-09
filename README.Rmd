@@ -17,7 +17,7 @@ status](https://github.com/hypertidy/geodist/workflows/R-CMD-check/badge.svg)](h
 [![pkgcheck](https://github.com/hypertidy/geodist/workflows/pkgcheck/badge.svg)](https://github.com/hypertidy/geodist/actions?query=workflow%3Apkgcheck)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/)
 [![codecov](https://codecov.io/gh/hypertidy/geodist/branch/master/graph/badge.svg)](https://app.codecov.io/gh/hypertidy/geodist)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/geodist)](http://cran.r-project.org/web/packages/geodist/) 
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/geodist)](https://cran.r-project.org/package=geodist/) 
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geodist)
 
 # geodist
@@ -27,7 +27,8 @@ geodesic distances. Main eponymous function, `geodist()`, accepts only one or
 two primary arguments, which must be rectangular objects with unambiguously
 labelled longitude and latitude columns (that is, some variant of `lon`/`lat`,
 or `x`/`y`).
-```{r, eval = FALSE}
+
+```{r initial-demo, eval = FALSE, message = FALSE}
 n <- 50
 x <- cbind (-10 + 20 * runif (n), -10 + 20 * runif (n))
 y <- cbind (-10 + 20 * runif (2 * n), -10 + 20 * runif (2 * n))
@@ -64,18 +65,20 @@ packageVersion ("geodist")
 
 Input(s) to the `geodist()` function can be in arbitrary rectangular format.
 
-```{r}
+```{r formats, eval = FALSE, message = FALSE}
 n <- 1e1
 x <- tibble::tibble (
     x = -180 + 360 * runif (n),
     y = -90 + 180 * runif (n)
 )
 dim (geodist (x, measure = "haversine"))
+#> [1] 10 10
 y <- tibble::tibble (
     x = -180 + 360 * runif (2 * n),
     y = -90 + 180 * runif (2 * n)
 )
 dim (geodist (x, y, measure = "haversine"))
+#> [1] 10 20
 x <- cbind (
     -180 + 360 * runif (n),
     -90 + 100 * runif (n),
@@ -83,6 +86,7 @@ x <- cbind (
 )
 colnames (x) <- c ("lon", "lat", "a", "b")
 dim (geodist (x, measure = "haversine"))
+#> [1] 10 10
 ```
 All outputs are distances in metres, calculated with a variety of spherical and
 elliptical distance measures. Distance measures currently implemented are
@@ -121,7 +125,7 @@ generally constant at around 0.2%, while relative errors of cheap-ruler
 distances out to 100km are around 0.16%.
 
 
-```{r plot, eval = FALSE, echo = FALSE}
+```{r plot, eval = TRUE, echo = FALSE, message = FALSE, fig.height = 6}
 lat <- 30
 d <- 10^(1:35 / 5) # 1m to 100 km
 y <- lapply (d, function (i) geodist_benchmark (lat = lat, d = i))
@@ -181,7 +185,6 @@ for (i in 1:2)
     )
 }
 ```
-![](vignettes/fig1.png)
 
 
 ### Performance comparison
@@ -196,10 +199,10 @@ y <- cbind (-100 + dx * runif (2 * n), 20 + dy * runif (2 * n))
 colnames (x) <- colnames (y) <- c ("x", "y")
 rbenchmark::benchmark (
     replications = 10, order = "test",
-    d1 <- geodist (x, measure = "cheap"),
-    d2 <- geodist (x, measure = "haversine"),
-    d3 <- geodist (x, measure = "vincenty"),
-    d4 <- geodist (x, measure = "geodesic")
+    cheap <- geodist (x, measure = "cheap"),
+    haversine <- geodist (x, measure = "haversine"),
+    vincenty <- geodist (x, measure = "vincenty"),
+    geodesic <- geodist (x, measure = "geodesic")
 ) [, 1:4]
 ```
 

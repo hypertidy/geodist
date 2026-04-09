@@ -7,7 +7,7 @@
 test_all <- identical (Sys.getenv ("MPADGE_LOCAL"), "true")
 
 test_that ("geodist with df", {
-    n <- 1e2
+    n <- 100L
     x <- data.frame (
         x = -180 + 360 * runif (n),
         y = -90 + 180 * runif (n)
@@ -17,39 +17,41 @@ test_that ("geodist with df", {
         y = -90 + 180 * runif (2 * n)
     )
     d1 <- geodist (x)
-    expect_equal (dim (d1), c (n, n))
+    expect_identical (dim (d1), c (n, n))
     diag (d1) <- Inf
     expect_true (all (d1 >= 0))
 
     d2 <- geodist (x, y)
-    expect_equal (dim (d2), c (n, 2 * n))
+    expect_identical (dim (d2), c (n, 2L * n))
     diag (d2) <- Inf
     expect_true (all (d2 >= 0))
 })
 
 test_that ("geodist with matrix", {
-    n <- 1e2
+    n <- 100L
     x <- cbind (-180 + 360 * runif (n), -90 + 180 * runif (n))
     y <- cbind (-180 + 360 * runif (2 * n), -90 + 180 * runif (2 * n))
-    expect_message (d1 <- geodist (x), "object has no named columns")
+    expect_message (geodist (x), "object has no named columns")
     colnames (x) <- c ("x", "y")
     if (test_all) {
         expect_message (
-            d1 <- geodist (x),
+            geodist (x),
             "Maximum distance is > 100km"
         )
+        d1 <- suppressMessages (geodist (x))
     } else {
         d1 <- geodist (x)
     }
-    expect_equal (dim (d1), c (n, n))
+    expect_identical (dim (d1), c (n, n))
     diag (d1) <- Inf
     expect_true (all (d1 >= 0))
 
     expect_message (
-        d2 <- geodist (x, y),
+        geodist (x, y),
         "object has no named columns"
     )
-    expect_equal (dim (d2), c (n, 2 * n))
+    d2 <- suppressMessages (geodist (x, y))
+    expect_identical (dim (d2), c (n, 2L * n))
     diag (d2) <- Inf
     expect_true (all (d2 > 0))
     expect_true (all (d2 >= 0))
@@ -73,7 +75,7 @@ test_that ("column names", {
     y <- cbind (-10 + 20 * runif (n), -10 + 20 * runif (n))
     colnames (x) <- colnames (y) <- c ("x", "x")
     expect_error (
-        d <- geodist (x, y, paired = TRUE),
+        geodist (x, y, paired = TRUE),
         paste0 (
             "Unable to determine longitude and ",
             "latitude columns"
@@ -81,7 +83,7 @@ test_that ("column names", {
     )
     colnames (x) <- colnames (y) <- c ("_x_x_", "_x_y_")
     expect_error (
-        d <- geodist (x, y, paired = TRUE),
+        geodist (x, y, paired = TRUE),
         paste0 (
             "Unable to determine longitude and ",
             "latitude columns"
@@ -90,9 +92,10 @@ test_that ("column names", {
     colnames (x) <- colnames (y) <- c ("_x_x", "_x_y")
     if (test_all) {
         expect_message (
-            d1 <- geodist (x, y, paired = TRUE),
+            geodist (x, y, paired = TRUE),
             "Maximum distance is > 100km"
         )
+        d1 <- suppressMessages (geodist (x, y, paired = TRUE))
     } else {
         d1 <- geodist (x, y, paired = TRUE)
     }
@@ -100,9 +103,10 @@ test_that ("column names", {
     colnames (x) <- colnames (y) <- c ("_a_x_", "_a_y_")
     if (test_all) {
         expect_message (
-            d2 <- geodist (x, y, paired = TRUE),
+            geodist (x, y, paired = TRUE),
             "Maximum distance is > 100km"
         )
+        d2 <- suppressMessages (geodist (x, y, paired = TRUE))
     } else {
         d2 <- geodist (x, y, paired = TRUE)
     }

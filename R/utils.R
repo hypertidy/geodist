@@ -42,7 +42,7 @@ geodist_benchmark <- function (lat = 0.0, d = 1.0, n = 100L) {
         res [upper.tri (res)]
     })
 
-    indx <- which (!grepl ("geodesic", dist_methods))
+    indx <- which (!grepl ("geodesic", dist_methods, fixed = TRUE))
     dabs <- unlist (lapply (d [indx], function (i) mean (abs (i - d [[1]]))))
     drel <- unlist (lapply (d [indx], function (i) {
         mean (abs (i - d [[1]]) / d [[1]])
@@ -163,16 +163,16 @@ convert_to_matrix <- function (obj) {
         cbind (obj [, xy_cols [1]], obj [, xy_cols [2]])
     } else {
 
-        if (!(is.numeric (obj [, xy_cols [1], drop = TRUE]) &
-            is.numeric (obj [, xy_cols [2], drop = TRUE]))) {
+        if (is.numeric (obj [, xy_cols [1], drop = TRUE]) &
+            is.numeric (obj [, xy_cols [2], drop = TRUE])) {
+
+            cbind (obj [[xy_cols [1]]], obj [[xy_cols [2]]]) # nolint
+        } else {
 
             cbind (
                 as.numeric (obj [, xy_cols [1], drop = TRUE]),
                 as.numeric (obj [, xy_cols [2], drop = TRUE])
             )
-        } else {
-
-            cbind (obj [[xy_cols [1]]], obj [[xy_cols [2]]]) # nolint
         }
     }
 }
@@ -183,7 +183,7 @@ check_max_d <- function (d, measure) {
         message (
             "Maximum distance is > 100km. The 'cheap' measure is ",
             "inaccurate over such\nlarge distances, you'd likely ",
-            "be better using a different 'measure', \n", 
+            "be better using a different 'measure', \n",
             "one of 'haversine', 'vincenty', or 'geodesic'. "
         )
     }

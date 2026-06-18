@@ -91,9 +91,7 @@ dim (geodist (x, measure = "haversine"))
 All outputs are distances in metres, calculated with a variety of spherical and
 elliptical distance measures. Distance measures currently implemented are
 Haversine, Vincenty (spherical and elliptical)), the very fast [mapbox cheap
-ruler](https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp)
-(see their [blog
-post](https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016)),
+ruler](https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp),
 and the "reference" implementation of [Karney
 (2013)](https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf), as
 implemented in the package [`sf`](https://cran.r-project.org/package=sf). (Note

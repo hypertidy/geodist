@@ -91,9 +91,7 @@ All outputs are distances in metres, calculated with a variety of
 spherical and elliptical distance measures. Distance measures currently
 implemented are Haversine, Vincenty (spherical and elliptical)), the
 very fast [mapbox cheap
-ruler](https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp)
-(see their [blog
-post](https://blog.mapbox.com/fast-geodesic-approximations-with-cheap-ruler-106f229ad016)),
+ruler](https://github.com/mapbox/cheap-ruler-cpp/blob/master/include/mapbox/cheap_ruler.hpp),
 and the “reference” implementation of [Karney
 (2013)](https://link.springer.com/content/pdf/10.1007/s00190-012-0578-z.pdf),
 as implemented in the package
@@ -115,8 +113,8 @@ to the nanometre-accuracy standard of [Karney
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
 #>            haversine    vincenty       cheap
-#> absolute 0.826237406 0.826237406 0.582295536
-#> relative 0.002138821 0.002138821 0.001599847
+#> absolute 0.728786064 0.728786064 0.552930383
+#> relative 0.002009509 0.002009509 0.001564216
 ```
 
 All distances (`d)` are in metres, and all measures are accurate to
@@ -150,10 +148,10 @@ rbenchmark::benchmark (
     geodesic <- geodist (x, measure = "geodesic")
 ) [, 1:4]
 #>                                             test replications elapsed relative
-#> 1         cheap <- geodist(x, measure = "cheap")           10   0.096    1.000
-#> 4   geodesic <- geodist(x, measure = "geodesic")           10   2.943   30.656
-#> 2 haversine <- geodist(x, measure = "haversine")           10   0.136    1.417
-#> 3   vincenty <- geodist(x, measure = "vincenty")           10   0.194    2.021
+#> 1         cheap <- geodist(x, measure = "cheap")           10   0.036    1.000
+#> 4   geodesic <- geodist(x, measure = "geodesic")           10   1.397   38.806
+#> 2 haversine <- geodist(x, measure = "haversine")           10   0.048    1.333
+#> 3   vincenty <- geodist(x, measure = "vincenty")           10   0.085    2.361
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -196,13 +194,13 @@ rbenchmark::benchmark (
     geo_dist (x)
 ) [, 1:4]
 #> Spherical geometry (s2) switched off
-#> Linking to GEOS 3.14.1, GDAL 3.12.2, PROJ 9.7.0; sf_use_s2() is FALSE
+#> Linking to GEOS 3.14.1, GDAL 3.13.0, PROJ 9.8.1; sf_use_s2() is FALSE
 #> Spherical geometry (s2) switched on
 #> Spherical geometry (s2) switched off
 #>                       test replications elapsed relative
-#> 3              geo_dist(x)           10   0.064     1.00
-#> 2 sf_dist(xsf, s2 = FALSE)           10   0.208     3.25
-#> 1  sf_dist(xsf, s2 = TRUE)           10   0.160     2.50
+#> 3              geo_dist(x)           10   0.028    1.000
+#> 2 sf_dist(xsf, s2 = FALSE)           10   0.096    3.429
+#> 1  sf_dist(xsf, s2 = TRUE)           10   0.069    2.464
 ```
 
 The [`geosphere` package](https://cran.r-project.org/package=geosphere)
@@ -218,8 +216,8 @@ rbenchmark::benchmark (
     fgeosph ()
 ) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.018      1.0
-#> 2  fgeosph()           10   0.045      2.5
+#> 1 fgeodist()           10   0.007    1.000
+#> 2  fgeosph()           10   0.017    2.429
 ```
 
 `geodist` is thus at least twice as fast as both `sf` for highly

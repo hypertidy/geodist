@@ -1,9 +1,11 @@
 Package: geodist
 Title: Fast, Dependency-Free Geodesic Distance Calculations
-Version: 0.1.1.019
+Version: 0.1.1.020
 Authors@R: c(
-    person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre")),
-    person("Michael D.", "Sumner", role = "aut"),
+    person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0003-2172-5265")),
+    person("Michael D.", "Sumner", role = "aut",
+             comment = c(ORCID = "0000-0002-2471-7511")),
     person("Charles F.F", "Karney", role = "cph",
            comment = "Original author of included code for geodesic distances")
   )
@@ -29,6 +31,6 @@ VignetteBuilder:
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: yes
-RoxygenNote: 7.3.3
 Config/testthat/edition: 3
 Config/testthat/parallel: true
+Config/roxygen2/version: 8.1.0

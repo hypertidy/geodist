@@ -13,7 +13,7 @@ knitr::opts_chunk$set (
 ```
 
 [![R build
-status](https://github.com/hypertidy/geodist/workflows/R-CMD-check/badge.svg)](https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check)
+status](https://github.com/hypertidy/geodist/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check.yaml)
 [![pkgcheck](https://github.com/hypertidy/geodist/workflows/pkgcheck/badge.svg)](https://github.com/hypertidy/geodist/actions?query=workflow%3Apkgcheck)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/)
 [![codecov](https://codecov.io/gh/hypertidy/geodist/branch/master/graph/badge.svg)](https://app.codecov.io/gh/hypertidy/geodist)
@@ -51,6 +51,7 @@ following options:
 # install.packages("remotes")
 remotes::install_git ("https://git.sr.ht/~mpadge/geodist")
 remotes::install_git ("https://codeberg.org/hypertidy/geodist")
+remotes::install_git ("https://tangled.org/mpadge.eu/geodist")
 remotes::install_bitbucket ("hypertidy/geodist")
 remotes::install_gitlab ("hypertidy/geodist")
 remotes::install_github ("hypertidy/geodist")

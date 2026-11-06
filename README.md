@@ -2,7 +2,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![R build
-status](https://github.com/hypertidy/geodist/workflows/R-CMD-check/badge.svg)](https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check)
+status](https://github.com/hypertidy/geodist/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hypertidy/geodist/actions?query=workflow%3AR-CMD-check.yaml)
 [![pkgcheck](https://github.com/hypertidy/geodist/workflows/pkgcheck/badge.svg)](https://github.com/hypertidy/geodist/actions?query=workflow%3Apkgcheck)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
@@ -45,6 +45,7 @@ of the following options:
 # install.packages("remotes")
 remotes::install_git ("https://git.sr.ht/~mpadge/geodist")
 remotes::install_git ("https://codeberg.org/hypertidy/geodist")
+remotes::install_git ("https://tangled.org/mpadge.eu/geodist")
 remotes::install_bitbucket ("hypertidy/geodist")
 remotes::install_gitlab ("hypertidy/geodist")
 remotes::install_github ("hypertidy/geodist")
@@ -113,8 +114,8 @@ to the nanometre-accuracy standard of [Karney
 ``` r
 geodist_benchmark (lat = 30, d = 1000)
 #>            haversine    vincenty       cheap
-#> absolute 0.728786064 0.728786064 0.552930383
-#> relative 0.002009509 0.002009509 0.001564216
+#> absolute 0.807895078 0.807895078 0.588284170
+#> relative 0.002125146 0.002125146 0.001610181
 ```
 
 All distances (`d)` are in metres, and all measures are accurate to
@@ -148,10 +149,10 @@ rbenchmark::benchmark (
     geodesic <- geodist (x, measure = "geodesic")
 ) [, 1:4]
 #>                                             test replications elapsed relative
-#> 1         cheap <- geodist(x, measure = "cheap")           10   0.036    1.000
-#> 4   geodesic <- geodist(x, measure = "geodesic")           10   1.397   38.806
-#> 2 haversine <- geodist(x, measure = "haversine")           10   0.048    1.333
-#> 3   vincenty <- geodist(x, measure = "vincenty")           10   0.085    2.361
+#> 1         cheap <- geodist(x, measure = "cheap")           10   0.067    1.000
+#> 4   geodesic <- geodist(x, measure = "geodesic")           10   2.936   43.821
+#> 2 haversine <- geodist(x, measure = "haversine")           10   0.146    2.179
+#> 3   vincenty <- geodist(x, measure = "vincenty")           10   0.234    3.493
 ```
 
 Geodesic distance calculation is available in the [`sf`
@@ -194,13 +195,16 @@ rbenchmark::benchmark (
     geo_dist (x)
 ) [, 1:4]
 #> Spherical geometry (s2) switched off
-#> Linking to GEOS 3.14.1, GDAL 3.13.0, PROJ 9.8.1; sf_use_s2() is FALSE
+#> Linking to GEOS 3.15.0, GDAL 3.13.3, PROJ 9.8.1; sf_use_s2() is FALSE
+#> WARNING: different compile-time and runtime versions for GEOS found:
+#> Linked against: 3.15.0-CAPI-1.21.0 compiled against: 3.14.1-CAPI-1.20.5
+#> It is probably a good idea to reinstall sf (and maybe lwgeom too)
 #> Spherical geometry (s2) switched on
 #> Spherical geometry (s2) switched off
 #>                       test replications elapsed relative
-#> 3              geo_dist(x)           10   0.028    1.000
-#> 2 sf_dist(xsf, s2 = FALSE)           10   0.096    3.429
-#> 1  sf_dist(xsf, s2 = TRUE)           10   0.069    2.464
+#> 3              geo_dist(x)           10   0.065    1.000
+#> 2 sf_dist(xsf, s2 = FALSE)           10   0.214    3.292
+#> 1  sf_dist(xsf, s2 = TRUE)           10   0.165    2.538
 ```
 
 The [`geosphere` package](https://cran.r-project.org/package=geosphere)
@@ -216,8 +220,8 @@ rbenchmark::benchmark (
     fgeosph ()
 ) [, 1:4]
 #>         test replications elapsed relative
-#> 1 fgeodist()           10   0.007    1.000
-#> 2  fgeosph()           10   0.017    2.429
+#> 1 fgeodist()           10   0.020      1.0
+#> 2  fgeosph()           10   0.042      2.1
 ```
 
 `geodist` is thus at least twice as fast as both `sf` for highly
